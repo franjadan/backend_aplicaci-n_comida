@@ -1,0 +1,19 @@
+body{
+    overflow-x: hidden;
+}
+
+.section{
+    height: 100vh;
+}
+
+.main .sidebar{
+    width: 15%;
+}
+
+.main .principal{
+    width: 85%;;
+}
+
+#wrapper{
+    height: 100vh;
+}
