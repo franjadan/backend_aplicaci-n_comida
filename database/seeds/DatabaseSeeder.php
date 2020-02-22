@@ -15,14 +15,18 @@ class DatabaseSeeder extends Seeder
             'comments',
             'users',
             'ingredients',
-            'allergens'
+            'allergens',
+            'categories',
+            'products',
         ]);
 
         $this->call([
             UsersSeeder::class,
             CommentsSeeder::class,
             AllergensSeeder::class,
-            IngredientsSeeder::class
+            IngredientsSeeder::class,
+            CategoriesSeeder::class,
+            ProductsSeeder::class,
         ]);
     }
 
