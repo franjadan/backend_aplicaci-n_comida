@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('index');
 });
+
+Route::prefix('/categories')->group(function () {
+
+    Route::get('/', 'CategoryController@index')->name('categories');
+});
