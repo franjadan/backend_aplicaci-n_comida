@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', "Inicio");
+
 @section('content')
     <div class="jumbotron shadow">
         <h1 class="display-4">!Bienvenido a Menu of the day!</h1>

@@ -41,3 +41,11 @@ body{
       width: 100%;
     }
 }
+
+.status.st-active {
+    background-color: green;
+  }
+  
+  .status.st-inactive {
+    background-color: red;
+  }
