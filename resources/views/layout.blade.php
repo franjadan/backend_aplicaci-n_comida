@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/4e337af5d8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Menu of the day</title>
+    <title>@yield('title')</title>
 </head>
 <body>
     <div class="section">
@@ -27,7 +27,7 @@
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-hamburger"></i> Productos</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
+                <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i> Perfil</a>
