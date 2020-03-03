@@ -42,10 +42,18 @@ body{
     }
 }
 
+.status {
+    display: inline-block;
+    margin: 0 0 0 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+}
+  
 .status.st-active {
     background-color: green;
-  }
+}
   
-  .status.st-inactive {
+.status.st-inactive {
     background-color: red;
-  }
+}
