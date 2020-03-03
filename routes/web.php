@@ -15,5 +15,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/usuarios', 'UserController@index')
-    ->name('users.index');
+Route::get('/usuarios', 'UserController@index')->name('users.index');
+
+Route::prefix('/categories')->group(function () {
+
+    Route::get('/', 'CategoryController@index')->name('categories');
+});

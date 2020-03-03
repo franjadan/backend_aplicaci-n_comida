@@ -24,7 +24,7 @@ class Category extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -35,10 +35,8 @@ class Category extends Model
     protected $casts = [
     ];
 
-    /*
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_categories');
     }
-    */
 }
