@@ -1,16 +1,15 @@
 @extends('layout')
 
+@section('title', "Listado de categorías")
+
 @section('content')
-    <div class="mb-4">
-        <a href="#" class="btn btn-secondary">Nueva Categoría</a>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h5>Categorías</h5>
+        <h1>Listado de categorías</h1>
+        <div>
+            <a href="#" class="btn btn-secondary mt-2">Nueva Categoría</a>
         </div>
-        <div class="card-body">
+        <div>
             @if ($categories->isNotEmpty())
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered mt-3">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -45,5 +44,4 @@
                 <p>No hay categorías registradas.</p>
             @endif
         </div>
-    </div>
 @endsection
