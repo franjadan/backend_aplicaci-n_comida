@@ -24,4 +24,8 @@ Route::prefix('/categorias')->group(function () {
     Route::get('/nueva', 'CategoryController@create')->name('categories.create');
 
     Route::post('/nueva', 'CategoryController@store')->name('categories.create');
+
+    Route::get('/{category}/editar', 'CategoryController@edit')->name('categories.edit');
+
+    Route::put('/{category}/editar', 'CategoryController@update')->name('categories.edit');
 });

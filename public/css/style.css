@@ -49,11 +49,15 @@ body{
     height: 8px;
     border-radius: 5px;
 }
-  
+
 .status.st-active {
     background-color: green;
 }
-  
+
 .status.st-inactive {
     background-color: red;
+}
+
+#categories_image{
+    width: 20%;
 }

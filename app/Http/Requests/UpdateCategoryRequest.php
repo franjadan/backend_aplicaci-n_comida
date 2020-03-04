@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Category;
 
-class CreateCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class CreateCategoryRequest extends FormRequest
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
             'discount' => ['nullable', 'present', 'regex:/^\d+$/'],
-            'image' => ['required'],
+            'image' => ['nullable'],
         ];
     }
 
@@ -39,19 +39,29 @@ class CreateCategoryRequest extends FormRequest
             'name.regex' => 'El campo nombre no es válido.',
             'discount.present' => 'El campo descuento debe esta presente.',
             'discount.regex' => 'El campo descuento no es válido.',
-            'image.required' => 'El campo imagen es obligatorio.',
         ];
     }
 
-    public function createCategory()
+    public function updateCategory(Category $category)
     {
-        $image = $this->file('image');
-        $name = $image->getClientOriginalName();
-        $image->move('media/categories', $name);
-        Category::create([
-            'name' => $this['name'],
-            'discount' => $this['discount'],
-            'image' => "media/categories/$name",
-        ]);
+        if ($this->file('image') != null){
+            $old = public_path()."/$category->image";
+            if (@getimagesize($old)){
+                unlink($old);
+            }
+            $new = $this->file('image');
+            $name = $new->getClientOriginalName();
+            $new->move('media/categories', $name);
+            $category->update([
+                'name' => $this['name'],
+                'discount' => $this['discount'],
+                'image' => "media/categories/$name",
+            ]);
+        }else{
+            $category->update([
+                'name' => $this['name'],
+                'discount' => $this['discount'],
+            ]);
+        }
     }
 }

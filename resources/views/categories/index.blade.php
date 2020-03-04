@@ -32,7 +32,7 @@
                                 </td>
                                 <td scope="row">
                                     <div>
-                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('categories.edit', $category) }}"><i class="fas fa-edit"></i></a>
                                         <a href="#"><i class="far fa-trash-alt"></i></a>
                                     </div>
                                 </td>

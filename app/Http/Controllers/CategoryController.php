@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -33,5 +34,19 @@ class CategoryController extends Controller
         $request->createCategory();
 
         return redirect()->route('categories');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('categories.edit', [
+            'category' => $category,
+        ]);
+    }
+
+    public function update(UpdateCategoryRequest $request, Category $category)
+    {
+        $request->updateCategory($category);
+
+        return redirect()->route('categories.edit', $category);
     }
 }
