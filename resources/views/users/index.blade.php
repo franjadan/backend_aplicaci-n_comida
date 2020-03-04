@@ -27,11 +27,12 @@
                         <td><h5>{{ $user->name }} @if ($user->isAdmin()) (Admin) @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
                         <td class="text-muted">{{ $user->email }}</td>
                         <td>
-                            <form class="" action="#" method="POST">
-                                @csrf
-                                @method('PATCH')
+                            <form class="" action="{{ route('users.destroy', $user) }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
                                 <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
-                                <button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('¿Estas seguro de que quieres eliminar este usuario?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>

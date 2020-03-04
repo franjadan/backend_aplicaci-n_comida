@@ -29,10 +29,10 @@ Route::prefix('/usuarios')->group(function () {
 
     Route::put('/{user}', 'UserController@update'); //Ruta para realizar la edición del usuario
 
-    Route::post('/{user}/status', 'UserController@changeStatus'); 
+    Route::post('/{user}/estado', 'UserController@changeStatus'); //Ruta para habilitar o deshabilitar el usuario
 
-    Route::delete('/{user}', 'UserController@disable') //Ruta para deshabilitar el usuario
-        ->name('users.disable');
+    Route::delete('/{user}', 'UserController@destroy') //Ruta para realizar la eliminación el usuario
+        ->name('users.destroy');
 });
 
 Route::prefix('/categories')->group(function () {

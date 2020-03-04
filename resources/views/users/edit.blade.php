@@ -16,7 +16,7 @@
     
     </form>
 
-    <form method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}/status") }}">
+    <form method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}/estado") }}">
                 
         {{ method_field('POST') }}
         {{ csrf_field() }}
