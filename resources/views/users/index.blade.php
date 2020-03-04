@@ -5,7 +5,7 @@
 @section('content')
     <h1>Listado de usuarios</h1>
 
-    <a href="#" class="btn btn-primary mt-2">Nuevo usuario</a>
+    <a href="{{ route('users.create') }}" class="btn btn-primary mt-2">Nuevo usuario</a>
 
     @if(!$users->isEmpty())
 
