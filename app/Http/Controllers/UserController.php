@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         $request->createUser();
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Se han creado el usuario con éxito');
     }
 
     public function edit(User $user) 
@@ -48,6 +48,6 @@ class UserController extends Controller
     {
         $request->updateUser($user);
         
-        return redirect()->route('users.index');
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
     }
 }

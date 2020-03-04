@@ -35,6 +35,8 @@
             </div>
             <div id="page-content-wrapper">
               <div class="container mt-5">
+                @include('shared._flash-message')
+
                 @yield('content')
             </div>
           </div>
