@@ -49,4 +49,15 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.edit', $category);
     }
+
+    public function destroy(Category $category)
+    {
+        $image = public_path()."/$category->image";
+        if (@getimagesize($image)){
+            unlink($image);
+        }
+        $category->delete();
+
+        return redirect()->route('categories');
+    }
 }

@@ -32,8 +32,12 @@
                                 </td>
                                 <td scope="row">
                                     <div>
-                                        <a href="{{ route('categories.edit', $category) }}"><i class="fas fa-edit"></i></a>
-                                        <a href="#"><i class="far fa-trash-alt"></i></a>
+                                        <form action="{{ route('categories.destroy', $category) }}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

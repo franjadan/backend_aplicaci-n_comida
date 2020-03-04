@@ -28,4 +28,6 @@ Route::prefix('/categorias')->group(function () {
     Route::get('/{category}/editar', 'CategoryController@edit')->name('categories.edit');
 
     Route::put('/{category}/editar', 'CategoryController@update')->name('categories.edit');
+
+    Route::delete('/{category}', 'CategoryController@destroy')->name('categories.destroy');
 });
