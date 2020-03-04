@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\User;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,8 @@ class CreateUserRequest extends FormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'present', 'min:6'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user)],
+            'password' => ['nullable', 'present', 'min:6'],
             'address' => 'required',
             'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'role' => ['required', Rule::in(['admin', 'user'])],
@@ -46,7 +46,6 @@ class CreateUserRequest extends FormRequest
             'email.required' => 'El campo email es obligatorio',
             'email.email' => 'El campo email debe ser válido',
             'email.unique' => 'El campo email debe ser único',
-            'password.required' => 'El campo contraseña debe ser obligatorio',
             'password.min' => 'El campo contraseña debe tener mínimo 6 caracteres',
             'address.required' => 'El campo dirección es obligatorio',
             'phone.required' => 'El campo teléfono es obligatorio',
@@ -57,25 +56,25 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
-    public function createUser()
+    public function updateUser(User $user)
     {
-        DB::transaction(function () {
 
-            $user = new User();
+        $user->forceFill([
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,                
+            'email' => $this->email,
+            'address' => $this->address,
+            'phone' => $this->phone,
+            'role' => $this->role ?? 'user',
+            'active' => $this->active == "on" ? true : false
+        ]);
 
-            $user->forceFill([
-                'first_name' => $this->first_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'password' => bcrypt($this->password),
-                'address' => $this->address,
-                'phone' => $this->phone,
-                'role' => $this->role ?? 'user',
-                'active' => $this->active == "on" ? true : false
-            ]);
+        if($this->password != null){
+            $user->password = bcrypt($this->password);
+        }    
 
-            $user->save();
+        $user->save();
 
-        });
     }
+    
 }

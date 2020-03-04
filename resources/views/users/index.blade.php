@@ -30,8 +30,7 @@
                             <form class="" action="#" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <a class="btn btn-primary" href="#"><i class="fas fa-eye"></i></a>
-                                <a class="btn btn-primary" href="#"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
                                 <button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>

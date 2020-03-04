@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', "Inicio");
+@section('title', "Inicio")
 
 @section('content')
     <div class="jumbotron shadow">
