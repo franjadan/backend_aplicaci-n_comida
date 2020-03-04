@@ -22,7 +22,7 @@
                         @foreach ($categories as $category)
                             <tr>
                                 <td scope="row">{{ $category->id }}</td>
-                                <td scope="row">{{ $category->name }}</td>
+                                <td scope="row"><h5>{{ $category->name }}</h5></td>
                                 <td scope="row">
                                     @if ($category->discount == 0)
                                         Sin descuento
