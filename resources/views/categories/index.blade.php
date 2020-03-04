@@ -1,11 +1,11 @@
 @extends('layout')
 
-@section('title', "Listado de categorías")
+@section('title', 'Listado de categorías')
 
 @section('content')
         <h1>Listado de categorías</h1>
         <div>
-            <a href="#" class="btn btn-secondary mt-2">Nueva Categoría</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-secondary mt-2">Nueva Categoría</a>
         </div>
         <div>
             @if ($categories->isNotEmpty())
@@ -40,6 +40,8 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{ $categories->links() }}
             @else
                 <p>No hay categorías registradas.</p>
             @endif

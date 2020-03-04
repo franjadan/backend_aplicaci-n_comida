@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('image');
             $table->string('name');
-            $table->double('discount')->nullable;
+            $table->double('discount')->nullable();
             $table->timestamps();
         });
     }

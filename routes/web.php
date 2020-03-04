@@ -17,7 +17,11 @@ Route::get('/', function () {
 
 Route::get('/usuarios', 'UserController@index')->name('users.index');
 
-Route::prefix('/categories')->group(function () {
+Route::prefix('/categorias')->group(function () {
 
     Route::get('/', 'CategoryController@index')->name('categories');
+
+    Route::get('/nueva', 'CategoryController@create')->name('categories.create');
+
+    Route::post('/nueva', 'CategoryController@store')->name('categories.create');
 });
