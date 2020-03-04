@@ -50,4 +50,19 @@ class UserController extends Controller
         
         return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
     }
+
+    public function changeStatus(User $user)
+    {
+
+        if($user->active) {
+            $user->active = false;
+        } else {
+            $user->active = true;
+        }
+
+        $user->save();
+
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
+
+    }
 }

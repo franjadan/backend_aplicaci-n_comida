@@ -29,6 +29,8 @@ Route::prefix('/usuarios')->group(function () {
 
     Route::put('/{user}', 'UserController@update'); //Ruta para realizar la edición del usuario
 
+    Route::post('/{user}/status', 'UserController@changeStatus'); 
+
     Route::delete('/{user}', 'UserController@disable') //Ruta para deshabilitar el usuario
         ->name('users.disable');
 });

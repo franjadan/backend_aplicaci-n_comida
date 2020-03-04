@@ -3,6 +3,8 @@
 @section('title', "Nuevo usuario")
 
 @section('content')
+
+    <h1>Nuevo usuario</h1>
     
     <form method="POST" action="{{ url('usuarios/crear') }}">
         

@@ -48,14 +48,6 @@
     @endif
 </div>
 
-<div class="form-check">
-    <input type="checkbox" name="active" class="form-check-input" id="active" {{ old('active', $user->active) == true || old('active', $user->active) == "on" ? 'checked' : ''}}>
-    <label for="active">Habilitado</label>
-    @if ($errors->has('active'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('active') }}</div>
-    @endif
-</div>
-
 <div class="form-group">
     <label>Rol</label>
     @foreach($roles as $role => $name)

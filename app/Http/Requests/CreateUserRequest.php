@@ -34,7 +34,6 @@ class CreateUserRequest extends FormRequest
             'address' => 'required',
             'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'role' => ['required', Rule::in(['admin', 'user'])],
-            'active' => Rule::in(['on', 'off'])
         ];
     }
 
@@ -53,7 +52,6 @@ class CreateUserRequest extends FormRequest
             'phone.regex' => 'El teléfono debe ser válido',
             'role.required' => 'El campo rol es obligatorio',
             'role.in' => 'El rol debe ser válido',
-            'active.in' => 'El campo habilitado debe ser válido'
         ];
     }
 
@@ -71,7 +69,7 @@ class CreateUserRequest extends FormRequest
                 'address' => $this->address,
                 'phone' => $this->phone,
                 'role' => $this->role ?? 'user',
-                'active' => $this->active == "on" ? true : false
+                'active' => true
             ]);
 
             $user->save();
