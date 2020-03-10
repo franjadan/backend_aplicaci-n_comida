@@ -13,7 +13,7 @@
     <div class="section">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse d-flex justify-content-between p-3">
-              <a class="navbar-brand" href="#">Menu of the day</a>
+              <a class="navbar-brand" href="{{ url('/') }}">Menu of the day</a>
               <div>
                 <a href="nav-link" class="btn btn-outline-secondary">Cerrar sesión <i class="fas fa-sign-out-alt"></i></a>
               </div>
@@ -35,6 +35,8 @@
             </div>
             <div id="page-content-wrapper">
               <div class="container mt-5">
+                @include('shared._flash-message')
+
                 @yield('content')
             </div>
           </div>
