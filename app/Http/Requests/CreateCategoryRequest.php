@@ -26,7 +26,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
-            'discount' => ['nullable', 'present', 'regex:/^\d+$/'],
+            'discount' => ['nullable', 'present', 'numeric'],
             'image' => ['required'],
         ];
     }
@@ -38,7 +38,7 @@ class CreateCategoryRequest extends FormRequest
             'name.min' => 'El campo nombre debe tener más de dos caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
             'discount.present' => 'El campo descuento debe esta presente.',
-            'discount.regex' => 'El campo descuento no es válido.',
+            'discount.numeric' => 'El campo descuento no es válido.',
             'image.required' => 'El campo imagen es obligatorio.',
         ];
     }
