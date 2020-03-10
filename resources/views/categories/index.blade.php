@@ -5,7 +5,7 @@
 @section('content')
         <h1>Listado de categorías</h1>
         <div>
-            <a href="{{ route('categories.create') }}" class="btn btn-secondary mt-2">Nueva Categoría</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Nueva Categoría</a>
         </div>
         <div>
             @if ($categories->isNotEmpty())
