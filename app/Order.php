@@ -3,13 +3,11 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Order extends Model
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'address', 'phone'
+        'favourite_order_name', 'guest_name', 'guest_adress', 'guest_phone', 'order_date', 'estimated_time', 'real_time', 'comment'
     ];
 
     /**
@@ -26,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'guest_token'
     ];
 
     /**
@@ -35,16 +33,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'active' => 'bool'
+    'paid' => 'bool'
     ];
 
-    public function isAdmin()
+    public function products()
     {
-        return $this->role === 'admin';
+        return $this->belongsToMany(Category::class, 'order_products');
     }
 
-    public function getNameAttribute()
+    public function user() 
     {
-        return "{$this->first_name} {$this->last_name}";
+        return $this->belongsTo(User::class);
     }
+
 }

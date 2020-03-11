@@ -1,0 +1,63 @@
+body{
+    overflow-x: hidden;
+}
+
+.section{
+    height: 100vh;
+}
+
+.main .sidebar{
+    width: 15%;
+}
+
+.main .principal{
+    width: 85%;;
+}
+
+#wrapper{
+    height: 130vh;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem;
+}
+
+#sidebar-wrapper .list-group .list-group-item{
+    border: 0px;
+    margin: 0.25em 0em;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+}
+
+.status {
+    display: inline-block;
+    margin: 0 0 0 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+}
+
+.status.st-active {
+    background-color: green;
+}
+
+.status.st-inactive {
+    background-color: red;
+}
+
+#categories_image{
+    width: 20%;
+}

@@ -3,13 +3,11 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Allergen extends Model
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'address', 'phone'
+        'name', 'image'
     ];
 
     /**
@@ -26,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        
     ];
 
     /**
@@ -35,16 +33,5 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'active' => 'bool'
     ];
-
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
-    }
-
-    public function getNameAttribute()
-    {
-        return "{$this->first_name} {$this->last_name}";
-    }
 }
