@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             'allergens',
             'categories',
             'products',
+            'orders',
         ]);
 
         $this->call([
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
             IngredientsSeeder::class,
             CategoriesSeeder::class,
             ProductsSeeder::class,
+            OrdersSeeder::class,
         ]);
     }
 
