@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ingredient;
 
-class UserController extends Controller
+class IngredientController extends Controller
 {
     public function index() 
     {
         $ingredients = Ingredient::query()
-            ->orderBy('name');
+            ->orderBy('name')
+            ->paginate();
 
         return view('ingredients.index', [
             'ingredients' => $ingredients
@@ -30,7 +31,7 @@ class UserController extends Controller
     {
         $request->createIngredient();
 
-        return redirect()->route('ingredients');
+        return redirect()->route('ingredients.store');
     }
 
     public function edit(Ingredient $ingredient)
@@ -51,6 +52,6 @@ class UserController extends Controller
     {
         $ingredient->delete();
 
-        return redirect()->route('ingredients');
+        return redirect()->route('ingredients.destroy');
     }
 }
