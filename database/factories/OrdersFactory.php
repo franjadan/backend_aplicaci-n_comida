@@ -2,11 +2,8 @@
 
 use Faker\Generator as Faker;
 
-$faker = Faker::create('es_ES');
-
 $factory->define(App\Order::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
         'favourite_order_name' => $faker->word, 
         'guest_name' => $faker->name, 
         'guest_adress' => $faker->address, 
@@ -17,6 +14,5 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'comment' => $faker->sentence,
         'paid' => false,
         'state' => 'pending',
-        'user_id' => '1',
     ];
 });
