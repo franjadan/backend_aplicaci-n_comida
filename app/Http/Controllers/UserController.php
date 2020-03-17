@@ -22,7 +22,7 @@ class UserController extends Controller
                         $active = "";
 
                         if($row->isAdmin()){
-                            $tipo = "Admin";
+                            $tipo = " (Admin)";
                         }
 
                         if($row->active){
