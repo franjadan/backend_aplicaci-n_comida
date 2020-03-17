@@ -14,7 +14,6 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
                     <th scope="col">Email</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -64,8 +63,7 @@
         ajax: "{{ route('users.index') }}",
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'first_name', name: 'first_name'},
-            {data: 'last_name', name: 'last_name'},
+            {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]

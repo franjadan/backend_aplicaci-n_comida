@@ -16,11 +16,30 @@ class UserController extends Controller
 
         if ($request->ajax()) {
             return Datatables::of($users)
+                    ->addColumn('name', function($row){
+
+                        $tipo = "";
+                        $active = "";
+
+                        if($row->isAdmin()){
+                            $tipo = "Admin";
+                        }
+
+                        if($row->active){
+                            $active = "<span class='status st-active'></span>";
+                        }else{
+                            $active = "<span class='status st-inactive'></span>";
+                        }
+
+                        $result = "<td><h5>" . $row->first_name . " " . $row->last_name . "" . $tipo . "" . $active . "</h5></td>";
+                        return $result;
+
+                    })
                     ->addColumn('actions', function($row){
                             $actions = "<form action='". route('users.destroy', $row) . "' method='POST'>" .csrf_field() . "" . method_field('DELETE') . "<a class='btn btn-primary mr-1' href='" . route('users.edit', ['user' => $row]) . "'><i class='fas fa-edit'></i></a><button class='btn btn-danger' type='submit'><i class='fas fa-trash-alt'></i></button></form>";
                             return $actions;
                     })
-                    ->rawColumns(['actions'])
+                    ->rawColumns(['name', 'actions'])
                     ->make(true);
         }
 
