@@ -14,6 +14,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Hora de recogida</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,7 +59,7 @@
         },
         processing: true,
         serverSide: true,
-        ajax: "{{ route('users.index') }}",
+        ajax: "{{ route('orders.index') }}",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'estimated_time', name: 'estimated_time'},

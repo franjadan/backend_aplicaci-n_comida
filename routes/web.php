@@ -48,12 +48,12 @@ Route::prefix('/categorias')->group(function () {
     Route::delete('/{category}', 'CategoryController@destroy')->name('categories.destroy');
 });
 
-
 Route::prefix('/pedidos')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index'); //Ruta listado
 
-    Route::get('/nuevo', 'OrderController@create') //Ruta de la página para crear el pedido
-        ->name('orders.create');
+    Route::get('/{order}', 'OrderController@show')->name('orders.show'); //Ruta detalle pedido
+
+    Route::get('/nuevo', 'OrderController@create')->name('orders.create'); //Ruta de la página para crear el pedido
 
     Route::post('/crear', 'OrderController@store'); //Ruta para realizar la creación del pedido
 
@@ -61,4 +61,19 @@ Route::prefix('/pedidos')->group(function () {
         ->name('orders.edit');
 
     Route::put('/{order}', 'OrderController@update'); //Ruta para realizar la edición del pedido
+});
+
+Route::prefix('/ingredientes')->group(function () {
+    Route::get('/', 'IngredientController@index')->name('ingredients.index'); 
+
+    Route::get('/nuevo', 'IngredientController@create')->name('ingredients.create');
+
+    //Route::post('/crear', 'IngredientController@store')->name('ingredients.store');
+
+    Route::get('/{ingredient}/editar', 'IngredientController@edit')->name('ingredients.edit');
+
+    //Route::put('/{ingredient}', 'IngredientController@update')->name('ingredients.update'); 
+
+    Route::delete('/{ingredient}', 'IngredientController@destroy')->name('ingredients.destroy');
+
 });
