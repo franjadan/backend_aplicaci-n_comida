@@ -47,3 +47,18 @@ Route::prefix('/categorias')->group(function () {
 
     Route::delete('/{category}', 'CategoryController@destroy')->name('categories.destroy');
 });
+
+
+Route::prefix('/pedidos')->group(function () {
+    Route::get('/', 'OrderController@index')->name('orders.index'); //Ruta listado
+
+    Route::get('/nuevo', 'OrderController@create') //Ruta de la página para crear el pedido
+        ->name('orders.create');
+
+    Route::post('/crear', 'OrderController@store'); //Ruta para realizar la creación del pedido
+
+    Route::get('/{order}/editar', 'OrderController@edit') //Ruta de la página para editar el pedido
+        ->name('orders.edit');
+
+    Route::put('/{order}', 'OrderController@update'); //Ruta para realizar la edición del pedido
+});
