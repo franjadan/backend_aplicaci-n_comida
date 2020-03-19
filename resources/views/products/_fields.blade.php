@@ -2,28 +2,28 @@
 
 <div class="form-group">
     <label for="inputName">Nombre:</label>
-    <input type="text" class="form-control" id="inputName" name="name">
+    <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $product->name) }}">
     @if($errors->has('name'))
         <div class="alert alert-danger mt-2">{{ $errors->first('name') }}</div>
     @endif
 </div>
 <div class="form-group">
     <label for="inputDescription">Descripción:</label>
-    <textarea name="description" id="inputDescription" cols="5" rows="5" class="form-control"></textarea>
+    <textarea name="description" id="inputDescription" cols="5" rows="5" class="form-control">{{ old('description', $product->description) }}</textarea>
     @if($errors->has('description'))
         <div class="alert alert-danger mt-2">{{ $errors->first('description') }}</div>
     @endif
 </div>
 <div class="form-group">
     <label for="inputPrice">Precio:</label>
-    <input type="text" class="form-control" id="inputPrice" name="price">
+    <input type="text" class="form-control" id="inputPrice" name="price" value="{{ old('price', $product->price) }}">
     @if($errors->has('price'))
         <div class="alert alert-danger mt-2">{{ $errors->first('price') }}</div>
     @endif
 </div>
 <div class="form-group">
     <label for="inputDiscount">Descuento:</label>
-    <input type="text" class="form-control" id="inputDiscount" name="discount">
+    <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $product->discount) }}">
     @if($errors->has('discount'))
         <div class="alert alert-danger mt-2">{{ $errors->first('discount') }}</div>
     @endif
@@ -31,11 +31,11 @@
 <div class="form-group">
     <p>¿Está disponible?</p>
     <div class="form-check">
-        <input type="radio" class="form-check-input" name="available" id="available_yes" value="yes">
+        <input type="radio" class="form-check-input" name="available" id="available_yes" value="yes" {{ $product->available || old('available') == 'yes' ? 'checked': '' }}>
         <label for="form-check-label" for="available_yes">Sí</label>
     </div>
     <div class="form-check">
-        <input type="radio" class="form-check-input" name="available" id="available_no" value="no">
+        <input type="radio" class="form-check-input" name="available" id="available_no" value="no" {{ !$product->available || old('available') == 'no' ? 'checked': '' }}>
         <label for="form-check-label" for="available_no">No</label>
     </div>
     @if($errors->has('available'))
@@ -47,7 +47,7 @@
     @if ($categories->isNotEmpty())
         <select name="categories[]" id="selectCategories" class="form-control" multiple>
             @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}" {{ $errors->any() ? old($category->id) : $product->categories->contains($category) ? 'selected' : '' }}>{{ $category->name }}</option>
             @endforeach
         </select>
     @else
@@ -62,7 +62,7 @@
     @if ($ingredients->isNotEmpty())
         <select name="ingredients[]" id="selectIngredients" class="form-control" multiple>
             @foreach ($ingredients as $ingredient)
-                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                <option value="{{ $ingredient->id }}" {{ $errors->any() ? old($ingredient->id) : $product->ingredients->contains($ingredient) ? 'selected' : '' }}>{{ $ingredient->name }}</option>
             @endforeach
         </select>
     @else

@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $request->updateUser($user);
 
-        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
     }
 
     public function changeStatus(User $user)

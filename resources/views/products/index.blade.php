@@ -37,7 +37,7 @@
                                     <form action="#" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('products.edit', $product) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                                         <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                     </form>
                                 </div>

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Product;
 
-class CreateProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class CreateProductRequest extends FormRequest
         return [
             'description' => ['required', 'min:5', 'regex:/^[\pL\s\-\.]+$/u'],
             'available' => ['required'],
-            'image' => ['required'],
+            'image' => [''],
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
             'price' => ['required', 'numeric'],
             'discount' => ['nullable', 'numeric', 'present'],
@@ -43,7 +43,6 @@ class CreateProductRequest extends FormRequest
             'description.min' => 'El campo descripción debe tener más de cinco caracteres.',
             'description.regex' => 'El campo descripción no es válido.',
             'available.required' => 'El campo disponible es obligatorio.',
-            'image.required' => 'El campo imagen es obligatorio.',
             'name.required' => 'El campo nombre es obligatorio.',
             'name.min' => 'El campo descripción debe tener mas de dos caracteres.',
             'name.regex' => 'El campos nombre no es válido.',
@@ -60,24 +59,38 @@ class CreateProductRequest extends FormRequest
         ];
     }
 
-    public function createProduct()
+    public function updateProduct(Product $product)
     {
-        $image = $this->file('image');
-        $name = $image->getClientOriginalName();
-        $image->move('media/products', $name);
-
         $available = $this['available'] == 'yes'? true: false;
 
-        $product = Product::create([
-            'description' => $this['description'],
-            'available' => $available,
-            'image' => "media/products/$name",
-            'name' => $this['name'],
-            'price' => $this['price'],
-            'discount' => $this['discount'],
-        ]);
+        if ($this->file('image') != null){
+            $old = public_path()."/$product->image";
+            if (@getimagesize($old)){
+                unlink($old);
+            }
+            $new = $this->file('image');
+            $name = $new->getClientOriginalName();
+            $new->move("media/products/$name");
 
-        $product->categories()->attach($this['categories']);
-        $product->ingredients()->attach($this['ingredients']);
+            $product->update([
+                'description' => $this['description'],
+                'available' => $available,
+                'image' => "media/products/$name",
+                'name' => $this['name'],
+                'price' => $this['price'],
+                'discount' => $this['discount'],
+            ]);
+        }else{
+            $product->update([
+                'description' => $this['description'],
+                'available' => $available,
+                'name' => $this['name'],
+                'price' => $this['price'],
+                'discount' => $this['discount'],
+            ]);
+        }
+
+        $product->categories()->sync($this['categories']);
+        $product->ingredients()->sync($this['ingredients']);
     }
 }

@@ -54,4 +54,8 @@ Route::prefix('/productos')->group(function () {
     Route::get('/nuevo', 'ProductController@create')->name('products.create');
 
     Route::post('/nuevo', 'ProductController@store')->name('products.create');
+
+    Route::get('/{product}/editar', 'ProductController@edit')->name('products.edit');
+
+    Route::put('/{product}/editar', 'ProductController@update')->name('products.edit');
 });

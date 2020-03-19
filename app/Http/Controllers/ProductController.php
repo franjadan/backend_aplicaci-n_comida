@@ -7,6 +7,7 @@ use App\Category;
 use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -39,5 +40,24 @@ class ProductController extends Controller
         $request->createProduct();
 
         return redirect()->route('products')->with('success', 'Se ha creado el producto con éxito.');
+    }
+
+    public function edit(Product $product)
+    {
+        $categories = Category::query()->orderby('name')->get();
+        $ingredints = Ingredient::query()->orderby('name')->get();
+
+        return view('products.edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'ingredients' => $ingredints,
+        ]);
+    }
+
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        $request->updateProduct($product);
+
+        return redirect()->route('products.edit', $product)->with('success', 'Se han guardado los cambios.');
     }
 }
