@@ -47,3 +47,11 @@ Route::prefix('/categorias')->group(function () {
 
     Route::delete('/{category}', 'CategoryController@destroy')->name('categories.destroy');
 });
+
+Route::prefix('/productos')->group(function () {
+    Route::get('/', 'ProductController@index')->name('products');
+
+    Route::get('/nuevo', 'ProductController@create')->name('products.create');
+
+    Route::post('/nuevo', 'ProductController@store')->name('products.create');
+});

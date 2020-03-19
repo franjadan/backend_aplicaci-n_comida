@@ -24,7 +24,7 @@
               <div class="list-group list-group-flush">
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-square"></i> Pedidos</a>
                 <a href="{{ route('categories') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-th-list"></i> Categorías</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-hamburger"></i> Productos</a>
+                <a href="{{ route('products') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-hamburger"></i> Productos</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
                 <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
