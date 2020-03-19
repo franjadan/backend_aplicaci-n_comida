@@ -21,7 +21,7 @@
                     @foreach ($products as $product)
                         <tr>
                             <td scope="row">{{ $product->id }}</td>
-                            <td scope="row">{{ $product->name }}</td>
+                            <td scope="row"><h5>{{ $product->name }}</h5></td>
                             <td scope="row">{{ $product->price }}</td>
                             <td scope="row">
                                 @if ($product->discount == 0)
