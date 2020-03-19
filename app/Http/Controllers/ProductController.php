@@ -60,4 +60,15 @@ class ProductController extends Controller
 
         return redirect()->route('products.edit', $product)->with('success', 'Se han guardado los cambios.');
     }
+
+    public function destroy(Product $product)
+    {
+        $image = public_path()."/$product->image";
+        if (@getimagesize($image)){
+            unlink($image);
+        }
+        $product->delete();
+
+        return redirect()->route('products')->with('success', 'Se ha eliminado con éxito');
+    }
 }

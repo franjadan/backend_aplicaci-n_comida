@@ -58,4 +58,6 @@ Route::prefix('/productos')->group(function () {
     Route::get('/{product}/editar', 'ProductController@edit')->name('products.edit');
 
     Route::put('/{product}/editar', 'ProductController@update')->name('products.edit');
+
+    Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
 });

@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
 
     }
 
@@ -70,6 +70,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito');
+        return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito.');
     }
 }

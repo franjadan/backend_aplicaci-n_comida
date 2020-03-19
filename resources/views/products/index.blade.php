@@ -13,7 +13,6 @@
                 <thead class="thead-dark">
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th Scope="col">Descripción</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Descuento</th>
                     <th scope="col">Acciones</th>
@@ -23,7 +22,6 @@
                         <tr>
                             <td scope="row">{{ $product->id }}</td>
                             <td scope="row">{{ $product->name }}</td>
-                            <td scope="row">{{ $product->description }}</td>
                             <td scope="row">{{ $product->price }}</td>
                             <td scope="row">
                                 @if ($product->discount == 0)
@@ -34,7 +32,7 @@
                             </td>
                             <td scope="row">
                                 <div>
-                                    <form action="#" method="post">
+                                    <form action="{{ route('products.destroy', $product) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <a href="{{ route('products.edit', $product) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
