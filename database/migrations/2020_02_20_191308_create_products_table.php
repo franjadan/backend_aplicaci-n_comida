@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->boolean('available');
             $table->string('image');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->double('price');
             $table->double('discount');
             $table->timestamps();

@@ -38,7 +38,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Category::class, 'order_products');
+        return $this->belongsToMany(Product::class, 'order_products');
     }
 
     public function user() 

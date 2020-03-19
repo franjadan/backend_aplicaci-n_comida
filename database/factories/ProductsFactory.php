@@ -7,7 +7,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'description' => $faker->sentence,
         'available' => true,
         'image' => "media/shared/lorem_ipsum.jpg",
-        'name' => $faker->word,
+        'name' => $faker->unique()->word,
         'price' => $faker->randomDigit,
         'discount' => $faker->randomDigit,
     ];

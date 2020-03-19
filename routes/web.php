@@ -51,7 +51,7 @@ Route::prefix('/categorias')->group(function () {
 Route::prefix('/pedidos')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index'); //Ruta listado
 
-    Route::get('/{order}', 'OrderController@show')->name('orders.show'); //Ruta detalle pedido
+    Route::get('/{order}', 'OrderController@show')->where('order', '[0-9]+')->name('orders.show'); //Ruta detalle pedido
 
     Route::get('/nuevo', 'OrderController@create')->name('orders.create'); //Ruta de la página para crear el pedido
 
