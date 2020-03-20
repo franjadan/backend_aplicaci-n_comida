@@ -50,6 +50,8 @@ Route::prefix('/categorias')->group(function () {
 
 Route::prefix('/pedidos')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index'); //Ruta listado
+    
+    Route::get('/historial', 'OrderController@orderRecord')->name('orders.record'); //Ruta historial de pedidos
 
     Route::get('/{order}', 'OrderController@show')->where('order', '[0-9]+')->name('orders.show'); //Ruta detalle pedido
 

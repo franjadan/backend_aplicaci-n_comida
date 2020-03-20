@@ -42,7 +42,7 @@
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
                 <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
+                <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i> Perfil</a>
               </div>
             </div>
