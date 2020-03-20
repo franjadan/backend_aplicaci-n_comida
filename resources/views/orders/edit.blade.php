@@ -16,22 +16,23 @@
     
     </form>
 
-    <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}/cancelar") }}">
-                
-        {{ method_field('POST') }}
-        {{ csrf_field() }}
-        
-        <input type="submit" class="btn btn-warning" value="Cancelar pedido">        
-    </form>
-
     <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}/finalizar") }}">
                 
         {{ method_field('POST') }}
         {{ csrf_field() }}
         
         <input type="submit" class="btn btn-warning" value="Finalizar pedido">
-        <a class="btn btn-outline-primary" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
         
+    </form>
+
+    <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}/cancelar") }}">
+                
+        {{ method_field('POST') }}
+        {{ csrf_field() }}
+        
+        <input type="submit" class="btn btn-danger" value="Cancelar pedido"> 
+        <a class="btn btn-outline-primary" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
+       
     </form>
   
 @endsection

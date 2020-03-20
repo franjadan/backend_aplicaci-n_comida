@@ -86,11 +86,21 @@ class OrderController extends Controller
         }
     }
 
-    public function finish(){
-        dd("Finalizar");
+    public function finish(Order $order){
+
+        $order->state = 'finished';
+        $order->paid = true;
+
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Se han finalizado el pedido');
     }
 
-    public function cancel(){
-        dd("Cancelar");
+    public function cancel(Order $order){
+
+        $order->state = 'cancelled';
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Se han cancelado el pedido');
     }
 }
