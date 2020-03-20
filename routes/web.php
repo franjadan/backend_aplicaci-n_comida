@@ -61,6 +61,12 @@ Route::prefix('/pedidos')->group(function () {
         ->name('orders.edit');
 
     Route::put('/{order}', 'OrderController@update'); //Ruta para realizar la edición del pedido
+
+    Route::post('/{order}/finalizar', 'OrderController@finish'); //Ruta para finalizar el pedido
+
+    Route::post('/{order}/cancelar', 'OrderController@cancel'); //Ruta para cancelar el pedido
+
+
 });
 
 Route::prefix('/ingredientes')->group(function () {

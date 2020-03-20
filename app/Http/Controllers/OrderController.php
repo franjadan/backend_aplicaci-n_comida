@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Order;
 use App\User;
 use App\Product;
@@ -57,5 +58,39 @@ class OrderController extends Controller
         }else{
             return redirect()->route('orders.index')->with('success', 'Se han creado el pedido con éxito');
         }
+    }
+
+    public function edit(Order $order) 
+    {
+        $users = User::query()
+        ->orderBy('first_name')
+        ->get();
+        $products = Product::query()
+        ->orderBy('name')
+        ->get();
+        return view('orders.edit', [
+            'order' => $order,
+            'users' => $users,
+            'products' => $products
+        ]);  
+    }
+
+    public function update(UpdateOrderRequest $request, Order $order)
+    {
+        $error = $request->updateOrder($order);
+
+        if(!empty($error)){
+            return back()->with('error', $error);
+        }else{
+            return redirect()->route('orders.edit', ['order' => $order])->with('success', 'Se han guardado los cambios');
+        }
+    }
+
+    public function finish(){
+        dd("Finalizar");
+    }
+
+    public function cancel(){
+        dd("Cancelar");
     }
 }

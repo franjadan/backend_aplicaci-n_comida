@@ -46,7 +46,7 @@
     @if ($products->isNotEmpty())
         <select name="products[]" id="selectProducts" class="form-control" multiple>
             @foreach ($products as $product)
-                <option {{ collect(old('products', $order->products))->contains($product->id) ? 'selected':'' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                <option {{ collect(old('products', $order->products->pluck('id')->toArray()))->contains($product->id) ? 'selected':'' }} value="{{ $product->id }}">{{ $product->name }}</option>
             @endforeach
         </select>
     @else
