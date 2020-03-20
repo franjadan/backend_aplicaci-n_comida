@@ -103,4 +103,11 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Se han cancelado el pedido');
     }
+
+    public function show(Order $order) 
+    {
+        return view('orders.show', [
+            'order' => $order
+        ]);
+    }
 }
