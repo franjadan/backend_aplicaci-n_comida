@@ -16,6 +16,8 @@
 
     @if($rute != "record")
         <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
+    @else
+        <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
     @endif
 
     @if(!$orders->isEmpty())
@@ -46,10 +48,6 @@
 <script type="text/javascript">
   $(function () {
     var table = $('.data-table').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'excel',
-        ],
         "language": {
             "sProcessing":    "Procesando...",
             "sLengthMenu":    "Mostrar _MENU_ registros",

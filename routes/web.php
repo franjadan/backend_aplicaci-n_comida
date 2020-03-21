@@ -53,6 +53,10 @@ Route::prefix('/pedidos')->group(function () {
     
     Route::get('/historial', 'OrderController@orderRecord')->name('orders.record'); //Ruta historial de pedidos
 
+    Route::get('/historial/excel', function () {
+        return Excel::download(new App\Exports\OrdersExport, 'historial.xlsx');
+    })->name('orders.excel');
+
     Route::get('/{order}', 'OrderController@show')->where('order', '[0-9]+')->name('orders.show'); //Ruta detalle pedido
 
     Route::get('/nuevo', 'OrderController@create')->name('orders.create'); //Ruta de la página para crear el pedido
@@ -85,3 +89,5 @@ Route::prefix('/ingredientes')->group(function () {
     Route::delete('/{ingredient}', 'IngredientController@destroy')->name('ingredients.destroy');
 
 });
+
+
