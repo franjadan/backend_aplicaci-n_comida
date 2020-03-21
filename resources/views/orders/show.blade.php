@@ -43,9 +43,9 @@
     @endif
 
     <h5>Estado del pedido</h5>
-    @if($order->state = "pending")
+    @if($order->state == "pending")
         <p>Pendiente</p>
-    @elseif($order->state = "finished")
+    @elseif($order->state == "finished")
         <p>Finalizado</p>
     @else
         <p>Cancelado</p>

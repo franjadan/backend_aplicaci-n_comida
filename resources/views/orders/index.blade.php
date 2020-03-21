@@ -1,9 +1,18 @@
 @extends('layout')
 
-@section('title', "Listado de pedidos")
+@if($rute == "record")
+    @section('title', "Historial de pedidos")
+@else
+    @section('title', "Pedidos pendientes")
+@endif
 
 @section('content')
-    <h1>Listado de pedidos</h1>
+
+    @if($rute == "record")
+        <h1>Historial de pedidos</h1>
+    @else
+        <h1>Pedidos pendientes</h1>
+    @endif
 
     @if($rute != "record")
         <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
@@ -37,6 +46,10 @@
 <script type="text/javascript">
   $(function () {
     var table = $('.data-table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'excel',
+        ],
         "language": {
             "sProcessing":    "Procesando...",
             "sLengthMenu":    "Mostrar _MENU_ registros",
