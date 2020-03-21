@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Product;
 
 class OrdersSeeder extends Seeder
 {
@@ -11,6 +12,14 @@ class OrdersSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Order::class)->times(10)->create();
+        $products = Product::all();
+
+        foreach(range(1, 10) as $i) {
+            $order = factory(App\Order::class)->create();
+            $randomProduct = $products->random(rand(1,5));
+            $order->products()->attach($randomProduct);
+        }
+
+        
     }
 }

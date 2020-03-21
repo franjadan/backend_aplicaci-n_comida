@@ -15,6 +15,7 @@ class OrderController extends Controller
     public function index(Request $request){
         $orders = Order::query()
         ->where('state', 'pending')
+        ->orderByDesc('order_date')
         ->orderByDesc('estimated_time')
         ->get();
 
@@ -116,6 +117,7 @@ class OrderController extends Controller
     {
         $orders = Order::query()
         ->where('state', '<>', 'pending')
+        ->orderByDesc('order_date')
         ->orderByDesc('estimated_time')
         ->get();
 

@@ -16,6 +16,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Hora de recogida</th>
+                    <th scope="col">Fecha del pedido</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -66,6 +67,7 @@
         columns: [
             {data: 'id', name: 'id'},
             {data: 'estimated_time', name: 'estimated_time'},
+            {data: 'order_date', name: 'order_date'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
     });
@@ -106,6 +108,7 @@
         columns: [
             {data: 'id', name: 'id'},
             {data: 'estimated_time', name: 'estimated_time'},
+            {data: 'order_date', name: 'order_date'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
     });

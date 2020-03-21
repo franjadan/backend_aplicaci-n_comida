@@ -21,14 +21,13 @@
     <h5>Fecha pedido</h5>
     <p>{{ $order->order_date }}</p>
 
-    @if($order->products->isNotEmpty())
-        <h5>Productos</h5>
-        <ul>
-            @foreach ($order->products as $product)
-                <li>{{ $product->name }}</li>
-            @endforeach
-        </ul>
-    @endif
+
+    <h5>Productos</h5>
+    <ul>
+        @foreach ($order->products as $product)
+            <li>{{ $product->name }}</li>
+        @endforeach
+    </ul>
 
     @if(!empty($order->comment))
         <h5>Observaciones</h5>

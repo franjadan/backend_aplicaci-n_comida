@@ -9,7 +9,7 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'guest_address' => $faker->address, 
         'guest_phone' => $faker->phoneNumber, 
         'order_date' => $faker->dateTime, 
-        'estimated_time' => $faker->dateTime, 
+        'estimated_time' => $faker->time($format = 'H:i:s', $max = 'now'), 
         'real_time' => $faker->dateTime, 
         'comment' => $faker->sentence,
         'paid' => false,
