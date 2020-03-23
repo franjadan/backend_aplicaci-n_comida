@@ -6,7 +6,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
     return [
         'description' => $faker->sentence,
         'available' => true,
-        'image' => 'media/products/producto_defecto.jpg',
+        'image' => 'media/shared/imagen_defecto.png',
         'name' => $faker->word,
         'price' => $faker->randomDigit,
         'discount' => $faker->randomDigit,
