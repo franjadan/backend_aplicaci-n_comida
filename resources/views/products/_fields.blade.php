@@ -47,7 +47,7 @@
     @if ($categories->isNotEmpty())
         <select name="categories[]" id="selectCategories" class="form-control" multiple>
             @foreach ($categories as $category)
-                <option value="{{ $category->id }}" {{ $errors->any() ? old($category->id) : $product->categories->contains($category) ? 'selected' : '' }}>{{ $category->name }}</option>
+                <option value="{{ $category->id }}" {{ collect(old('categories', $product->categories->pluck('id')->toArray()))->contains($category->id) ? 'selected': '' }}>{{ $category->name }}</option>
             @endforeach
         </select>
     @else
@@ -62,7 +62,7 @@
     @if ($ingredients->isNotEmpty())
         <select name="ingredients[]" id="selectIngredients" class="form-control" multiple>
             @foreach ($ingredients as $ingredient)
-                <option value="{{ $ingredient->id }}" {{ $errors->any() ? old($ingredient->id) : $product->ingredients->contains($ingredient) ? 'selected' : '' }}>{{ $ingredient->name }}</option>
+                <option value="{{ $ingredient->id }}" {{ collect(old('ingredients', $product->ingredients->pluck('id')->toArray()))->contains($ingredient->id) ? 'selected': '' }}>{{ $ingredient->name }}</option>
             @endforeach
         </select>
     @else
