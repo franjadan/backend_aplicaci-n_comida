@@ -58,6 +58,6 @@ class CategoryController extends Controller
         }
         $category->delete();
 
-        return redirect()->route('categories');
+        return redirect()->route('categories')->with('success', 'Se ha eliminado con éxito.');
     }
 }

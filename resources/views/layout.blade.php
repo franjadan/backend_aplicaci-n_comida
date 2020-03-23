@@ -11,7 +11,7 @@
     <link href="https://cdn.datatables.net/plug-ins/1.10.20/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4e337af5d8.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -41,7 +41,7 @@
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
                 <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
+                <a href="{{ route('comments') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i> Perfil</a>
               </div>

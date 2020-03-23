@@ -61,3 +61,11 @@ Route::prefix('/productos')->group(function () {
 
     Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
 });
+
+Route::prefix('/comentarios')->group(function () {
+    Route::get('/', 'CommentController@index')->name('comments');
+
+    Route::get('/{comment}', 'CommentController@show')->name('comments.show');
+
+    Route::delete('/{comment}', 'CommentController@destroy')->name('comments.destroy');
+});
