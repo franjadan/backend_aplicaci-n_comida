@@ -64,6 +64,10 @@ class OrderController extends Controller
 
     public function edit(Order $order) 
     {
+        if($order->state != "pending"){
+            return redirect()->route('orders.index')->with('error', 'No puedes acceder a este pedido');
+        }
+
         $users = User::query()
         ->orderBy('first_name')
         ->get();
@@ -124,7 +128,7 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return Datatables::of($orders)
                 ->addColumn('actions', function($row){
-                    $actions = "<a class='btn btn-primary' href=" . route('orders.show', ['order' => $row]) . "><i class='fas fa-eye'></i></a><a class='btn btn-primary ml-1' href='" . route('orders.edit', ['order' => $row]) . "'><i class='fas fa-edit'></i></a>";
+                    $actions = "<a class='btn btn-primary' href=" . route('orders.show', ['order' => $row]) . "><i class='fas fa-eye'></i></a>";
                     return $actions;
                 })
                 ->rawColumns(['actions'])
