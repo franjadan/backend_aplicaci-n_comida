@@ -3,10 +3,7 @@
 @section('title', 'Listado de comentarios')
 
 @section('content')
-    <h1>Listado de categorías</h1>
-    <div>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Nuevo Comentario</a>
-    </div>
+    <h1>Listado de comentarios</h1>
     <div>
         @if ($comments->isNotEmpty())
             <table class="table table-striped table-bordered mt-3">
