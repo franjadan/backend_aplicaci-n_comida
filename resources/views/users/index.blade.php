@@ -60,13 +60,29 @@
         },
         processing: true,
         serverSide: true,
-        ajax: "{{ route('users.index') }}",
+        searchDelay: 0,
+		ajax: "{{ route('users.index') }}",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
+    });
+
+	$(".dataTables_filter input")
+    .unbind() // Unbind previous default bindings
+    .bind("input", function(e) { // Bind our desired behavior
+		// If the length is 2 or more characters, search
+		if(this.value.length >= 2) {
+            // Call the API search function
+            table.search(this.value).draw();
+        }
+        // Ensure we clear the search if they backspace far enough
+        if(this.value == "") {
+            table.search("").draw();
+        }
+        return;
     });
     
   });
