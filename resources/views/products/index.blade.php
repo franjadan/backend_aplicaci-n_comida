@@ -1,20 +1,23 @@
 @extends('layout')
 
-@section('title', "Listado de usuarios")
+@section('title', 'Listado de productos')
 
 @section('content')
-    <h1>Listado de usuarios</h1>
+    <h1>Listado de productos</h1>
 
-    <a href="{{ route('users.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo usuario</a>
+    <div>
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
+    </div>
 
-    @if(!$users->isEmpty())
+    @if(!$products->isEmpty())
 
         <table class="table table-bordered data-table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Descuento</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -24,7 +27,7 @@
 
         
     @else
-        <p class="mt-3">No hay usuarios</p>
+        <p class="mt-3">No hay productos registrados</p>
     @endif
 
 @endsection
@@ -60,29 +63,14 @@
         },
         processing: true,
         serverSide: true,
-        searchDelay: 0,
-		ajax: "{{ route('users.index') }}",
+        ajax: "{{ route('products') }}",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
+            {data: 'price', name: 'price'},
+            {data: 'discount', name: 'discount'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
-    });
-
-	$(".dataTables_filter input")
-    .unbind() // Unbind previous default bindings
-    .bind("input", function(e) { // Bind our desired behavior
-		// If the length is 2 or more characters, search
-		if(this.value.length >= 2) {
-            // Call the API search function
-            table.search(this.value).draw();
-        }
-        // Ensure we clear the search if they backspace far enough
-        if(this.value == "") {
-            table.search("").draw();
-        }
-        return;
     });
     
   });

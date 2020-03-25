@@ -52,6 +52,7 @@ class UpdateCategoryRequest extends FormRequest
             $new = $this->file('image');
             $name = $new->getClientOriginalName();
             $new->move('media/categories', $name);
+
             $category->update([
                 'name' => $this['name'],
                 'discount' => $this['discount'],
