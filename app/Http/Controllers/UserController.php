@@ -128,7 +128,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) { 
-            return response()->json(['error'=>$validator->errors()], 422);         
+            return response()->json(["code" => -1, "data" => $validator->errors()], 422);         
         } else {
             
             $user = new User();
@@ -147,8 +147,9 @@ class UserController extends Controller
             $user->save();
 
             $token = JWTAuth::fromUser($user);
-        
-            return response()->json(compact('user','token'), 201);
+
+            $data = compact('user','token');
+            return response()->json(["code" => 1, "data" => $data], 201);
             
         } 
     }
@@ -159,13 +160,15 @@ class UserController extends Controller
         
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+                return response()->json(["code" => -1, "data" => "Credenciales no válidas"], 400);         
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(["code" => -1, "data" => "No se ha podido crear un token"], 500);         
         }
 
         $user = DB::table('users')->where('email', $request->get('email'))->first();
-        return response()->json(compact('user','token'), 200);
+
+        $data = compact('user','token');
+        return response()->json(["code" => 1, "data" => $data], 200);
     }
 }
