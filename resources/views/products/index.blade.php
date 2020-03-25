@@ -25,7 +25,6 @@
             </tbody>
         </table>
 
-        
     @else
         <p class="mt-3">No hay productos registrados</p>
     @endif
@@ -72,9 +71,9 @@
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
     });
-    
+
   });
   </script>
-  
+
 @endsection
 

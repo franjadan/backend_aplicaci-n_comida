@@ -3,13 +3,11 @@
 @section('title', 'Listado de comentarios')
 
 @section('content')
-    <h1>Listado de categorías</h1>
-    <div>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Nuevo Comentario</a>
-    </div>
+    <h1>Listado de comentarios</h1>
     <div>
         @if ($comments->isNotEmpty())
-            <table class="table table-striped table-bordered mt-3">
+
+            <table class="table table-bordered data-table">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -18,28 +16,55 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($comments as $comment)
-                        <tr>
-                            <td scope="row">{{ $comment->id }}</td>
-                            <td scope="row">{{ substr($comment->comment, 0, 20) }}...</td>
-                            <td scope="row">
-                                <div>
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="post">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <a href="{{ route('comments.show', $comment) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                        <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
                 </tbody>
             </table>
 
-            {{ $comments->links() }}
         @else
             <p>No hay comentarios registrados.</p>
         @endif
     </div>
+@endsection
+
+@section('datatable')
+
+<script type="text/javascript">
+  $(function () {
+    var table = $('.data-table').DataTable({
+        "language": {
+            "sProcessing":    "Procesando...",
+            "sLengthMenu":    "Mostrar _MENU_ registros",
+            "sZeroRecords":   "No se encontraron resultados",
+            "sEmptyTable":    "Ningún dato disponible en esta tabla",
+            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":   "",
+            "sSearch":        "Buscar:",
+            "sUrl":           "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":    "Último",
+                "sNext":    "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('comments') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'comment', name: 'comment'},
+            {data: 'actions', name: 'actions', orderable: false, searchable: false},
+        ]
+    });
+
+  });
+  </script>
+
 @endsection
