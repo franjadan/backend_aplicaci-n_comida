@@ -69,6 +69,20 @@
         ]
     });
 
+    $(".dataTables_filter input")
+    .unbind() // Unbind previous default bindings
+    .bind("input", function(e) { // Bind our desired behavior
+		// If the length is 2 or more characters, search
+		if(this.value.length >= 2) {
+            // Call the API search function
+            table.search(this.value).draw();
+        }
+        // Ensure we clear the search if they backspace far enough
+        if(this.value == "") {
+            table.search("").draw();
+        }
+        return;
+    });
   });
   </script>
 
