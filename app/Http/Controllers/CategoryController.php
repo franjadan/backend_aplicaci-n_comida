@@ -33,7 +33,7 @@ class CategoryController extends Controller
     {
         $request->createCategory();
 
-        return redirect()->route('categories');
+        return redirect()->route('categories')->with('success', 'Se ha creado la categoría con éxito.');
     }
 
     public function edit(Category $category)
@@ -47,7 +47,7 @@ class CategoryController extends Controller
     {
         $request->updateCategory($category);
 
-        return redirect()->route('categories.edit', $category);
+        return redirect()->route('categories.edit', $category)->with('sucsess', 'Se han guardado los cambios.');
     }
 
     public function destroy(Category $category)
@@ -58,6 +58,6 @@ class CategoryController extends Controller
         }
         $category->delete();
 
-        return redirect()->route('categories');
+        return redirect()->route('categories')->with('success', 'Se ha eliminado con éxito.');
     }
 }

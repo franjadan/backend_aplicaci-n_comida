@@ -10,7 +10,7 @@ use DataTables;
 
 class UserController extends Controller
 {
-    public function index(Request $request) 
+    public function index(Request $request)
     {
         $users = User::all();
 
@@ -48,7 +48,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function create() 
+    public function create()
     {
         $user = new User;
         return view('users.create', [
@@ -61,22 +61,22 @@ class UserController extends Controller
     {
         $request->createUser();
 
-        return redirect()->route('users.index')->with('success', 'Se han creado el usuario con éxito');
+        return redirect()->route('users.index')->with('success', 'Se ha creado el usuario con éxito.');
     }
 
-    public function edit(User $user) 
+    public function edit(User $user)
     {
         return view('users.edit', [
             'user' => $user,
             'roles' => ['admin' => 'Admin', 'user' => 'Usuario']
-        ]);    
+        ]);
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $request->updateUser($user);
-        
-        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
+
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
     }
 
     public function changeStatus(User $user)
@@ -90,7 +90,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios');
+        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
 
     }
 
@@ -98,6 +98,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito');
+        return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito.');
     }
 }
