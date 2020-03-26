@@ -126,11 +126,11 @@
 <div class="form-group">
     <p>¿Está pagado?</p>
     <div class="form-check">
-        <input {{ old('paid', $user->paid) == 1 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_yes" value="1">
+        <input {{ old('paid', $order->paid) == 1 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_yes" value="1">
         <label for="form-check-label" for="available_yes">Sí</label>
     </div>
     <div class="form-check">
-        <input {{ old('paid', $user->paid) == 0 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_no" value="0" >
+        <input {{ old('paid', $order->paid) == 0 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_no" value="0" >
         <label for="form-check-label" for="paid_no">No</label>
     </div>
     @if($errors->has('paid'))
