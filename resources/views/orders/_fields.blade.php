@@ -77,11 +77,11 @@
                 </select>
 
                 @if(count($order->products) > 0)
-                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
                 @elseif(old('num') != null)
-                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
                 @else
-                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="1">
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
                 @endif
             </div>
         <?php endfor; ?>
