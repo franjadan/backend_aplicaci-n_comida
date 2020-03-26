@@ -65,10 +65,10 @@
                 <select name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
                 
                 @foreach ($products as $product)
-                    @if(count($order->products) > 0)
-                        <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
-                    @elseif(old('num') != null)
+                    @if(old('num') != null)
                         <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                    @elseif(count($order->products) > 0)
+                        <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
                     @else
                         <option value="{{ $product->id }}">{{ $product->name }}</option>
                     @endif
@@ -76,10 +76,10 @@
                 @endforeach
                 </select>
 
-                @if(count($order->products) > 0)
-                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
-                @elseif(old('num') != null)
+                @if(old('num') != null)
                     <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
+                @elseif(count($order->products) > 0)
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
                 @else
                     <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
                 @endif
