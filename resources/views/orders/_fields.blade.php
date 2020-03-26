@@ -42,13 +42,23 @@
 </div>
 
 <div class="form-group">
-    <label for="selectProducts">Productos:</label>
+    <label for="selectProducts">Productos: <button class="btnAdd btn btn-success">+</button></label>
+
     @if ($products->isNotEmpty())
-        <select name="products[]" id="selectProducts" class="form-control" multiple>
-            @foreach ($products as $product)
-                <option {{ collect(old('products', $order->products->pluck('id')->toArray()))->contains($product->id) ? 'selected':'' }} value="{{ $product->id }}">{{ $product->name }}</option>
-            @endforeach
-        </select>
+        <div class="selects">
+            <div class="d-flex">
+                <input type="hidden" name="num" id="num" value="1">
+                <select name="product_1" id="product_1" class="form-control">
+                @foreach ($products as $product)
+                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                @endforeach
+                </select>
+                <input style="width: 20%;" type="number" name="cant_1" id="cant_1" class="form-control" value="1">
+            </div>
+        </div>
+        @if ($errors->has('product_1'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('product_1') }}</div>
+        @endif
     @else
         <p>No hay productos registrados.</p>
     @endif
@@ -98,4 +108,48 @@
     @endif
 </div>
 
+<script>
 
+$getProducts = false;
+$products = "";
+
+$.ajax({
+    url: "{{ route('products') }}",
+    type: 'get',
+    dataType: 'json',
+    success: function(response){
+        $products = response["data"];
+        $products.sort(sortByName);
+        $getProducts = true;
+    }
+});
+
+$('.btnAdd').click(function(event) {
+    event.preventDefault();
+    
+    if($getProducts){
+
+        $num = $("#num").val();
+        $num++;
+
+        $html = '<div class="d-flex"><select name="product_' + $num +'" id="product_'+ $num +'" class="form-control">';
+
+        $.each($products, function(index, value){
+            $html += '<option value="' + value["id"] + '">' +  value["name"] + '</option>';
+        });
+
+        $html += ' </select><input style="width:20%;" type="number" name="cant_'+ $num +'" id="cant_'+ $num +'" class="form-control" value="1"></div>';
+
+        $('.selects').append($html);
+
+        $("#num").val($num);    
+    }
+});
+
+function sortByName(a, b){
+  var aName = a.name.toLowerCase();
+  var bName = b.name.toLowerCase(); 
+  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+}
+
+</script>

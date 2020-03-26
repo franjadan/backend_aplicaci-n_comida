@@ -27,6 +27,7 @@ class CreateOrderRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
             'user_id' => ['nullable', 'present', Rule::exists('users', 'id')],
             'guest_name' => ['nullable', 'present'],
