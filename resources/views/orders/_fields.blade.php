@@ -46,15 +46,45 @@
 
     @if ($products->isNotEmpty())
         <div class="selects">
+        <?php 
+            $number = 1;
+
+            if(old('num') != null){
+                
+                $number = old('num');
+            }
+
+            if(count($order->products) > 0){
+                $number = count(array_unique($order->products->pluck('id')->toArray()));
+            }
+            
+        ?>
+        <?php  for ($i = 1; $i <= $number; $i++): ?>
             <div class="d-flex">
-                <input type="hidden" name="num" id="num" value="1">
-                <select name="product_1" id="product_1" class="form-control">
+                <input type="hidden" name="num" id="num" value="<?php echo $i ?>">
+                <select name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
+                
                 @foreach ($products as $product)
-                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @if(count($order->products) > 0)
+                        <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                    @elseif(old('num') != null)
+                        <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                    @else
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endif
+
                 @endforeach
                 </select>
-                <input style="width: 20%;" type="number" name="cant_1" id="cant_1" class="form-control" value="1">
+
+                @if(count($order->products) > 0)
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
+                @elseif(old('num') != null)
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
+                @else
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$number" ?>" id="<?php echo "cant_$number" ?>" class="form-control" value="1">
+                @endif
             </div>
+        <?php endfor; ?>
         </div>
         @if ($errors->has('product_1'))
             <div class="alert alert-danger mt-2">{{ $errors->first('product_1') }}</div>

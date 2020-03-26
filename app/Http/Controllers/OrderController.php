@@ -126,7 +126,7 @@ class OrderController extends Controller
                     return back()->withErrors($validator)->withInput();                
                 }
             }
-
+            
             $order = new Order();
             $dt = new DateTime();
 
