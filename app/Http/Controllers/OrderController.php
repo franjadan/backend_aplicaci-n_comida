@@ -299,4 +299,166 @@ class OrderController extends Controller
             'orders' => $orders
         ]);
     }
+
+    public function storeAPI(Request $request)
+    {
+        $rules = [
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'guest_name' => ['nullable'],
+            'guest_address' => ['nullable'],
+            'guest_phone' => ['nullable', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'guest_token' => ['nullable'],
+            'products' => ['required', 'array', Rule::exists('products', 'id')],
+            'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
+            'comment' => ['nullable'],
+            'paid' => ['required', 'boolean']
+        ];
+
+        $messages = [
+            'user_id.exists' => 'El campo usuario debe ser válido',
+            'products.required' => 'El campo productos es obligatorio',
+            'products.exists' => 'El campo productos debe ser válido',
+            'estimated_time.required' => 'El campo hora de recogida es obligatorio',
+            'estimated_time.regex' => 'El campo hora de recogida debe ser válido',
+            'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
+            'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
+            'paid.required' => 'El campo pagado es obligatorio',
+            'paid.boolean' => 'El campo pagado no es válido'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);         
+
+        } else {
+
+            if($request->get('user_id') != null){
+                if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone')) || !empty($request->get('guest_token'))){
+                    return response()->json(["response" => ["code" => -1, "data" => "El pedido sólo podrá realizarse con un usuario registrado o invitado"]], 422);         
+                }
+            }else{
+                if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone')) || empty($request->get('guest_token'))){
+                    return response()->json(["response" => ["code" => -1, "data" => "Debe haber un usuario registrado o datos de invitado"]], 422);         
+                }
+            }
+            
+            $order = new Order();
+            $dt = new DateTime();
+
+            $order->forceFill([
+                'user_id' => $request->get('user_id'),
+                'guest_name' => $request->get('guest_name'),
+                'guest_address' => $request->get('guest_address'),
+                'guest_phone' => $request->get('order_date'),
+                'guest_token' => $request->get('guest_token'),
+                'order_date' => $dt->format('Y-m-d H:i:s'),
+                'estimated_time' => $request->get('estimated_time'),
+                'state' => 'pending',
+                'comment' =>$request->get('comment'),
+                'paid' => $request->get('paid'),
+            ]);
+        
+            $order->save();
+
+            $order->products()->attach($request->get('products'));
+
+            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 201);
+        }
+    }
+
+    public function storeFavoriteOrder(Request $request){
+        $validator = Validator::make($request->all(), [
+            'order_id' => ['required', Rule::exists('orders', 'id')],
+            'favourite_order_name' => ['required']
+        ], [
+            'order_id.required' => 'El pedido es obligatorio',
+            'order_id.exists' => 'El pedido debe ser válido',
+            'favourite_order_name.required' => 'El campo nombre del pedido favorito es obligatorio'
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+            $order = Order::query()
+            ->where('id', $request->get('order_id'))
+            ->first();
+
+            $order->favourite_order_name = $request->get('favourite_order_name');
+            $order->save();
+
+            return response()->json(["response" => ["code" => 1, "data" => $order]], 200);
+        }
+    }
+
+    public function listFavoriteOrders(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')]
+        ], [
+            'user_id.exists' => 'El campo usuario debe ser válido',
+            'guest_token.exists' => 'El campo token del invitado debe ser válido',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+
+            if($request->get('guest_token') != null){
+                $orders = Order::query()
+                    ->where('guest_token', $request->get('guest_token'))
+                    ->whereNotNull('favourite_order_name')
+                    ->get();
+
+                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+            }else{
+                if($request->get('user_id') != null){
+                    $orders = Order::query()
+                        ->where('user_id', $request->get('user_id'))
+                        ->whereNotNull('favourite_order_name')
+                        ->get();
+
+                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                }else{
+                    return response()->json(["response" => ["code" => 1, "data" => []]], 200);
+                }
+            }
+        }
+    }
+
+    public function lastOrders(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')]
+        ], [
+            'user_id.exists' => 'El campo usuario debe ser válido',
+            'guest_token.exists' => 'El campo token del invitado debe ser válido',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+
+            if($request->get('guest_token') != null){
+                $orders = Order::query()
+                    ->where('guest_token', $request->get('guest_token'))
+                    ->where('state', 'pending')
+                    ->get();
+
+                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+            }else{
+                if($request->get('user_id') != null){
+                    $orders = Order::query()
+                        ->where('user_id', $request->get('user_id'))
+                        ->where('state', 'pending')
+                        ->get();
+
+                        return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                }else{
+                    return response()->json(["response" => ["code" => 1, "data" => []]], 200);
+                }
+            }
+        }
+    }
+    
 }
