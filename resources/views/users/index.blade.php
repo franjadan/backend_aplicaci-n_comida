@@ -46,13 +46,16 @@
 @endsection
 
 @section('datatable')
-
-
 <!--Datatables-->
 <script>
 $(document).ready(function(){
 
 	$('.data-table').DataTable( {
+        "columnDefs": [{
+          "targets": 3, //posición de la columna a la que afecte los cambios (empieza por 0). Puede ser un array de varias columnas
+          "orderable": false,
+          "searchable": false,
+        }],
 		"stateSave": true,
 		"pageLength": 50,
 		"language": {

@@ -23,18 +23,8 @@ class OrderController extends Controller
         ->orderByDesc('estimated_time')
         ->get();
 
-        if ($request->ajax()) {
-            return Datatables::of($orders)
-                ->addColumn('actions', function($row){
-                    $actions = "<a class='btn btn-primary' href=" . route('orders.show', ['order' => $row]) . "><i class='fas fa-eye'></i></a><a class='btn btn-primary ml-1' href='" . route('orders.edit', ['order' => $row]) . "'><i class='fas fa-edit'></i></a>";
-                    return $actions;
-                })
-                ->rawColumns(['actions'])
-                ->make(true);
-        }
-
         return view('orders.index', [
-            'rute' => "index",
+            'route' => "index",
             'orders' => $orders
         ]);
     }
@@ -305,7 +295,7 @@ class OrderController extends Controller
         }
 
         return view('orders.index', [
-            'rute' => "record",
+            'route' => "record",
             'orders' => $orders
         ]);
     }
