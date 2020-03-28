@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use DataTables;
 
 class CategoryController extends Controller
@@ -75,5 +76,12 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories')->with('success', 'Se ha eliminado con éxito.');
+    }
+
+    public function categories()
+    {
+        $categories = Category::all();
+
+        return response()->json(['code' => 1, 'data' => CategoryResource::collection($categories)], 200);
     }
 }

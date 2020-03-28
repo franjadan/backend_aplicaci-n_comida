@@ -29,3 +29,8 @@ Route::post('pedidos/nuevo', 'OrderController@storeAPI');
 Route::get('pedidos/favoritos', 'OrderController@listFavoriteOrders');
 Route::get('pedidos/ultimos', 'OrderController@lastOrders');
 
+Route::get('categorias', 'CategoryController@categories');
+
+Route::get('productos/{category}', 'ProductController@productsByCategory');
+
+Route::get('productos', 'ProductController@products');

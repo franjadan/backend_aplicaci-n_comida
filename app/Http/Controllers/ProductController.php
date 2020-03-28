@@ -8,6 +8,7 @@ use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use DataTables;
 
 class ProductController extends Controller
@@ -86,5 +87,19 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products')->with('success', 'Se ha eliminado con éxito');
+    }
+
+    public function productsByCategory(Category $category)
+    {
+        $products = $category->products;
+
+        return response()->json(['code' => 1, 'data' => ProductResource::collection($products)], 200);
+    }
+
+    public function products()
+    {
+        $products = Product::all();
+
+        return response()->json(['code' => 1, 'data' => ProductResource::collection($products)], 200);
     }
 }
