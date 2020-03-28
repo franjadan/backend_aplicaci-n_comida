@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Order;
 use App\User;
 use App\Product;
@@ -384,10 +385,15 @@ class OrderController extends Controller
             ->where('id', $request->get('order_id'))
             ->first();
 
-            $order->favourite_order_name = $request->get('favourite_order_name');
-            $order->save();
+            if($order->favourite_order_name == null){
 
-            return response()->json(["response" => ["code" => 1, "data" => $order]], 200);
+                $order->favourite_order_name = $request->get('favourite_order_name');
+                $order->save();
+
+                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+            }else{
+                return response()->json(["response" => ["code" => -1, "data" => "Ya ha sido registrado como favorito"]], 400);
+            }
         }
     }
 
@@ -410,7 +416,7 @@ class OrderController extends Controller
                     ->whereNotNull('favourite_order_name')
                     ->get();
 
-                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
             }else{
                 if($request->get('user_id') != null){
                     $orders = Order::query()
@@ -418,7 +424,7 @@ class OrderController extends Controller
                         ->whereNotNull('favourite_order_name')
                         ->get();
 
-                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
                 }else{
                     return response()->json(["response" => ["code" => 1, "data" => []]], 200);
                 }
@@ -445,7 +451,7 @@ class OrderController extends Controller
                     ->where('state', 'pending')
                     ->get();
 
-                    return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
             }else{
                 if($request->get('user_id') != null){
                     $orders = Order::query()
@@ -453,7 +459,7 @@ class OrderController extends Controller
                         ->where('state', 'pending')
                         ->get();
 
-                        return response()->json(["response" => ["code" => 1, "data" => $orders]], 200);
+                        return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
                 }else{
                     return response()->json(["response" => ["code" => 1, "data" => []]], 200);
                 }
