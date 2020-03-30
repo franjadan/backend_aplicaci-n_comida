@@ -400,34 +400,22 @@ class OrderController extends Controller
     public function listFavoriteOrders(Request $request){
         $validator = Validator::make($request->all(), [
             'user_id' => ['nullable', Rule::exists('users', 'id')],
-            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')]
         ], [
             'user_id.exists' => 'El campo usuario debe ser válido',
-            'guest_token.exists' => 'El campo token del invitado debe ser válido',
         ]);
 
         if ($validator->fails()) { 
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
-
-            if($request->get('guest_token') != null){
+            if($request->get('user_id') != null){
                 $orders = Order::query()
-                    ->where('guest_token', $request->get('guest_token'))
+                    ->where('user_id', $request->get('user_id'))
                     ->whereNotNull('favourite_order_name')
                     ->get();
 
-                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
+                return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
             }else{
-                if($request->get('user_id') != null){
-                    $orders = Order::query()
-                        ->where('user_id', $request->get('user_id'))
-                        ->whereNotNull('favourite_order_name')
-                        ->get();
-
-                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
-                }else{
-                    return response()->json(["response" => ["code" => 1, "data" => []]], 200);
-                }
+                return response()->json(["response" => ["code" => 1, "data" => []]], 200);
             }
         }
     }
@@ -464,6 +452,30 @@ class OrderController extends Controller
                     return response()->json(["response" => ["code" => 1, "data" => []]], 200);
                 }
             }
+        }
+    }
+
+
+    public function cancelOrderAPI(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'order_id' => ['required', Rule::exists('orders', 'id')],
+        ], [
+            'order_id.required' => 'El pedido es obligatorio',
+            'order_id.exists' => 'El pedido debe ser válido',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+            $order = Order::query()
+            ->where('id', $request->get('order_id'))
+            ->first();
+
+            $order->state = 'cancelled';
+            $order->save();
+
+            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
         }
     }
     
