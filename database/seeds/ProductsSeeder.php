@@ -18,10 +18,8 @@ class ProductsSeeder extends Seeder
         foreach(range(1, 30) as $i) {
             $product = factory(App\Product::class)->create();
             $randomCategories = $categories->random(rand(0, 2));
+            $randomIngredients = $ingredients->random(rand(1, 3));
             $product->categories()->attach($randomCategories);
-
-            $randomIngredients = $ingredients->random(rand(0, 2));
-            $product->ingredients()->attach($randomIngredients);
         }
     }
 }

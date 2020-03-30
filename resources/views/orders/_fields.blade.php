@@ -42,13 +42,53 @@
 </div>
 
 <div class="form-group">
-    <label for="selectProducts">Productos:</label>
+    <label for="selectProducts">Productos: <button class="btnAdd btn btn-success">+</button></label>
+
     @if ($products->isNotEmpty())
-        <select name="products[]" id="selectProducts" class="form-control" multiple>
-            @foreach ($products as $product)
-                <option {{ collect(old('products', $order->products->pluck('id')->toArray()))->contains($product->id) ? 'selected':'' }} value="{{ $product->id }}">{{ $product->name }}</option>
-            @endforeach
-        </select>
+        <div class="selects">
+        <?php 
+            $number = 1;
+
+            if(old('num') != null){
+                
+                $number = old('num');
+            }
+
+            if(count($order->products) > 0){
+                $number = count(array_unique($order->products->pluck('id')->toArray()));
+            }
+            
+        ?>
+        <?php  for ($i = 1; $i <= $number; $i++): ?>
+            <div class="d-flex">
+                <input type="hidden" name="num" id="num" value="<?php echo $i ?>">
+                <select name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
+                
+                @foreach ($products as $product)
+                    @if(old('num') != null)
+                        <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                    @elseif(count($order->products) > 0)
+                        <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                    @else
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endif
+
+                @endforeach
+                </select>
+
+                @if(old('num') != null)
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
+                @elseif(count($order->products) > 0)
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
+                @else
+                    <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
+                @endif
+            </div>
+        <?php endfor; ?>
+        </div>
+        @if ($errors->has('product_1'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('product_1') }}</div>
+        @endif
     @else
         <p>No hay productos registrados.</p>
     @endif
@@ -86,11 +126,11 @@
 <div class="form-group">
     <p>¿Está pagado?</p>
     <div class="form-check">
-        <input {{ old('paid', $user->paid) == 1 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_yes" value="1">
+        <input {{ old('paid', $order->paid) == 1 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_yes" value="1">
         <label for="form-check-label" for="available_yes">Sí</label>
     </div>
     <div class="form-check">
-        <input {{ old('paid', $user->paid) == 0 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_no" value="0" >
+        <input {{ old('paid', $order->paid) == 0 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_no" value="0" >
         <label for="form-check-label" for="paid_no">No</label>
     </div>
     @if($errors->has('paid'))
@@ -98,4 +138,48 @@
     @endif
 </div>
 
+<script>
 
+$getProducts = false;
+$products = "";
+
+$.ajax({
+    url: "{{ route('products') }}",
+    type: 'get',
+    dataType: 'json',
+    success: function(response){
+        $products = response["data"];
+        $products.sort(sortByName);
+        $getProducts = true;
+    }
+});
+
+$('.btnAdd').click(function(event) {
+    event.preventDefault();
+    
+    if($getProducts){
+
+        $num = $("#num").val();
+        $num++;
+
+        $html = '<div class="d-flex"><select name="product_' + $num +'" id="product_'+ $num +'" class="form-control">';
+
+        $.each($products, function(index, value){
+            $html += '<option value="' + value["id"] + '">' +  value["name"] + '</option>';
+        });
+
+        $html += ' </select><input style="width:20%;" type="number" name="cant_'+ $num +'" id="cant_'+ $num +'" class="form-control" value="1"></div>';
+
+        $('.selects').append($html);
+
+        $("#num").val($num);    
+    }
+});
+
+function sortByName(a, b){
+  var aName = a.name.toLowerCase();
+  var bName = b.name.toLowerCase(); 
+  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+}
+
+</script>

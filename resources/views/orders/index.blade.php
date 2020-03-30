@@ -1,6 +1,6 @@
 @extends('layout')
 
-@if($rute == "record")
+@if($route == "record")
     @section('title', "Historial de pedidos")
 @else
     @section('title', "Pedidos pendientes")
@@ -8,13 +8,13 @@
 
 @section('content')
 
-    @if($rute == "record")
+    @if($route == "record")
         <h1>Historial de pedidos</h1>
     @else
         <h1>Pedidos pendientes</h1>
     @endif
 
-    @if($rute != "record")
+    @if($route != "record")
         <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
     @else
         <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
@@ -28,14 +28,35 @@
                     <th scope="col">#</th>
                     <th scope="col">Hora de recogida</th>
                     <th scope="col">Fecha del pedido</th>
+                    @if($route == "record")
+                        <th scope="col">Estado</th>
+                    @endif
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($orders as $order)
+                    <tr>
+                        <td>{{ $order->id }}</td>
+                        <td>{{ $order->estimated_time }}</td>
+                        <td>{{ $order->order_date }}</td>
+                        @if($route == "record")
+                            @if($order->state == "finished")
+                                <td>Finalizado</td>
+                            @else
+                                <td>Cancelado</td>
+                            @endif
+                        @endif
+                        <td>
+                            <a class='btn btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
+                            @if($route != 'record')
+                                <a class='btn btn-primary ml-1' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
-
-        
     @else
         <p class="mt-3">No hay pedidos pendientes</p>
     @endif
@@ -43,92 +64,42 @@
 @endsection
 
 @section('datatable')
+<!--Datatables-->
+<script>
+$(document).ready(function(){
 
-@if($rute == "record")
-<script type="text/javascript">
-  $(function () {
-    var table = $('.data-table').DataTable({
-        "language": {
-            "sProcessing":    "Procesando...",
-            "sLengthMenu":    "Mostrar _MENU_ registros",
-            "sZeroRecords":   "No se encontraron resultados",
-            "sEmptyTable":    "Ningún dato disponible en esta tabla",
-            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":   "",
-            "sSearch":        "Buscar:",
-            "sUrl":           "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":    "Último",
-                "sNext":    "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('orders.record') }}",
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'estimated_time', name: 'estimated_time'},
-            {data: 'order_date', name: 'order_date'},
-            {data: 'actions', name: 'actions', orderable: false, searchable: false},
-        ]
-    });
-    
-  });
-  </script>
-@else
-<script type="text/javascript">
-  $(function () {
-    var table = $('.data-table').DataTable({
-        "language": {
-            "sProcessing":    "Procesando...",
-            "sLengthMenu":    "Mostrar _MENU_ registros",
-            "sZeroRecords":   "No se encontraron resultados",
-            "sEmptyTable":    "Ningún dato disponible en esta tabla",
-            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":   "",
-            "sSearch":        "Buscar:",
-            "sUrl":           "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":    "Último",
-                "sNext":    "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('orders.index') }}",
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'estimated_time', name: 'estimated_time'},
-            {data: 'order_date', name: 'order_date'},
-            {data: 'actions', name: 'actions', orderable: false, searchable: false},
-        ]
-    });
-    
-  });
-  </script>
-@endif
+	$('.data-table').DataTable( {
+        "bSort": false,
+		"stateSave": true,
+		"pageLength": 50,
+		"language": {
+				"sProcessing":    "Procesando...",
+				"sLengthMenu":    "Mostrar _MENU_ registros",
+				"sZeroRecords":   "No se encontraron resultados",
+				"sEmptyTable":    "Ningún dato disponible en esta tabla",
+				"sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":   "",
+				"sSearch":        "Buscar:",
+				"sUrl":           "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":    "Último",
+					"sNext":    "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+			}
+	});
 
+});
+</script>
 
-  
 @endsection
 

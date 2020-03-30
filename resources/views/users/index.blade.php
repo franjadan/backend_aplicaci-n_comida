@@ -19,6 +19,22 @@
                 </tr>
             </thead>
             <tbody>
+            @foreach ($users as $user)
+                    <tr>
+                        <td>{{ $user->id }}</td>
+                        <td><h5>{{ $user->name }} @if ($user->isAdmin()) (Admin) @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
+                        <td class="text-muted">{{ $user->email }}</td>
+                        <td>
+                            <form class="" action="{{ route('users.destroy', $user) }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('¿Estas seguro de que quieres eliminar este usuario?')"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
@@ -30,63 +46,45 @@
 @endsection
 
 @section('datatable')
+<!--Datatables-->
+<script>
+$(document).ready(function(){
 
-<script type="text/javascript">
-  $(function () {
-    var table = $('.data-table').DataTable({
-        "language": {
-            "sProcessing":    "Procesando...",
-            "sLengthMenu":    "Mostrar _MENU_ registros",
-            "sZeroRecords":   "No se encontraron resultados",
-            "sEmptyTable":    "Ningún dato disponible en esta tabla",
-            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":   "",
-            "sSearch":        "Buscar:",
-            "sUrl":           "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":    "Último",
-                "sNext":    "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        processing: true,
-        serverSide: true,
-        searchDelay: 0,
-		ajax: "{{ route('users.index') }}",
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'actions', name: 'actions', orderable: false, searchable: false},
-        ]
-    });
+	$('.data-table').DataTable( {
+        "columnDefs": [{
+          "targets": 3, //posición de la columna a la que afecte los cambios (empieza por 0). Puede ser un array de varias columnas
+          "orderable": false,
+          "searchable": false,
+        }],
+		"stateSave": true,
+		"pageLength": 50,
+		"language": {
+				"sProcessing":    "Procesando...",
+				"sLengthMenu":    "Mostrar _MENU_ registros",
+				"sZeroRecords":   "No se encontraron resultados",
+				"sEmptyTable":    "Ningún dato disponible en esta tabla",
+				"sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":   "",
+				"sSearch":        "Buscar:",
+				"sUrl":           "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":    "Último",
+					"sNext":    "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+			}
+	});
 
-	$(".dataTables_filter input")
-    .unbind() // Unbind previous default bindings
-    .bind("input", function(e) { // Bind our desired behavior
-		// If the length is 2 or more characters, search
-		if(this.value.length >= 2) {
-            // Call the API search function
-            table.search(this.value).draw();
-        }
-        // Ensure we clear the search if they backspace far enough
-        if(this.value == "") {
-            table.search("").draw();
-        }
-        return;
-    });
-    
-  });
-  </script>
-  
+});
+</script>
 @endsection
 

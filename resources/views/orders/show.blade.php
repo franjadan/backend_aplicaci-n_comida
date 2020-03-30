@@ -57,5 +57,11 @@
     @else
         <p>No</p>
     @endif
+
+    @if($order->state == "pending")
+        <a class="btn btn-outline-primary" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
+    @else
+        <a class="btn btn-outline-primary" href="{{ route('orders.record') }}">Regresar al listado de pedidos</a>
+    @endif
   
 @endsection
