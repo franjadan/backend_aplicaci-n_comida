@@ -82,6 +82,6 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return response()->json(['code' => 1, 'data' => CategoryResource::collection($categories)], 200);
+        return response()->json(['response' => ['code' => 1, 'data' => CategoryResource::collection($categories)]], 200);
     }
 }
