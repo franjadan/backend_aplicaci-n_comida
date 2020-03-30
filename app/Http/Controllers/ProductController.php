@@ -93,13 +93,13 @@ class ProductController extends Controller
     {
         $products = $category->products;
 
-        return response()->json(['code' => 1, 'data' => ProductResource::collection($products)], 200);
+        return response()->json(['response' => ['code' => 1, 'data' => ProductResource::collection($products)]], 200);
     }
 
     public function products()
     {
         $products = Product::all();
 
-        return response()->json(['code' => 1, 'data' => ProductResource::collection($products)], 200);
+        return response()->json(['response' => ['code' => 1, 'data' => ProductResource::collection($products)]], 200);
     }
 }
