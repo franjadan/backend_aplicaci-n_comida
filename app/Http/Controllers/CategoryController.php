@@ -13,24 +13,9 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::all();
-
-        if ($request->ajax()) {
-            return Datatables::of($categories)
-                ->addColumn('discount', function($row) {
-                    if($row->discount == 0){
-                        return "<td>Sin descuento</td>";
-                    }else{
-                        return "<td>". $row->discount ."</td>";
-                    }
-                })
-                ->addColumn('actions', function($row){
-                        $actions = "<form action='". route('categories.destroy', $row) . "' method='POST'>" .csrf_field() . "" . method_field('DELETE') . "<a class='btn btn-primary mr-1' href='" . route('categories.edit', ['category' => $row]) . "'><i class='fas fa-edit'></i></a><button class='btn btn-danger' type='submit'><i class='fas fa-trash-alt'></i></button></form>";
-                        return $actions;
-                })
-                ->rawColumns(['discount', 'actions'])
-                ->make(true);
-        }
+        $categories = Category::query()
+        ->orderBy('name')
+        ->get();
 
         return view('categories.index', [
             'categories' => $categories,
