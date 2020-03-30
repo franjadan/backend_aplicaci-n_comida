@@ -21,6 +21,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     /*AÑADE AQUI LAS RUTAS QUE QUIERAS PROTEGER CON JWT*/
     Route::post('pedidos/favoritos/nuevo', 'OrderController@storeFavoriteOrder');
     Route::get('pedidos/favoritos', 'OrderController@listFavoriteOrders');
+    Route::post('comentarios/nuevo', 'CommentController@new');
 });
 
 Route::post('login', 'UserController@login');

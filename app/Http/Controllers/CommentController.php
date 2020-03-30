@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Http\Resources\CommentResource;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use DataTables;
 
 class CommentController extends Controller
@@ -39,5 +41,32 @@ class CommentController extends Controller
         $comments = Comment::all();
 
         return response()->json(['response' => ['code' => 1, 'data' => CommentResource::collection($comments)]]);
+    }
+
+    public function new(Request $request)
+    {
+        $rules = [
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'comment' => ['required'],
+        ];
+
+        $messages = [
+            'user_id.required' => 'El comentario debe ser redactado por un usuario',
+            'user_id.exists' => 'El comentario debe ser redactado por un usuario registrado',
+            'comment.required' => 'El cmapo comentario debe ser obligatorio',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['response' => ['code' => -1, 'data' => $validator->errors()]], 400);
+        }else {
+            Comment::create([
+                'user_id' => $request->get('user_id'),
+                'comment' => $request->get('comment'),
+            ]);
+
+            return response()->json(['response' => ['code' => 1, 'data' => 'El comentario se ha guardado con éxito']], 201);
+        }
     }
 }

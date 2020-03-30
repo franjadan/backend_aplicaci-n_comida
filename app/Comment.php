@@ -15,7 +15,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment'
+        'comment', 'user_id'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Comment extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -35,7 +35,7 @@ class Comment extends Model
     protected $casts = [
     ];
 
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
