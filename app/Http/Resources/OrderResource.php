@@ -27,6 +27,7 @@ class OrderResource extends JsonResource
             'state' => $this->state,
             'paid' => $this->paid,
             'comment' => $this->comment,
+            'favourite_order_name' => $this->favourite_order_name,
             'products' => ProductResource::collection($this->products),
         ];
     }
