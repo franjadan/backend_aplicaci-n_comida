@@ -22,3 +22,5 @@ Route::get('categorias', 'CategoryController@categories');
 Route::get('productos/{category}', 'ProductController@productsByCategory');
 
 Route::get('productos', 'ProductController@products');
+
+Route::get('comentarios', 'CommentController@comments');
