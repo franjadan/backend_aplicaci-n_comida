@@ -1,5 +1,7 @@
 {{ csrf_field() }}
 
+<!--Aquí se encuentran los campos compartidos entre la creación y edición de pedidios-->
+
 <div class="form-group">
     <label for="selectUser">Usuario:</label>
     @if ($users->isNotEmpty())
@@ -44,6 +46,7 @@
 <div class="form-group">
     <label for="selectProducts">Productos: <button class="btnAdd btn btn-success">+</button></label>
 
+    <!--Compruebo el número de productos-->
     @if ($products->isNotEmpty())
         <div class="selects">
         <?php 
@@ -59,11 +62,13 @@
             }
             
         ?>
+        <!--En caso de encontrar productos los añade en el bucle-->
         <?php  for ($i = 1; $i <= $number; $i++): ?>
             <div class="d-flex">
                 <input type="hidden" name="num" id="num" value="<?php echo $i ?>">
                 <select name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
                 
+                <!--select de productos-->
                 @foreach ($products as $product)
                     @if(old('num') != null)
                         <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
@@ -76,6 +81,7 @@
                 @endforeach
                 </select>
 
+                <!--Cantidad de producto seleccionado-->
                 @if(old('num') != null)
                     <input style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
                 @elseif(count($order->products) > 0)
@@ -148,12 +154,14 @@ $.ajax({
     type: 'get',
     dataType: 'json',
     success: function(response){
+        //Obtengo todos los productos para montar los select dinámicamente
         $products = response["data"];
         $products.sort(sortByName);
         $getProducts = true;
     }
 });
 
+//Cuando pulso el botón de añadir genero un nuevo select de productos y un campo de cantidad
 $('.btnAdd').click(function(event) {
     event.preventDefault();
     
@@ -176,6 +184,7 @@ $('.btnAdd').click(function(event) {
     }
 });
 
+//Función para ordenar los productos
 function sortByName(a, b){
   var aName = a.name.toLowerCase();
   var bName = b.name.toLowerCase(); 

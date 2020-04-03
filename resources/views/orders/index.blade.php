@@ -1,5 +1,7 @@
 @extends('layout')
 
+<!--Hago cambios en función si el listado es de pedidios pendientes o es el historial de pedidos-->
+
 @if($route == "record")
     @section('title', "Historial de pedidos")
 @else
@@ -19,7 +21,7 @@
     @else
         <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
     @endif
-
+    <!--Relleno la tabla con los datos de los pedidios-->
     @if(!$orders->isEmpty())
 
         <table class="table table-bordered data-table">
@@ -69,7 +71,7 @@
 $(document).ready(function(){
 
 	$('.data-table').DataTable( {
-        "bSort": false,
+        "bSort": false, //Quito la ordenación por defecto, puesto que ya ordeno manualmente por fecha
 		"stateSave": true,
 		"pageLength": 50,
 		"language": {
