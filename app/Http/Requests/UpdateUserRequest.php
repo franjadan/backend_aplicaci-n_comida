@@ -16,7 +16,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return true; //Autorizado a todo el mundo
     }
 
     /**
@@ -24,6 +24,8 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array
      */
+
+    //Reglas de validación
     public function rules()
     {
         return [
@@ -37,6 +39,7 @@ class UpdateUserRequest extends FormRequest
         ];
     }
 
+    //Mensajes
     public function messages()
     {
         return [
@@ -54,9 +57,11 @@ class UpdateUserRequest extends FormRequest
         ];
     }
 
+    //Función que actualiza el usuario en la bd
     public function updateUser(User $user)
     {
 
+        //Rellena el usuario con los datos
         $user->forceFill([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,                
@@ -67,7 +72,7 @@ class UpdateUserRequest extends FormRequest
         ]);
 
         if($this->password != null){
-            $user->password = bcrypt($this->password);
+            $user->password = bcrypt($this->password); //Encripta la contraseña
         }    
 
         $user->save();

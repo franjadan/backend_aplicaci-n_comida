@@ -16,7 +16,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return true; //Autorizado a todo el mundo
     }
 
     /**
@@ -24,6 +24,8 @@ class CreateUserRequest extends FormRequest
      *
      * @return array
      */
+    
+     //Reglas de validación
     public function rules()
     {
         return [
@@ -37,6 +39,7 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
+    //Mensajes de error
     public function messages()
     {
         return [
@@ -55,17 +58,19 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
+    //Función que guarda el usuario en la bd
     public function createUser()
     {
         DB::transaction(function () {
 
             $user = new User();
-
+            
+            //Rellena el usuario con los datos
             $user->forceFill([
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
                 'email' => $this->email,
-                'password' => bcrypt($this->password),
+                'password' => bcrypt($this->password), //Encripta la contraseña
                 'address' => $this->address,
                 'phone' => $this->phone,
                 'role' => $this->role ?? 'user',

@@ -19,6 +19,7 @@
                 </tr>
             </thead>
             <tbody>
+            <!--Relleno la tabla con los datos de los usuarios-->
             @foreach ($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>

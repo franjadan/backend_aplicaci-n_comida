@@ -17,6 +17,8 @@ use DateTime;
 
 class OrderController extends Controller
 {
+
+    //Función que genera la vista para listar el pedido
     public function index(Request $request){
         $orders = Order::query()
         ->where('state', 'pending')
@@ -30,6 +32,7 @@ class OrderController extends Controller
         ]);
     }
 
+    //Función que genera la vista para crear el pedido
     public function create() 
     {
         $order = new Order;
@@ -46,6 +49,7 @@ class OrderController extends Controller
         ]);
     }
 
+    //Función que guarda el pedido en la bd
     public function store(Request $request)
     {
 
@@ -57,7 +61,7 @@ class OrderController extends Controller
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'real_time' => ['nullable', 'present', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
-            'paid' => ['required', 'boolean']
+            'paid' => ['required', 'boolean'] //Reglas
         ];
 
         $messages = [
@@ -72,13 +76,15 @@ class OrderController extends Controller
             'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
             'comments.present' => 'El campo observaciones debe estar presente',
             'paid.required' => 'El campo pagado es obligatorio',
-            'paid.boolean' => 'El campo pagado no es válido'
+            'paid.boolean' => 'El campo pagado no es válido' //Mensajes
         ];
 
         $num = 1;
         $products = [];
 
+        //Controlo el número de productos que se reciben
         while($request->get('product_' . $num) != null){
+            //Añado la validación a los productos
             $rules["product_$num"] = [Rule::exists('products', 'id')];
             $rules["cant_$num"] = ['numeric'];
             $messages["product_$num.exists"] = 'El producto debe ser válido';
@@ -86,7 +92,7 @@ class OrderController extends Controller
 
             if($request->get('cant_' . $num) > 0 && is_numeric($request->get('cant_' . $num))){
                 for ($i = 0; $i < $request->get('cant_' . $num); $i++) {
-                    array_push($products, $request->get('product_' . $num));
+                    array_push($products, $request->get('product_' . $num)); //Si el producto es correct lo guardo en el array
                 }
             }
 
@@ -121,6 +127,7 @@ class OrderController extends Controller
             $order = new Order();
             $dt = new DateTime();
 
+            //Rellena el pedido con los datos
             $order->forceFill([
                 'user_id' => $request->get('user_id'),
                 'guest_name' => $request->get('guest_name'),
@@ -136,15 +143,17 @@ class OrderController extends Controller
         
             $order->save();
 
+            //Guarda los productos de este pedido
             $order->products()->attach($products);
 
             return redirect()->route('orders.index')->with('success', 'Se han guardado los cambios');
         }
     }
 
+    //Función que genera la vista para editar el pedido
     public function edit(Order $order) 
     {
-        if($order->state != "pending"){
+        if($order->state != "pending"){ //Sólo se pueden editar pedidos pendientes
             return redirect()->route('orders.index')->with('error', 'No puedes acceder a este pedido');
         }
 
@@ -161,6 +170,7 @@ class OrderController extends Controller
         ]);  
     }
 
+    //Función que actualiza el pedido en la bd
     public function update(Request $request, Order $order)
     {
         $rules = [
@@ -171,7 +181,7 @@ class OrderController extends Controller
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'real_time' => ['nullable', 'present', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
-            'paid' => ['required', 'boolean']
+            'paid' => ['required', 'boolean'] //Reglas
         ];
 
         $messages = [
@@ -186,13 +196,15 @@ class OrderController extends Controller
             'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
             'comments.present' => 'El campo observaciones debe estar presente',
             'paid.required' => 'El campo pagado es obligatorio',
-            'paid.boolean' => 'El campo pagado no es válido'
+            'paid.boolean' => 'El campo pagado no es válido' //Mensajes
         ];
 
         $num = 1;
         $products = [];
 
+        //Compruebo los productos que recibe
         while($request->get('product_' . $num) != null){
+            //Añado la validación a esos productos
             $rules["product_$num"] = [Rule::exists('products', 'id')];
             $rules["cant_$num"] = ['numeric'];
             $messages["product_$num.exists"] = 'El producto debe ser válido';
@@ -200,7 +212,7 @@ class OrderController extends Controller
 
             if($request->get('cant_' . $num) > 0 && is_numeric($request->get('cant_' . $num))){
                 for ($i = 0; $i < $request->get('cant_' . $num); $i++) {
-                    array_push($products, $request->get('product_' . $num));
+                    array_push($products, $request->get('product_' . $num)); //Si el producto es correcto lo añado a la bd
                 }
             }
 
@@ -232,6 +244,7 @@ class OrderController extends Controller
                 }
             }
 
+            //Rellena el pedido con los datos
             $order->forceFill([
                 'user_id' => $request->get('user_id'),
                 'guest_name' => $request->get('guest_name'),
@@ -245,6 +258,7 @@ class OrderController extends Controller
         
             $order->save();
 
+            //Actualiza los productos
             $order->products()->detach();
             $order->products()->attach($products);
 
@@ -252,16 +266,18 @@ class OrderController extends Controller
         }
     }
 
+    //Función para finalizar el pedido
     public function finish(Order $order){
 
         $order->state = 'finished';
-        $order->paid = true;
+        $order->paid = true; //El finalizar un pedidio quiere decir que este se ha pagado
 
         $order->save();
 
         return redirect()->route('orders.index')->with('success', 'Se han finalizado el pedido');
     }
 
+    //Función para cancelar el pedido
     public function cancel(Order $order){
 
         $order->state = 'cancelled';
@@ -270,6 +286,7 @@ class OrderController extends Controller
         return redirect()->route('orders.index')->with('success', 'Se han cancelado el pedido');
     }
 
+    //Función que genera la vista de detalle del pedido
     public function show(Order $order) 
     {
         return view('orders.show', [
@@ -277,23 +294,15 @@ class OrderController extends Controller
         ]);
     }
 
+    //Función que genera el listado del historial de pedidos
     public function orderRecord(Request $request) 
     {
+        //Muestra todos los que no sean pendientes
         $orders = Order::query()
         ->where('state', '<>', 'pending')
         ->orderByDesc('order_date')
         ->orderByDesc('estimated_time')
         ->get();
-
-        if ($request->ajax()) {
-            return Datatables::of($orders)
-                ->addColumn('actions', function($row){
-                    $actions = "<a class='btn btn-primary' href=" . route('orders.show', ['order' => $row]) . "><i class='fas fa-eye'></i></a>";
-                    return $actions;
-                })
-                ->rawColumns(['actions'])
-                ->make(true);
-        }
 
         return view('orders.index', [
             'route' => "record",
@@ -301,6 +310,7 @@ class OrderController extends Controller
         ]);
     }
 
+    //Función que guarda el pedido recibido por la API en la bd
     public function storeAPI(Request $request)
     {
         $rules = [
@@ -312,7 +322,7 @@ class OrderController extends Controller
             'products' => ['required', 'array', Rule::exists('products', 'id')],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable'],
-            'paid' => ['required', 'boolean']
+            'paid' => ['required', 'boolean'] //Reglas
         ];
 
         $messages = [
@@ -324,7 +334,7 @@ class OrderController extends Controller
             'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
             'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
             'paid.required' => 'El campo pagado es obligatorio',
-            'paid.boolean' => 'El campo pagado no es válido'
+            'paid.boolean' => 'El campo pagado no es válido' //Mensajes
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -368,14 +378,15 @@ class OrderController extends Controller
         }
     }
 
+    //Función que guarda un pedido como favorito desde la API en la bd
     public function storeFavoriteOrder(Request $request){
         $validator = Validator::make($request->all(), [
             'order_id' => ['required', Rule::exists('orders', 'id')],
-            'favourite_order_name' => ['required']
+            'favourite_order_name' => ['required'] //Reglas
         ], [
             'order_id.required' => 'El pedido es obligatorio',
             'order_id.exists' => 'El pedido debe ser válido',
-            'favourite_order_name.required' => 'El campo nombre del pedido favorito es obligatorio'
+            'favourite_order_name.required' => 'El campo nombre del pedido favorito es obligatorio' //Mensajes
         ]);
 
         if ($validator->fails()) { 
@@ -397,11 +408,12 @@ class OrderController extends Controller
         }
     }
 
+    //Función que lista los pedidos favoritos de un usuario a la API
     public function listFavoriteOrders(Request $request){
         $validator = Validator::make($request->all(), [
-            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'user_id' => ['nullable', Rule::exists('users', 'id')], //Reglas
         ], [
-            'user_id.exists' => 'El campo usuario debe ser válido',
+            'user_id.exists' => 'El campo usuario debe ser válido', //Mensajes
         ]);
 
         if ($validator->fails()) { 
@@ -420,13 +432,14 @@ class OrderController extends Controller
         }
     }
 
+    //Función que lista los últimos pedidios pendientes de un usuario a la API
     public function lastOrders(Request $request){
         $validator = Validator::make($request->all(), [
             'user_id' => ['nullable', Rule::exists('users', 'id')],
-            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')]
+            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')] //Reglas
         ], [
             'user_id.exists' => 'El campo usuario debe ser válido',
-            'guest_token.exists' => 'El campo token del invitado debe ser válido',
+            'guest_token.exists' => 'El campo token del invitado debe ser válido', //Mensajes
         ]);
 
         if ($validator->fails()) { 
@@ -455,7 +468,7 @@ class OrderController extends Controller
         }
     }
 
-
+    //Función que cancela un pedido desde la API
     public function cancelOrderAPI(Request $request){
 
         $validator = Validator::make($request->all(), [

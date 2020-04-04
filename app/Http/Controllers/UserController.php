@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+
+    //Función que genera la vista que lista los usuarios
     public function index()
     {
         $users = User::all();
@@ -23,6 +25,7 @@ class UserController extends Controller
         ]);
     }
 
+    //Función que genera la vista para crear los usuarios
     public function create()
     {
         $user = new User;
@@ -32,6 +35,7 @@ class UserController extends Controller
         ]);
     }
 
+    //Función que llama al request que se encarga de la creación de usuarios
     public function store(CreateUserRequest $request)
     {
         $request->createUser();
@@ -39,6 +43,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Se ha creado el usuario con éxito.');
     }
 
+    //Función que genera la vista para editar el usuario
     public function edit(User $user)
     {
         return view('users.edit', [
@@ -47,6 +52,7 @@ class UserController extends Controller
         ]);
     }
 
+    //Función que llama al request para editar al usuario
     public function update(UpdateUserRequest $request, User $user)
     {
         $request->updateUser($user);
@@ -54,6 +60,7 @@ class UserController extends Controller
         return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
     }
 
+    //Función que cambia el estado del usuario en la bd
     public function changeStatus(User $user)
     {
 
@@ -69,6 +76,7 @@ class UserController extends Controller
 
     }
 
+    //Función para eliminar al usuario
     public function destroy(User $user)
     {
         $user->delete();
@@ -76,6 +84,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito.');
     }
 
+    //Función para registrar un usuario a través de la API
     public function register(Request $request) 
     {
         $validator = Validator::make($request->all(), [ 
@@ -84,7 +93,7 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'present', 'min:6'],
             'address' => 'required',
-            'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'], //Reglas
         ], [
             'first_name.required' => 'El campo nombre es obligatorio',
             'last_name.required' => 'El campo apellido es obligatorio',
@@ -95,7 +104,7 @@ class UserController extends Controller
             'password.min' => 'El campo contraseña debe tener mínimo 6 caracteres',
             'address.required' => 'El campo dirección es obligatorio',
             'phone.required' => 'El campo teléfono es obligatorio',
-            'phone.regex' => 'El teléfono debe ser válido',
+            'phone.regex' => 'El teléfono debe ser válido', //Mensajes
         ]);
 
         if ($validator->fails()) { 
@@ -104,6 +113,7 @@ class UserController extends Controller
             
             $user = new User();
         
+            //Rellena al usuario con los datos
             $user->forceFill([
                 'first_name' => $request->get('first_name'),
                 'last_name' => $request->get('last_name'),
@@ -125,6 +135,7 @@ class UserController extends Controller
         } 
     }
 
+    //Función para enviar los datos del usuario a través de la API
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');

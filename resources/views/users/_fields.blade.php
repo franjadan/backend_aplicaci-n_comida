@@ -1,5 +1,7 @@
 {{ csrf_field() }}
 
+<!--Aquí se encuentran los campos que comparten la creación y edición de usuarios-->
+
 <div class="form-group">
     <label for="first_name">Nombre</label>
     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Pedro" value="{{ old('first_name', $user->first_name) }}">

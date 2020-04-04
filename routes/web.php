@@ -54,7 +54,7 @@ Route::prefix('/pedidos')->group(function () {
     Route::get('/historial', 'OrderController@orderRecord')->name('orders.record'); //Ruta historial de pedidos
 
     Route::get('/historial/excel', function () {
-        return Excel::download(new App\Exports\OrdersExport, 'historial.xlsx');
+        return Excel::download(new App\Exports\OrdersExport, 'historial.xlsx'); //Ruta para descargar el excel
     })->name('orders.excel');
 
     Route::get('/{order}', 'OrderController@show')->where('order', '[0-9]+')->name('orders.show'); //Ruta detalle pedido
