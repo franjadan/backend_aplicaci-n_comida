@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'IndexController@index')->name('index');
 
 Route::prefix('/usuarios')->group(function () {
     Route::get('/', 'UserController@index')->name('users.index'); //Ruta listado
