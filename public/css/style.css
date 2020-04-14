@@ -14,10 +14,6 @@ body{
     width: 85%;;
 }
 
-#wrapper{
-    height: 130vh;
-}
-
 #sidebar-wrapper .list-group {
     width: 15rem;
 }
@@ -29,17 +25,6 @@ body{
 
 #page-content-wrapper {
     min-width: 100vw;
-}
-
-@media (min-width: 768px) {
-    #sidebar-wrapper {
-      margin-left: 0;
-    }
-
-    #page-content-wrapper {
-      min-width: 0;
-      width: 100%;
-    }
 }
 
 .status {
@@ -73,4 +58,47 @@ body{
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: none !important ;
     color: black!important;
+}
+
+img {
+    max-width: 100%;
+}
+
+.card-container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.card {
+    width: 95%;
+    height: 80%;
+}
+
+.card-option {
+    color: #ffffff;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+}
+
+@media (min-width: 600px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
