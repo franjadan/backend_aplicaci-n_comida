@@ -1,52 +1,74 @@
 @extends('layout')
 
+@section('scripts')
+    <script src="{{ asset('js/add_animation_to_hover.js') }}"></script>
+    <script src="{{ asset('js/show_alert.js') }}"></script>
+@endsection
+
 @section('title', 'Listado de productos')
 
 @section('content')
     <h1>Listado de productos</h1>
-
+    <div class="p-4 my-custom-alert shadow-lg">
+        <div class="model-dialog" role="document">
+            <div class="model-content">
+                <div class="modal-header">
+                    <h5>¡ATENCIÓN!</h5>
+                    <div>
+                        <a href="" class="d-block option-close"><i class="fas fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea eliminar el producto?</p>
+                </div>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-2 btn btn-success mr-2 option-accept">Aceptar</div>
+                        <div class="col-2 btn btn-danger option-cancel"><a href="" class="d-block option-cancel">Cancelar</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div>
         <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
     </div>
+    <div>
+        @if(!$products->isEmpty())
 
-    @if(!$products->isEmpty())
-
-        <table class="table table-bordered data-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Descuento</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
+            <div class="card-container">
                 @foreach ($products as $product)
-                    <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->discount }}</td>
-                        <td>
-                            <div>
-                                <form action="{{ route('products.destroy', $product) }}" method="post">
+                    <div class="card mb-5 mt-3" id="card-product-{{ $product->id }}">
+                        <img class="card-img-top" src="{{ asset($product->image) }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <div class="card-options my-3" id="card-options-{{ $product->id }}">
+                                <div class="container">
+                                    <div class="row my-3">
+                                        <div class="col">
+                                            <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="btn btn-danger d-block show-alert" id="card-option-delete-{{ $product->id }}"><i class='fas fa-trash-alt'></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form action="{{ route('products.destroy', $product) }}" method="post" id="card-form-{{ $product->id }}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <a href="{{ route('products.edit', $product) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    <button class='btn btn-danger' type='submit'><i class='fas fa-trash-alt'></i></button>
                                 </form>
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 @endforeach
-            </tbody>
-        </table>
+            </div>
 
-    @else
-        <p class="mt-3">No hay productos registrados</p>
-    @endif
-
+        @else
+            <p class="mt-3">No hay productos registrados</p>
+        @endif
+    </div>
 @endsection
 
 @section('datatable')
