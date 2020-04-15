@@ -1,3 +1,7 @@
+@section('scripts')
+    <script src="{{ asset('js/multi-select.js') }}"></script>
+@endsection
+
 {{ csrf_field() }}
 
 <div class="form-group">
@@ -55,7 +59,7 @@
 <div class="form-group">
     <label for="selectCategories">Categorías:</label>
     @if ($categories->isNotEmpty())
-        <select name="categories[]" id="selectCategories" class="form-control" multiple>
+        <select name="categories[]" id="selectCategories" class="form-control multi-select" multiple>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}" {{ collect(old('categories', $product->categories->pluck('id')->toArray()))->contains($category->id) ? 'selected': '' }}>{{ $category->name }}</option>
             @endforeach
@@ -70,7 +74,7 @@
 <div class="form-group">
     <label for="selectIngredients">Ingredientes:</label>
     @if ($ingredients->isNotEmpty())
-        <select name="ingredients[]" id="selectIngredients" class="form-control" multiple>
+        <select name="ingredients[]" id="selectIngredients" class="form-control select-categories multi-select" multiple>
             @foreach ($ingredients as $ingredient)
                 <option value="{{ $ingredient->id }}" {{ collect(old('ingredients', $product->ingredients->pluck('id')->toArray()))->contains($ingredient->id) ? 'selected': '' }}>{{ $ingredient->name }}</option>
             @endforeach
@@ -86,7 +90,7 @@
     <label for="inputImage">Imagen:</label>
     <div class="input-group">
         <div class="custom-file">
-            <input type="file" accept="image/*" name="image" class="form-control-file" id="inputImage">
+            <input type="file" accept="image/*" name="image" class="form-control-file" class="inputImage">
             <label for="inputImage" class="custom-file-label">Seleciona una imagen...</label>
         </div>
     </div>
