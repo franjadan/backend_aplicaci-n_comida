@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('guest_address')->nullable();
             $table->string('guest_phone')->nullable();
             $table->string('guest_token')->nullable();
-            $table->datetime('order_date')->nullable();
+            $table->datetime('order_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('estimated_time');
             $table->string('real_time')->nullable();
             $table->enum('state', ['pending', 'finished', 'cancelled']);
