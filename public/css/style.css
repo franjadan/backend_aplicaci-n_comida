@@ -92,10 +92,18 @@ img {
     text-decoration: none;
 }
 
-.option-disabled{
+.option-disabled {
     cursor: not-allowed;
     opacity: 0.5;
     pointer-events: none;
+}
+
+.option-close {
+    color: #000000;
+}
+
+.option-close:hover {
+    color: #000000;
 }
 
 @media (min-width: 768px) {

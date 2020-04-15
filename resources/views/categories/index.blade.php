@@ -10,11 +10,23 @@
 @section('content')
     <h1>Listado de categorías</h1>
     <div class="p-4 my-custom-alert shadow-lg">
-        <h5>¿Está seguro que desea eliminar la categoría?</h5>
-        <div class="container mt-3">
-            <div class="row">
-                <div class="col-2 btn btn-success mr-2 option-accept">Aceptar</div>
-                <div class="col-2 btn btn-danger"><a href="" class="option-cancel">Cancelar</a></div>
+        <div class="model-dialog" role="document">
+            <div class="model-content">
+                <div class="modal-header">
+                    <h5>¡ATENCIÓN!</h5>
+                    <div>
+                        <a href="" class="d-block option-close"><i class="fas fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea eliminar la categoría?</p>
+                </div>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-2 btn btn-success mr-2 option-accept">Aceptar</div>
+                        <div class="col-2 btn btn-danger option-cancel"><a href="" class="d-block option-cancel">Cancelar</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
