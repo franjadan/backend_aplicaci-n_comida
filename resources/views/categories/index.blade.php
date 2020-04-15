@@ -1,13 +1,23 @@
 @extends('layout')
 
 @section('scripts')
-<script src="{{ asset('js/add_animation_to_hover.js') }}"></script>
+    <script src="{{ asset('js/add_animation_to_hover.js') }}"></script>
+    <script src="{{ asset('js/show_alert.js') }}"></script>
 @endsection
 
 @section('title', 'Listado de categorías')
 
 @section('content')
     <h1>Listado de categorías</h1>
+    <div class="p-4 my-custom-alert shadow-lg">
+        <h5>¿Está seguro que desea eliminar la categoría?</h5>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-2 btn btn-success mr-2 option-accept">Aceptar</div>
+                <div class="col-2 btn btn-danger"><a href="" class="option-cancel">Cancelar</a></div>
+            </div>
+        </div>
+    </div>
     <div>
         <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2 mb-3">Nueva Categoría</a>
     </div>
@@ -24,30 +34,19 @@
                                <div class="container">
                                    <div class="row my-3">
                                         <div class="col">
-                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-primary d-block"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $category->id }}"><i class="fas fa-edit"></i></a>
                                         </div>
                                    </div>
                                    <div class="row">
                                         <div class="col">
-                                            <a href="" class="btn btn-danger d-block"><i class="fas fa-trash"></i></a>
+                                            <div class="btn btn-danger d-block show-alert" id="card-option-delete-{{ $category->id }}"><i class="fas fa-trash"></i></div>
                                         </div>
                                    </div>
                                </div>
-                                <!--<form action="{{ route('categories.destroy', $category) }}" method="post">
+                                <form action="{{ route('categories.destroy', $category) }}" method="post" id="card-form-{{ $category->id }}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col text-center btn btn-primary">
-                                                <a href="{{ route('categories.edit', $category) }}" class="btn"><i class="fas fa-edit card-option"></i></a>
-                                            </div>
-                                            <div class="col"></div>
-                                            <div class="col text-center  btn btn-danger">
-                                                <button class='btn' type='submit'><i class='fas fa-trash-alt card-option'></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>-->
+                                </form>
                             </div>
                         </div>
                     </div>

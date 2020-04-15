@@ -76,8 +76,26 @@ img {
     height: 80%;
 }
 
-.card-option {
+.my-custom-alert {
+    border-radius: 0.5em;
+    position: absolute;
+    width: 35em;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.my-custom-alert .option-cancel {
     color: #ffffff;
+}
+
+.my-custom-alert .option-cancel:hover {
+    text-decoration: none;
+}
+
+.option-disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 @media (min-width: 768px) {
