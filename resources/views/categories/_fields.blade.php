@@ -2,21 +2,31 @@
 
 <div class="form-group">
     <label for="inputName">Nombre:</label>
-    <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $category->name) }}">
+    <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $category->name) }}" placeholder="Hamburguesas">
     @if($errors->has('name'))
         <div class="alert alert-danger mt-2">{{ $errors->first('name') }}</div>
     @endif
 </div>
 <div class="form-group">
     <label for="inputDiscount">Descuento:</label>
-    <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $category->discount) }}">
+    <div class="input-group">
+        <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $category->discount) }}" placeholder="0.00">
+        <div class="input-group-append">
+            <span class="input-group-text">€</span>
+        </div>
+    </div>
     @if($errors->has('discount'))
         <div class="alert alert-danger mt-2">{{ $errors->first('discount') }}</div>
     @endif
 </div>
 <div class="form-group">
     <label for="inputImage">Imagen:</label>
-    <input type="file" accept="image/*" name="image" class="form-control-file">
+    <div class="input-group">
+        <div class="custom-file">
+            <input type="file" accept="image/*" name="image" class="form-control-file" id="inputImage">
+            <label for="inputImage" class="custom-file-label">Seleciona una imagen...</label>
+        </div>
+    </div>
     @if($errors->has('image'))
         <div class="alert alert-danger mt-2">{{ $errors->first('image') }}</div>
     @endif
