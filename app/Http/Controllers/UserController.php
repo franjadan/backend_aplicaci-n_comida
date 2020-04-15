@@ -142,7 +142,7 @@ class UserController extends Controller
         
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(["response" => ["code" => -1, "data" => "Credenciales no válidas"]], 400);         
+                return response()->json(["response" => ["code" => -1, "data" => "El email o la contraseña no coinciden con ningún registro"]], 400);         
             }
         } catch (JWTException $e) {
             return response()->json(["response" => ["code" => -1, "data" => "No se ha podido crear un token"]], 500);         
