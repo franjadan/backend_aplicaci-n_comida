@@ -44,7 +44,7 @@
 </div>
 
 <div class="form-group">
-    <label for="selectProducts">Productos: <button class="btnAdd btn btn-success">+</button></label>
+    <label for="selectProducts">Productos: <button id="btnAdd" class="btn btn-success">+</button></label>
 
     <!--Compruebo el número de productos-->
     @if ($products->isNotEmpty())
@@ -146,42 +146,27 @@
 
 <script>
 
-$getProducts = false;
-$products = "";
-
-$.ajax({
-    url: "{{ route('products') }}",
-    type: 'get',
-    dataType: 'json',
-    success: function(response){
-        //Obtengo todos los productos para montar los select dinámicamente
-        $products = response["data"];
-        $products.sort(sortByName);
-        $getProducts = true;
-    }
-});
-
 //Cuando pulso el botón de añadir genero un nuevo select de productos y un campo de cantidad
-$('.btnAdd').click(function(event) {
+$('#btnAdd').click(function(event) {
     event.preventDefault();
+
+    var products = <?php echo $products; ?>
     
-    if($getProducts){
+    var num = $("#num").val();
+    num++;
 
-        $num = $("#num").val();
-        $num++;
+    var html = '<div class="d-flex"><select name="product_' + num +'" id="product_'+ num +'" class="form-control">';
 
-        $html = '<div class="d-flex"><select name="product_' + $num +'" id="product_'+ $num +'" class="form-control">';
+    $.each(products, function(index, value){
+        html += '<option value="' + value["id"] + '">' +  value["name"] + '</option>';
+    });
 
-        $.each($products, function(index, value){
-            $html += '<option value="' + value["id"] + '">' +  value["name"] + '</option>';
-        });
+    html += ' </select><input style="width:20%;" type="number" name="cant_'+ num +'" id="cant_'+ num +'" class="form-control" value="1"></div>';
 
-        $html += ' </select><input style="width:20%;" type="number" name="cant_'+ $num +'" id="cant_'+ $num +'" class="form-control" value="1"></div>';
+    $('.selects').append(html);
 
-        $('.selects').append($html);
-
-        $("#num").val($num);    
-    }
+    $("#num").val(num);    
+    
 });
 
 //Función para ordenar los productos
