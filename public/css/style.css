@@ -15,7 +15,7 @@ body{
 }
 
 #wrapper{
-    height: 130vh;
+    min-height: 100%;
 }
 
 #sidebar-wrapper .list-group {
