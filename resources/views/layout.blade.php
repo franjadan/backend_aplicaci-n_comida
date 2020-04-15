@@ -19,12 +19,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<<<<<<< HEAD
     @yield('scripts')
-=======
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
->>>>>>> Fran
-
     <title>@yield('title')</title>
 </head>
 <body>
