@@ -21,11 +21,10 @@
     <h5>Fecha pedido</h5>
     <p>{{ $order->order_date }}</p>
 
-
     <h5>Productos</h5>
     <ul>
-        @foreach ($order->products as $product)
-            <li>{{ $product->name }}</li>
+        @foreach (array_count_values($order->products->pluck('name')->toArray()) as $product => $quantity)
+            <li>{{ $product }} x{{ $quantity }}</li>
         @endforeach
     </ul>
 
