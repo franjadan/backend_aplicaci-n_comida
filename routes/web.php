@@ -109,3 +109,5 @@ Route::prefix('/comentarios')->group(function () {
 
     Route::delete('/{comment}', 'CommentController@destroy')->name('comments.destroy');
 });
+
+Auth::routes(['register' => false]);

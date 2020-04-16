@@ -11,6 +11,7 @@ use DataTables;
 
 class CategoryController extends Controller
 {
+    
     public function index(Request $request)
     {
         $categories = Category::query()

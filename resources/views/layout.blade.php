@@ -30,8 +30,15 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse d-flex justify-content-between p-3">
               <a class="navbar-brand" href="{{ url('/') }}">Menu of the day</a>
-              <div>
-                <a href="nav-link" class="btn btn-outline-secondary">Cerrar sesión <i class="fas fa-sign-out-alt"></i></a>
+              <div>                
+                <a class="nav-link btn btn-outline-secondary" href="{{ route('logout') }}"
+                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  Cerrar sesión <i class="fas fa-sign-out-alt"></i>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                  {{ csrf_field() }}
+                </form>
+
               </div>
             </div>
         </nav>
