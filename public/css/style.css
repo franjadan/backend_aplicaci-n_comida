@@ -31,17 +31,6 @@ body{
     min-width: 100vw;
 }
 
-@media (min-width: 768px) {
-    #sidebar-wrapper {
-      margin-left: 0;
-    }
-
-    #page-content-wrapper {
-      min-width: 0;
-      width: 100%;
-    }
-}
-
 .status {
     display: inline-block;
     margin: 0 0 0 6px;
@@ -73,4 +62,78 @@ body{
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: none !important ;
     color: black!important;
+}
+
+img {
+    max-width: 100%;
+}
+
+.card-container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.card {
+    width: 95%;
+    height: 80%;
+}
+
+.my-custom-alert {
+    border-radius: 0.5em;
+    position: absolute;
+    width: 35em;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.my-custom-alert .option-cancel {
+    color: #ffffff;
+}
+
+.my-custom-alert .option-cancel:hover {
+    text-decoration: none;
+}
+
+.option-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.option-close {
+    color: #000000;
+}
+
+.option-close:hover {
+    color: #000000;
+}
+
+.custom-file-label::after {
+    font-family: FontAwesome;
+    content: "\f093"
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+}
+
+@media (min-width: 600px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
