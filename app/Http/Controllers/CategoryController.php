@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
-use DataTables;
 
 class CategoryController extends Controller
 {
@@ -15,7 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::query()
         ->orderBy('name')
-        ->get();
+        ->paginate(5);
 
         return view('categories.index', [
             'categories' => $categories,

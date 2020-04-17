@@ -38,6 +38,7 @@
 
             <div class="card-container">
                 @foreach ($products as $product)
+
                     <div class="card mb-5 mt-3" id="card-product-{{ $product->id }}">
                         <img class="card-img-top" src="{{ asset($product->image) }}" alt="Card image cap">
                         <div class="card-body">
@@ -62,8 +63,10 @@
                             </div>
                         </div>
                     </div>
+
                 @endforeach
             </div>
+            {{ $products->links() }}
 
         @else
             <p class="mt-3">No hay productos registrados</p>

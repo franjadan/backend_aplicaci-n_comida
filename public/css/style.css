@@ -115,6 +115,26 @@ img {
     content: "\f093"
 }
 
+.page-link {
+    border: 0px;
+    border-radius: 0.5em;
+    color:#000000;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 0em;
+    border-bottom-left-radius: 0em;
+    border-radius: 50%;
+    background-color: lightgray;
+}
+
+.page-item:last-child .page-link {
+    border-top-left-radius: 0em;
+    border-bottom-left-radius: 0em;
+    border-radius: 50%;
+    background-color: lightgray;
+}
+
 @media (min-width: 768px) {
     #sidebar-wrapper {
       margin-left: 0;

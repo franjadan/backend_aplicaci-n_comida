@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $products = Product::query()
         ->orderBy('name')
-        ->get();
+        ->paginate(5);
 
         return view('products.index', [
             'products' => $products,

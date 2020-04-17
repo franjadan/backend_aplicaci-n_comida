@@ -63,7 +63,9 @@
                         </div>
                     </div>
                 @endforeach
+
             </div>
+            {{ $categories->links() }}
 
         @else
             <p>No hay categorías registradas.</p>
