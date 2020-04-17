@@ -2,6 +2,10 @@
 
 @section('title', 'Listado de comentarios')
 
+@section('scripts')
+    <script src="{{ asset('js/modify_styles_datatables.js')}}"></script>
+@endsection
+
 @section('content')
     <h1>Listado de comentarios</h1>
     <div>

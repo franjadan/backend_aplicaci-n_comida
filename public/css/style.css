@@ -135,6 +135,18 @@ img {
     background-color: lightgray;
 }
 
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 5em !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 0em !important;
+}
+
+.pagination {
+    margin: 5em;
+}
+
 @media (min-width: 768px) {
     #sidebar-wrapper {
       margin-left: 0;
