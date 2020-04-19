@@ -110,4 +110,8 @@ Route::prefix('/comentarios')->group(function () {
     Route::delete('/{comment}', 'CommentController@destroy')->name('comments.destroy');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false, //Para eliminar la ruta de registro
+    'reset' => false, //Para eliminar la ruta de restaurar contraseña
+    'verify' => false, //Para eliminar la ruta de verificación
+]);
