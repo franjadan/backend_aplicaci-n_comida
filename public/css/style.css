@@ -112,6 +112,9 @@ img {
 
 .custom-file-label::after {
     font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
     content: "\f093"
 }
 
@@ -127,6 +130,16 @@ img {
     border-radius: 0.5em;
     background-color: lightgray;
     margin-right: 0.75em;
+    width: 8em;
+}
+
+.page-item:first-child .page-link::before {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    margin-top: 0.2em;
+    content: '\f060';
 }
 
 .page-item:last-child .page-link {
@@ -135,6 +148,20 @@ img {
     border-radius: 0.5em;
     background-color: lightgray;
     margin-left: 0.75em;
+    width: 8em;
+}
+
+.page-item:last-child .page-link::after {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    margin-top: 0.2em;
+    content: '\f061';
+}
+
+.page-item.active .page-link {
+    margin: 0em 0.5em;
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
