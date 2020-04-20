@@ -53,7 +53,7 @@ class CommentController extends Controller
         $messages = [
             'user_id.required' => 'El comentario debe ser redactado por un usuario',
             'user_id.exists' => 'El comentario debe ser redactado por un usuario registrado',
-            'comment.required' => 'El cmapo comentario debe ser obligatorio',
+            'comment.required' => 'El campo comentario debe ser obligatorio',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

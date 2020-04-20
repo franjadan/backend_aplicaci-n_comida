@@ -136,7 +136,7 @@ img {
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-    margin: 5em !important;
+    margin: 3em 0em 3em 3em !important;
 }
 
 .dataTables_wrapper .dataTables_paginate {
@@ -144,7 +144,19 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 .pagination {
-    margin: 5em;
+    margin: 3em 0em 3em 3em;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    margin: 2em 0em 2em 2em;
+}
+
+.my-custom-search {
+    margin: 2em 0em 2em 2em;
+}
+
+.my-custom-search input{
+    margin-left: 0.5em;
 }
 
 @media (min-width: 768px) {

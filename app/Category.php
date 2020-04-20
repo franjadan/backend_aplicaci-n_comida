@@ -39,4 +39,11 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class, 'product_categories');
     }
+
+    public function scopeSearch($query)
+    {
+        $query->when(request('search'), function($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        });
+    }
 }

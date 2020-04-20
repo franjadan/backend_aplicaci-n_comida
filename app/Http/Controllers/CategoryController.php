@@ -10,11 +10,9 @@ use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $categories = Category::query()
-        ->orderBy('name')
-        ->paginate(5);
+        $categories = Category::search()->orderBy('name')->paginate(5);
 
         return view('categories.index', [
             'categories' => $categories,
