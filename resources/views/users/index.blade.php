@@ -2,10 +2,6 @@
 
 @section('title', "Listado de usuarios")
 
-@section('scripts')
-    <script src="{{ asset('js/modify_styles_datatables.js') }}"></script>
-@endsection
-
 @section('content')
     <h1>Listado de usuarios</h1>
 

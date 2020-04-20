@@ -1,9 +1,5 @@
 @extends('layout')
 
-@section('scripts')
-    <script src="{{ asset('js/modify_styles_datatables.js') }}"></script>
-@endsection
-
 <!--Hago cambios en función si el listado es de pedidios pendientes o es el historial de pedidos-->
 
 @if($route == "record")

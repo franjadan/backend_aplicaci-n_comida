@@ -124,15 +124,17 @@ img {
 .page-item:first-child .page-link {
     border-top-left-radius: 0em;
     border-bottom-left-radius: 0em;
-    border-radius: 50%;
+    border-radius: 0.5em;
     background-color: lightgray;
+    margin-right: 0.75em;
 }
 
 .page-item:last-child .page-link {
     border-top-left-radius: 0em;
     border-bottom-left-radius: 0em;
-    border-radius: 50%;
+    border-radius: 0.5em;
     background-color: lightgray;
+    margin-left: 0.75em;
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
@@ -157,6 +159,14 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .my-custom-search input{
     margin-left: 0.5em;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    display: none;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
 }
 
 @media (min-width: 768px) {
