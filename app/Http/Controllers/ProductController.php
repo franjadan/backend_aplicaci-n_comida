@@ -47,6 +47,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        if(!$product->active){ //Sólo se pueden editar productos activados
+            return redirect()->route('products')->with('error', 'No puedes acceder a este producto');
+        }
+
         $categories = Category::query()->orderby('name')->get();
         $ingredints = Ingredient::query()->orderby('name')->get();
 

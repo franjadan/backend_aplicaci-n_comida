@@ -110,6 +110,15 @@ Route::prefix('/comentarios')->group(function () {
     Route::delete('/{comment}', 'CommentController@destroy')->name('comments.destroy');
 });
 
+Route::prefix('/perfil')->group(function () {
+    Route::get('/', 'ProfileController@index')->name('profile.index'); //Ruta para mostrar datos del perfil
+
+    Route::get('/{user}/editar', 'ProfileController@edit')->name('profile.edit'); //Ruta para cambiar la contraseña
+
+    Route::put('/{user}/editar', 'ProfileController@update');
+
+});
+
 Auth::routes([
     'register' => false, //Para eliminar la ruta de registro
     'reset' => false, //Para eliminar la ruta de restaurar contraseña
