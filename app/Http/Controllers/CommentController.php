@@ -11,6 +11,7 @@ use DataTables;
 
 class CommentController extends Controller
 {
+    
     public function index(Request $request)
     {
         $comments = Comment::query()

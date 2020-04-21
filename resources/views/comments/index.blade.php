@@ -1,9 +1,35 @@
 @extends('layout')
 
+@section('scripts')
+    <script src="{{ asset('js/confirm_modal.js') }}"></script>
+@endsection
+
 @section('title', 'Listado de comentarios')
 
 @section('content')
     <h1>Listado de comentarios</h1>
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de eliminar el comentario?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="acceptButton" class="btn btn-success">Aceptar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <div>
         @if ($comments->isNotEmpty())
 
@@ -22,11 +48,11 @@
                             <td>{{ substr($comment->comment, 0, 40)}}...</td>
                             <td>
                                 <div>
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="post">
+                                    <form id="deleteForm-{{ $comment->id }}" action="{{ route('comments.destroy', $comment) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <a href="{{ route('comments.show', $comment) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                        <button class='btn btn-danger' type='submit'><i class='fas fa-trash-alt'></i></button>
+                                        <button data-id="{{ $comment->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
                                     </form>
                                 </div>
                             </td>
