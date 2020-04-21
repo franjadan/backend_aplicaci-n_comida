@@ -64,9 +64,11 @@ class UpdateProductRequest extends FormRequest
         $available = $this['available'] == 'yes'? true: false;
 
         if ($this->file('image') != null){
-            $old = public_path()."/$product->image";
-            if (@getimagesize($old)){
-                unlink($old);
+            if($product->image != null && explode('/', $product->image)[1] != "shared"){
+                $old = public_path()."/$product->image";
+                if (@getimagesize($old)){
+                    unlink($old);
+                }
             }
             $new = $this->file('image');
             $name = $new->getClientOriginalName();

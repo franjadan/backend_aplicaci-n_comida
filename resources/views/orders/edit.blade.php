@@ -2,9 +2,53 @@
 
 @section('title', "Pedido {$order->id}")
 
+@section('scripts')
+    <script src="{{ asset('js/confirm_modal.js') }}"></script>
+@endsection
+
 @section('content')
 
     <h1>Pedido {{ $order->id }}</h1>
+
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelOrderModalLabel">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de cancelar el pedido?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="cancelOrderButton" class="btn btn-success">Aceptar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="concludeOrderModal" tabindex="-1" role="dialog" aria-labelledby="concludeOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="concludeOrderModalLabel">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de finalizar el pedido?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="concludeOrderButton" class="btn btn-success">Aceptar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     
     <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}") }}">
                 
@@ -16,21 +60,21 @@
     
     </form>
 
-    <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}/finalizar") }}">
+    <form method="POST" id="concludeForm-{{ $order->id }}" class="d-inline" action="{{ url("pedidos/{$order->id}/finalizar") }}">
                 
         {{ method_field('POST') }}
         {{ csrf_field() }}
         
-        <input type="submit" class="btn btn-warning" value="Finalizar pedido">
+        <input type="button" data-id="{{ $order->id }}" data-toggle="modal" data-target="#concludeOrderModal" class="btn btn-warning showModalConfirmBtn" value="Finalizar pedido">
         
     </form>
 
-    <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}/cancelar") }}">
+    <form method="POST" id="cancelForm-{{ $order->id }}" class="d-inline" action="{{ url("pedidos/{$order->id}/cancelar") }}">
                 
         {{ method_field('POST') }}
         {{ csrf_field() }}
         
-        <input type="submit" class="btn btn-danger" value="Cancelar pedido"> 
+        <input type="button" data-id="{{ $order->id }}" data-toggle="modal" data-target="#cancelOrderModal" class="btn btn-danger showModalConfirmBtn" value="Cancelar pedido"> 
         <a class="btn btn-outline-primary" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
        
     </form>
