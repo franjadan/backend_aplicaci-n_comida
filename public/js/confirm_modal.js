@@ -12,5 +12,15 @@ $(function() {
         event.preventDefault();
         $('#deleteForm-' + id).submit();
     });
+
+    $('#cancelOrderButton').click(function(event) {
+        event.preventDefault();
+        $('#cancelForm-' + id).submit();
+    });
+
+    $('#concludeOrderButton').click(function(event) {
+        event.preventDefault();
+        $('#concludeForm-' + id).submit();
+    });
 });
 
