@@ -2,31 +2,29 @@
 
 @section('scripts')
     <script src="{{ asset('js/add_animation_to_hover.js') }}"></script>
-    <script src="{{ asset('js/show_alert.js') }}"></script>
+    <script src="{{ asset('js/confirm_modal.js') }}"></script>
 @endsection
 
 @section('title', 'Listado de categorías')
 
 @section('content')
     <h1>Listado de categorías</h1>
-    <div class="p-4 my-custom-alert shadow-lg">
-        <div class="model-dialog" role="document">
-            <div class="model-content">
-                <div class="modal-header">
-                    <h5>¡ATENCIÓN!</h5>
-                    <div>
-                        <a href="" class="d-block option-close"><i class="fas fa-times"></i></a>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro que desea eliminar la categoría?</p>
-                </div>
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-2 btn btn-success mr-2 option-accept">Aceptar</div>
-                        <div class="col-2 btn btn-danger option-cancel"><a href="" class="d-block option-cancel">Cancelar</a></div>
-                    </div>
-                </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de eliminar el comentario?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="acceptButton" class="btn btn-success">Aceptar</button>
+            </div>
             </div>
         </div>
     </div>
@@ -52,11 +50,11 @@
                                    </div>
                                    <div class="row">
                                         <div class="col">
-                                            <div class="btn btn-danger d-block show-alert" id="card-option-delete-{{ $category->id }}"><i class="fas fa-trash"></i></div>
+                                            <button data-id="{{ $category->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
                                         </div>
                                    </div>
                                </div>
-                                <form action="{{ route('categories.destroy', $category) }}" method="post" id="card-form-{{ $category->id }}">
+                                <form action="{{ route('categories.destroy', $category) }}" method="post" id="deleteForm-{{ $category->id }}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>
