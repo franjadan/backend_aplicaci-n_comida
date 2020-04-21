@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->unique();
             $table->double('price');
             $table->double('discount')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

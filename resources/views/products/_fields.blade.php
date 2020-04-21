@@ -90,7 +90,7 @@
     <label for="inputImage">Imagen:</label>
     <div class="input-group">
         <div class="custom-file">
-            <input type="file" accept="image/*" name="image" class="form-control-file" class="inputImage">
+            <input type="file" accept="image/*" name="image" class="form-control-file" id="inputImage">
             <label for="inputImage" class="custom-file-label">Seleciona una imagen...</label>
         </div>
     </div>

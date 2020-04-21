@@ -33,7 +33,8 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        'available' => 'bool'
+        'available' => 'bool',
+        'active' => 'bool',
     ];
 
     public function categories()
