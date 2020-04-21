@@ -45,4 +45,11 @@ class Product extends Model
     {
         return $this->belongsToMany(Ingredient::class, 'product_ingredients');
     }
+
+    public function scopeSearch($query)
+    {
+        $query->when(request('search'), function($query, $search) {
+            $query->where('name', 'like', "%{$search}%");
+        });
+    }
 }

@@ -33,6 +33,7 @@
     <div>
         <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
     </div>
+    @include('products._filters')
     <div>
         @if(!$products->isEmpty())
 

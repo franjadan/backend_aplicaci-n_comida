@@ -13,11 +13,11 @@ use DataTables;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $products = Product::query()
-        ->orderBy('name')
-        ->paginate(5);
+        $products = Product::search()
+            ->orderBy('name')
+            ->paginate(5);
 
         return view('products.index', [
             'products' => $products,

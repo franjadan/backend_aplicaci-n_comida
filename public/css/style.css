@@ -172,6 +172,15 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     padding-top: 0em !important;
 }
 
+li .my-custom-link::before {
+    content: none !important;
+}
+
+li .my-custom-link::after {
+    content: none !important;
+    margin-top: 0em !important;
+}
+
 .pagination {
     margin: 3em 0em 3em 3em;
 }

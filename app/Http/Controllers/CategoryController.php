@@ -12,7 +12,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::search()->orderBy('name')->paginate(5);
+        $categories = Category::search()
+            ->orderBy('name')
+            ->paginate(5);
 
         return view('categories.index', [
             'categories' => $categories,
