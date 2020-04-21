@@ -211,3 +211,13 @@ div.dataTables_wrapper div.dataTables_info {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.info_field_title {
+    padding-left: 10px;
+    margin-bottom: 1em;
+    -webkit-box-shadow: 0 4px 6px -6px #000000;
+    -moz-box-shadow: 0 4px 6px -6px #000000;
+    box-shadow: 0 4px 6px -6px #000000;
+  
+}
+
