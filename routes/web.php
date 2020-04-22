@@ -99,6 +99,8 @@ Route::prefix('/productos')->group(function () {
 
     Route::put('/{product}/editar', 'ProductController@update')->name('products.edit');
 
+    Route::put('/{product}/editar', 'ProductController@available')->name('products.available');
+
     Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy')->middleware('admin');
 });
 

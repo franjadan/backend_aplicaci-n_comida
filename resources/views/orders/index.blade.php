@@ -17,9 +17,13 @@
     @endif
 
     @if($route != "record")
-        <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
-    @else
-        <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
+        <div>
+            <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
+        </div>
+    @elseif(auth()->user()->isAdmin())
+        <div>
+            <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
+        </div>
     @endif
     <!--Relleno la tabla con los datos de los pedidios-->
     @if(!$orders->isEmpty())
