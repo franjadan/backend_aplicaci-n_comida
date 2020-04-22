@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['logged']], function() {
+Route::group(['middleware' => ['auth','active']], function() {
 
     Route::get('/', 'IndexController@index')->name('index');
 

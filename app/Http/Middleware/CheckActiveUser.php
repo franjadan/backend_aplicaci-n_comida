@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class LoggedAuth
+class CheckActiveUser
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class LoggedAuth
             return $next($request);
         }else{
             Auth::logout();
-            return redirect('login');
+            return redirect('login')->with('error', "Has sido inhabilitado por el sistema");
         }
     }
 }

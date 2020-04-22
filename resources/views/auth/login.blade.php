@@ -8,6 +8,8 @@
                 <div class="card-header">Acceso</div>
 
                 <div class="card-body">
+                @include('shared._flash-message')
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
