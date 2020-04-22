@@ -146,6 +146,15 @@ class OrderController extends Controller
             //Guarda los productos de este pedido
             $order->products()->attach($products);
 
+            $total = 0;
+            foreach($order->products as $product){
+                $total += ($product->price - ($product->price * ($product->discount / 100)));
+            }
+
+            $order->total = $total;
+
+            $order->save();
+
             return redirect()->route('orders.index')->with('success', 'Se han guardado los cambios');
         }
     }
@@ -261,6 +270,15 @@ class OrderController extends Controller
             //Actualiza los productos
             $order->products()->detach();
             $order->products()->attach($products);
+
+            $total = 0;
+            foreach($order->products as $product){
+                $total += ($product->price - ($product->price * ($product->discount / 100)));
+            }
+
+            $order->total = $total;
+
+            $order->save();
 
             return redirect()->route('orders.edit', ['order' => $order])->with('success', 'Se han guardado los cambios');
         }

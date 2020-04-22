@@ -10,6 +10,7 @@ class OrdersExport implements FromCollection
     /**
     * @return \Illuminate\Support\Collection
     */
+
     public function collection()
     {
         return Order::query()

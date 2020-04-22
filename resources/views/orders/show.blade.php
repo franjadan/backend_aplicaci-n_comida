@@ -57,6 +57,9 @@
         <p>No</p>
     @endif
 
+    <h5 class="mt-5 info_field_title">Total</h5>
+    <p>{{ $order->total }}€</p>
+
     @if($order->state == "pending")
         <a class="btn btn-outline-primary mt-3" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
     @else

@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('paid')->default(false);
             $table->text('comment')->nullable();
             $table->string('favourite_order_name')->nullable();
+            $table->double('total')->default(0);
             $table->timestamps();
         });
     }

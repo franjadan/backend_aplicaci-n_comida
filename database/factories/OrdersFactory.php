@@ -13,5 +13,6 @@ $factory->define(App\Order::class, function (Faker $faker) {
         'comment' => $faker->sentence,
         'paid' => false,
         'state' => $faker->randomElement(['pending', 'finished', 'cancelled']),
+        'total' => $faker->randomNumber()
     ];
 });
