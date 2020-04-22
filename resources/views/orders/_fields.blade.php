@@ -43,9 +43,8 @@
     @endif
 </div>
 
-<div class="form-group">
-    <label for="selectProducts">Productos: <button id="btnAdd" class="btn btn-success">+</button></label>
-
+<label for="">Productos</label>
+<div class="bg-light p-3">
     <!--Compruebo el número de productos-->
     @if ($products->isNotEmpty())
         <div class="selects">
@@ -61,47 +60,74 @@
             }
             
         ?>
+        <input type="hidden" name="num" id="num" value="<?php echo $number ?>">
         <!--En caso de encontrar productos los añade en el bucle-->
         <?php  for ($i = 1; $i <= $number; $i++): ?>
-            <div class="d-flex">
-                <input type="hidden" name="num" id="num" value="<?php echo $number ?>">
-                <select onchange="calculateTotal()" name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
+            @if(old('num') == null || (old('num') != null && old("cant_$i") != null) || (old('num') != null && old("product_$i") != null))
+                <div class="row" id="row-{{ $i }}">
+                    <div class="form-group col-md-7">
+                        <label for="<?php echo "product_$i" ?>">Producto</label>
+                        <select onchange="calculateTotal()" name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
+                        
+                        <!--select de productos-->
+                        @foreach ($products as $product)
+                            @if(old('num') != null)
+                                <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                            @elseif(count($order->products) > 0)
+                                <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
+                            @else
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endif
+
+                        @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="<?php echo "cant_$i" ?>">Cantidad</label>
+                        <!--Cantidad de producto seleccionado-->
+                        @if(old('num') != null)
+                            <input onchange="calculateTotal()" type="number" min="1" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
+                        @elseif(count($order->products) > 0)
+                            <input onchange="calculateTotal()" type="number" min="1" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
+                        @else
+                            <input onchange="calculateTotal()" type="number" min="1" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
+                        @endif
+                    </div>
                 
-                <!--select de productos-->
-                @foreach ($products as $product)
-                    @if(old('num') != null)
-                        <option {{ old("product_$i") == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
-                    @elseif(count($order->products) > 0)
-                        <option {{ array_values(array_unique($order->products->pluck('id')->toArray()))[$i-1] == $product->id ? 'selected': '' }} value="{{ $product->id }}">{{ $product->name }}</option>
-                    @else
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                    @endif
 
-                @endforeach
-                </select>
+                    <div class="form-group col-md-2">
+                        <label>Total</label>
+                        <input type="text" class="form-control" id="totalProduct_{{ $i }}" value="0" readonly>
+                    </div>
 
-                <!--Cantidad de producto seleccionado-->
-                @if(old('num') != null)
-                    <input onchange="calculateTotal()" style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo old("cant_$i") ?>">
-                @elseif(count($order->products) > 0)
-                    <input onchange="calculateTotal()" style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="<?php echo array_values(array_count_values($order->products->pluck('id')->toArray()))[$i-1] ?>">
-                @else
-                    <input onchange="calculateTotal()" style="width: 20%;" type="number" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
+                    <div class="col-md-1">
+                        <label for="">Eliminar</label>
+                        <button class="btn btn-danger btnRemove col-md-12" data-id="{{ $i }}" onclick="removeRow(event)" type="button"><i data-id="{{ $i }}"  class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+                @if($errors->has('product_' . $i))
+                    <div class="alert alert-danger mt-2">{{ $errors->first('product_' . $i) }}</div>
                 @endif
-            </div>
+                @if($errors->has('cant_' . $i))
+                    <div class="alert alert-danger mt-2">{{ $errors->first('cant_' . $i) }}</div>
+                @endif
+            @endif   
         <?php endfor; ?>
         </div>
-        @if ($errors->has('product_1'))
-            <div class="alert alert-danger mt-2">{{ $errors->first('product_1') }}</div>
-        @endif
     @else
         <p>No hay productos registrados.</p>
     @endif
     @if($errors->has('products'))
         <div class="alert alert-danger mt-2">{{ $errors->first('products') }}</div>
     @endif
-</div>
 
+    <div class="row">
+        <div class=" col-md-12 text-center">
+            <button id="btnAdd" class="btn btn-success col-md-4">+</button>
+        </div>    
+    </div>
+</div>
 
 <div class="form-group">
     <label for="estimated_time">Hora de recogida</label>
@@ -158,6 +184,13 @@
         calculateTotal();
     });
 
+    function removeRow(event){
+        var num = $(event.target).data('id');
+        $('#row-' + num).find("input,textarea,select").prop('disabled', true);
+        $('#row-' + num).hide();
+        calculateTotal();
+    }
+
     Array.prototype.getById = function(array, id){
         for(var i = 0 ; i< array.length; i++){
             var obj = array[i];
@@ -176,13 +209,14 @@
         $('#inputTotalAmount').val(total + '€');
 
         for(i = 1; i <= num; i++){
-            if($('#cant_' + i).val() > 0){  
-                console.log(i);
+            if(!$('#row-' + i).is(":hidden") && $('#cant_' + i).val() > 0){  
                 var selectedId = $('#product_' + i).children("option:selected").val();
                 var product = products.getById(products, selectedId);
-                total += (product.price - (product.price * (product.discount / 100))) * $('#cant_' + i).val();
-                $('#inputTotalAmount').val(total + '€');
+                var totalPriceProduct = (product.price - (product.price * (product.discount / 100))) * $('#cant_' + i).val();
+                total += totalPriceProduct
+                $('#totalProduct_' + i).val(totalPriceProduct + '€');
             }
+            $('#inputTotalAmount').val(total + '€');
         }
     }
 
@@ -195,13 +229,15 @@ $('#btnAdd').click(function(event) {
     var num = $("#num").val();
     num++;
 
-    var html = '<div class="d-flex"><select onchange="calculateTotal(event)" name="product_' + num +'" id="product_'+ num +'" class="form-control">';
+    var html = '<div class="row" id="row-' + num + '"><div class="form-group col-md-7"><label for=product_' + num + '">Producto</label><select onchange="calculateTotal(event)" name="product_' + num +'" id="product_'+ num +'" class="form-control"></div>';
 
     $.each(products, function(index, value){
         html += '<option value="' + value["id"] + '">' +  value["name"] + '</option>';
     });
 
-    html += ' </select><input onchange="calculateTotal(event)" style="width:20%;" type="number" name="cant_'+ num +'" id="cant_'+ num +'" class="form-control" value="1"></div>';
+    html += ' </select></div><div class="form-group col-md-2"><label for="<?php echo "cant_$i" ?>">Cantidad</label><input onchange="calculateTotal(event)" type="number" min="1" name="cant_'+ num +'" id="cant_'+ num +'" class="form-control" value="1"></div>';
+
+    html += '<div class="form-group col-md-2"><label>Total</label><input type="text" class="form-control" id="totalProduct_' + num + '" value="0" readonly></div><div class="col-md-1"><label for="">Eliminar</label><button class="btn btn-danger btnRemove col-md-12" data-id="{{ $i }}" onclick="removeRow(event)" type="button"><i data-id="' + num + '" class="fas fa-trash-alt"></i></button></div></div>'
 
     $('.selects').append(html);
 

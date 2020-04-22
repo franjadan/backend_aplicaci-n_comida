@@ -79,24 +79,16 @@ class OrderController extends Controller
             'paid.boolean' => 'El campo pagado no es válido' //Mensajes
         ];
 
-        $num = 1;
-        $products = [];
+        $lenght = $request->get('num');
 
-        //Controlo el número de productos que se reciben
-        while($request->get('product_' . $num) != null){
+        //Compruebo los productos que recibe
+        for($i = 1; $i <= $lenght; $i++){
             //Añado la validación a los productos
-            $rules["product_$num"] = [Rule::exists('products', 'id')];
-            $rules["cant_$num"] = ['numeric'];
-            $messages["product_$num.exists"] = 'El producto debe ser válido';
-            $messages["cant_$num.numeric"] = 'La cantidad debe ser un número';
-
-            if($request->get('cant_' . $num) > 0 && is_numeric($request->get('cant_' . $num))){
-                for ($i = 0; $i < $request->get('cant_' . $num); $i++) {
-                    array_push($products, $request->get('product_' . $num)); //Si el producto es correct lo guardo en el array
-                }
-            }
-
-            $num++;
+            $rules["product_$i"] = [Rule::exists('products', 'id')];
+            $rules["cant_$i"] = ['integer', 'min:1'];
+            $messages["product_$i.exists"] = 'El producto debe ser válido';
+            $messages["cant_$i.integer"] = 'La cantidad debe ser un entero';
+            $messages["cant_$i.min"] = 'La cantidad debe ser mayor de 0';
         }
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -106,11 +98,6 @@ class OrderController extends Controller
             return redirect(route('orders.create'))->withErrors($validator)->withInput();;
 
         } else {
-
-            if(count($products) == 0){
-                $validator->getMessageBag()->add('product_1', 'Debe haber mínimo un pedido');
-                return back()->withErrors($validator)->withInput();
-            }
 
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
@@ -123,6 +110,21 @@ class OrderController extends Controller
                     return back()->withErrors($validator)->withInput();                
                 }
             }
+
+            $products = [];
+
+            for($i = 1; $i <= $lenght; $i++){
+                if($request->get("cant_$i") != null && $request->get("product_$i")){
+                    for ($j = 0; $j < $request->get('cant_' . $i); $j++) {
+                        array_push($products, $request->get('product_' . $i)); //Guardo los productos en el array
+                    }
+                }
+            }
+
+            if(count($products) <= 0){
+                $validator->getMessageBag()->add('guest_phone', 'Debe haber al menos un producto');
+                return back()->withErrors($validator)->withInput();
+            }
             
             $order = new Order();
             $dt = new DateTime();
@@ -132,7 +134,7 @@ class OrderController extends Controller
                 'user_id' => $request->get('user_id'),
                 'guest_name' => $request->get('guest_name'),
                 'guest_address' => $request->get('guest_address'),
-                'guest_phone' => $request->get('order_date'),
+                'guest_phone' => $request->get('guest_phone'),
                 'order_date' => $dt->format('Y-m-d H:i:s'),
                 'estimated_time' => $request->get('estimated_time'),
                 'state' => 'pending',
@@ -208,24 +210,16 @@ class OrderController extends Controller
             'paid.boolean' => 'El campo pagado no es válido' //Mensajes
         ];
 
-        $num = 1;
-        $products = [];
+        $lenght = $request->get('num');
 
         //Compruebo los productos que recibe
-        while($request->get('product_' . $num) != null){
-            //Añado la validación a esos productos
-            $rules["product_$num"] = [Rule::exists('products', 'id')];
-            $rules["cant_$num"] = ['numeric'];
-            $messages["product_$num.exists"] = 'El producto debe ser válido';
-            $messages["cant_$num.numeric"] = 'La cantidad debe ser un número';
-
-            if($request->get('cant_' . $num) > 0 && is_numeric($request->get('cant_' . $num))){
-                for ($i = 0; $i < $request->get('cant_' . $num); $i++) {
-                    array_push($products, $request->get('product_' . $num)); //Si el producto es correcto lo añado a la bd
-                }
-            }
-
-            $num++;
+        for($i = 1; $i <= $lenght; $i++){
+            //Añado la validación a los productos
+            $rules["product_$i"] = [Rule::exists('products', 'id')];
+            $rules["cant_$i"] = ['integer', 'min:1'];
+            $messages["product_$i.exists"] = 'El producto debe ser válido';
+            $messages["cant_$i.integer"] = 'La cantidad debe ser un entero';
+            $messages["cant_$i.min"] = 'La cantidad debe ser mayor de 0';
         }
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -235,11 +229,6 @@ class OrderController extends Controller
             return redirect(route('orders.edit', ['order' => $order]))->withErrors($validator)->withInput();
 
         } else {
-
-            if(count($products) == 0){
-                $validator->getMessageBag()->add('product_1', 'Debe haber mínimo un pedido');
-                return back()->withErrors($validator)->withInput();
-            }
 
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
@@ -253,12 +242,27 @@ class OrderController extends Controller
                 }
             }
 
+            $products = [];
+
+            for($i = 1; $i <= $lenght; $i++){
+                if($request->get("cant_$i") != null && $request->get("product_$i")){
+                    for ($j = 0; $j < $request->get('cant_' . $i); $j++) {
+                        array_push($products, $request->get('product_' . $i)); //Guardo los productos en el array
+                    }
+                }
+            }
+
+            if(count($products) <= 0){
+                $validator->getMessageBag()->add('guest_phone', 'Debe haber al menos un producto');
+                return back()->withErrors($validator)->withInput();
+            }
+
             //Rellena el pedido con los datos
             $order->forceFill([
                 'user_id' => $request->get('user_id'),
                 'guest_name' => $request->get('guest_name'),
                 'guest_address' => $request->get('guest_address'),
-                'guest_phone' => $request->get('order_date'),
+                'guest_phone' => $request->get('guest_phone'),
                 'estimated_time' => $request->get('estimated_time'),
                 'real_time' => $request->get('real_time'),
                 'comment' =>$request->get('comment'),
