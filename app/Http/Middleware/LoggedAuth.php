@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class AdminAuthorization
+class LoggedAuth
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,11 @@ class AdminAuthorization
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && Auth::user()->active == true) {
             return $next($request);
         }else{
-           return redirect('/');
+            Auth::logout();
+            return redirect('login');
         }
     }
 }

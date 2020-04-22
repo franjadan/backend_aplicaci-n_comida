@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['logged']], function() {
 
     Route::get('/', 'IndexController@index')->name('index');
 
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::put('/{user}/editar', 'ProfileController@update');
 
     });
-    
+
 });
 
 Auth::routes([
