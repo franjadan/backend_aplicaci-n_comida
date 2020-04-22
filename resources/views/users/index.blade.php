@@ -81,7 +81,8 @@ $(document).ready(function(){
           "searchable": false,
         }],
 		"stateSave": true,
-		"pageLength": 50,
+		"pageLength": 10,
+        "lengthChange": false,
 		"language": {
 				"sProcessing":    "Procesando...",
 				"sLengthMenu":    "Mostrar _MENU_ registros",
@@ -98,8 +99,8 @@ $(document).ready(function(){
 				"oPaginate": {
 					"sFirst":    "Primero",
 					"sLast":    "Último",
-					"sNext":    "Siguiente",
-					"sPrevious": "Anterior"
+					"sNext":    " ",
+					"sPrevious": " "
 				},
 				"oAria": {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",

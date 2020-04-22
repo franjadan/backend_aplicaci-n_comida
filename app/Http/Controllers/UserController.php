@@ -31,7 +31,7 @@ class UserController extends Controller
         $user = new User;
         return view('users.create', [
             'user' => $user,
-            'roles' => ['admin' => 'Admin', 'user' => 'Usuario']
+            'roles' => ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario']
         ]);
     }
 
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         return view('users.edit', [
             'user' => $user,
-            'roles' => ['admin' => 'Admin', 'user' => 'Usuario']
+            'roles' => ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario']
         ]);
     }
 
@@ -85,9 +85,9 @@ class UserController extends Controller
     }
 
     //Función para registrar un usuario a través de la API
-    public function register(Request $request) 
+    public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [ 
+        $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required', 'email', 'unique:users,email'],
@@ -107,12 +107,12 @@ class UserController extends Controller
             'phone.regex' => 'El teléfono debe ser válido', //Mensajes
         ]);
 
-        if ($validator->fails()) { 
-            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 422);         
+        if ($validator->fails()) {
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 422);
         } else {
-            
+
             $user = new User();
-        
+
             //Rellena al usuario con los datos
             $user->forceFill([
                 'first_name' => $request->get('first_name'),
@@ -124,28 +124,28 @@ class UserController extends Controller
                 'role' => 'user',
                 'active' => true
             ]);
-        
+
             $user->save();
 
             $token = JWTAuth::fromUser($user);
 
             $data = compact('user','token');
             return response()->json(["response" => ["code" => 1, "data" => $data]], 201);
-            
-        } 
+
+        }
     }
 
     //Función para enviar los datos del usuario a través de la API
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
+
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(["response" => ["code" => -1, "data" => "El email o la contraseña no coinciden con ningún registro"]], 400);         
+                return response()->json(["response" => ["code" => -1, "data" => "El email o la contraseña no coinciden con ningún registro"]], 400);
             }
         } catch (JWTException $e) {
-            return response()->json(["response" => ["code" => -1, "data" => "No se ha podido crear un token"]], 500);         
+            return response()->json(["response" => ["code" => -1, "data" => "No se ha podido crear un token"]], 500);
         }
 
         $user = DB::table('users')->where('email', $request->get('email'))->first();

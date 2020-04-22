@@ -17,9 +17,13 @@
     @endif
 
     @if($route != "record")
-        <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
-    @else
-        <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
+        <div>
+            <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
+        </div>
+    @elseif(auth()->user()->isAdmin())
+        <div>
+            <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
+        </div>
     @endif
     <!--Relleno la tabla con los datos de los pedidios-->
     @if(!$orders->isEmpty())
@@ -73,7 +77,8 @@ $(document).ready(function(){
 	$('.data-table').DataTable( {
         "bSort": false, //Quito la ordenación por defecto, puesto que ya ordeno manualmente por fecha
 		"stateSave": true,
-		"pageLength": 50,
+		"pageLength": 10,
+        "lengthChange": false,
 		"language": {
 				"sProcessing":    "Procesando...",
 				"sLengthMenu":    "Mostrar _MENU_ registros",
@@ -90,8 +95,8 @@ $(document).ready(function(){
 				"oPaginate": {
 					"sFirst":    "Primero",
 					"sLast":    "Último",
-					"sNext":    "Siguiente",
-					"sPrevious": "Anterior"
+					"sNext":    " ",
+					"sPrevious": " "
 				},
 				"oAria": {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",

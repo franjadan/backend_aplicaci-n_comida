@@ -24,7 +24,7 @@ class CreateUserRequest extends FormRequest
      *
      * @return array
      */
-    
+
      //Reglas de validación
     public function rules()
     {
@@ -35,7 +35,7 @@ class CreateUserRequest extends FormRequest
             'password' => ['required', 'present', 'min:6'],
             'address' => 'required',
             'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
-            'role' => ['required', Rule::in(['admin', 'user'])],
+            'role' => ['required', Rule::in(['admin', 'user', 'operator'])],
         ];
     }
 
@@ -64,7 +64,7 @@ class CreateUserRequest extends FormRequest
         DB::transaction(function () {
 
             $user = new User();
-            
+
             //Rellena el usuario con los datos
             $user->forceFill([
                 'first_name' => $this->first_name,

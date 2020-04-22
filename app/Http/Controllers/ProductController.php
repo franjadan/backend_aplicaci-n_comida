@@ -8,6 +8,7 @@ use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\AvailableProductRequest;
 use App\Http\Resources\ProductResource;
 use DataTables;
 
@@ -47,10 +48,6 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        if(!$product->active){ //Sólo se pueden editar productos activados
-            return redirect()->route('products')->with('error', 'No puedes acceder a este producto');
-        }
-
         $categories = Category::query()->orderby('name')->get();
         $ingredints = Ingredient::query()->orderby('name')->get();
 
@@ -66,6 +63,13 @@ class ProductController extends Controller
         $request->updateProduct($product);
 
         return redirect()->route('products.edit', $product)->with('success', 'Se han guardado los cambios.');
+    }
+
+    public function available(AvailableProductRequest $request, Product $product)
+    {
+        $request->availableProduct($product);
+
+        return redirect()->route('products.edit', $product)->with('success', 'se han guardado los cambios.');
     }
 
     public function destroy(Product $product)

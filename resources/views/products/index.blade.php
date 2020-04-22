@@ -9,28 +9,30 @@
 
 @section('content')
     <h1>Listado de productos</h1>
-    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">¡ATENCIÓN!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Estas seguro de eliminar el producto?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="acceptButton" class="btn btn-success">Aceptar</button>
-            </div>
+    @if(auth()->user()->isAdmin())
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">¡ATENCIÓN!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Estas seguro de eliminar el producto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="acceptButton" class="btn btn-success">Aceptar</button>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
-    </div>
+        <div>
+            <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
+        </div>
+    @endif
     @include('products._filters')
     <div>
         @if(!$products->isEmpty())
@@ -49,15 +51,20 @@
                                             <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>                                        </div>
+                                    @if(auth()->user()->isAdmin())
+                                        <div class="row">
+                                            <div class="col">
+                                                <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
+                                            </div>
                                         </div>
+                                    @endif
                                 </div>
-                                <form action="{{ route('products.destroy', $product) }}" method="post" id="deleteForm-{{ $product->id }}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                </form>
+                                @if(auth()->user()->isAdmin())
+                                    <form action="{{ route('products.destroy', $product) }}" method="post" id="deleteForm-{{ $product->id }}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
