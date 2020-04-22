@@ -35,7 +35,7 @@ class UpdateUserRequest extends FormRequest
             'password' => ['nullable', 'present', 'min:6'],
             'address' => 'required',
             'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
-            'role' => ['required', Rule::in(['admin', 'user'])],
+            'role' => ['required', Rule::in(['admin', 'user', 'operator'])],
         ];
     }
 
@@ -64,7 +64,7 @@ class UpdateUserRequest extends FormRequest
         //Rellena el usuario con los datos
         $user->forceFill([
             'first_name' => $this->first_name,
-            'last_name' => $this->last_name,                
+            'last_name' => $this->last_name,
             'email' => $this->email,
             'address' => $this->address,
             'phone' => $this->phone,
@@ -73,10 +73,10 @@ class UpdateUserRequest extends FormRequest
 
         if($this->password != null){
             $user->password = bcrypt($this->password); //Encripta la contraseña
-        }    
+        }
 
         $user->save();
 
     }
-    
+
 }

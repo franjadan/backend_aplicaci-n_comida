@@ -13,7 +13,7 @@
 
 Route::get('/', 'IndexController@index')->name('index');
 
-Route::prefix('/usuarios')->group(function () {
+Route::middleware('admin')->prefix('/usuarios')->group(function () {
     Route::get('/', 'UserController@index')->name('users.index'); //Ruta listado
 
     Route::get('/nuevo', 'UserController@create') //Ruta de la página para crear el usuario
@@ -32,7 +32,7 @@ Route::prefix('/usuarios')->group(function () {
         ->name('users.destroy');
 });
 
-Route::prefix('/categorias')->group(function () {
+Route::middleware('admin')->prefix('/categorias')->group(function () {
     Route::get('/', 'CategoryController@index')->name('categories');
 
     Route::get('/nueva', 'CategoryController@create')->name('categories.create');
@@ -48,12 +48,12 @@ Route::prefix('/categorias')->group(function () {
 
 Route::prefix('/pedidos')->group(function () {
     Route::get('/', 'OrderController@index')->name('orders.index'); //Ruta listado
-    
+
     Route::get('/historial', 'OrderController@orderRecord')->name('orders.record'); //Ruta historial de pedidos
 
     Route::get('/historial/excel', function () {
         return Excel::download(new App\Exports\OrdersExport, 'historial.xlsx'); //Ruta para descargar el excel
-    })->name('orders.excel');
+    })->name('orders.excel')->middleware('admin');
 
     Route::get('/{order}', 'OrderController@show')->where('order', '[0-9]+')->name('orders.show'); //Ruta detalle pedido
 
@@ -74,7 +74,7 @@ Route::prefix('/pedidos')->group(function () {
 });
 
 Route::prefix('/ingredientes')->group(function () {
-    Route::get('/', 'IngredientController@index')->name('ingredients.index'); 
+    Route::get('/', 'IngredientController@index')->name('ingredients.index');
 
     Route::get('/nuevo', 'IngredientController@create')->name('ingredients.create');
 
@@ -82,7 +82,7 @@ Route::prefix('/ingredientes')->group(function () {
 
     Route::get('/{ingredient}/editar', 'IngredientController@edit')->name('ingredients.edit');
 
-    //Route::put('/{ingredient}', 'IngredientController@update')->name('ingredients.update'); 
+    //Route::put('/{ingredient}', 'IngredientController@update')->name('ingredients.update');
 
     Route::delete('/{ingredient}', 'IngredientController@destroy')->name('ingredients.destroy');
 
@@ -91,18 +91,18 @@ Route::prefix('/ingredientes')->group(function () {
 Route::prefix('/productos')->group(function () {
     Route::get('/', 'ProductController@index')->name('products');
 
-    Route::get('/nuevo', 'ProductController@create')->name('products.create');
+    Route::get('/nuevo', 'ProductController@create')->name('products.create')->middleware('admin');
 
-    Route::post('/nuevo', 'ProductController@store')->name('products.create');
+    Route::post('/nuevo', 'ProductController@store')->name('products.create')->middleware('admin');
 
     Route::get('/{product}/editar', 'ProductController@edit')->name('products.edit');
 
     Route::put('/{product}/editar', 'ProductController@update')->name('products.edit');
 
-    Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
+    Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy')->middleware('admin');
 });
 
-Route::prefix('/comentarios')->group(function () {
+Route::middleware('admin')->prefix('/comentarios')->group(function () {
     Route::get('/', 'CommentController@index')->name('comments');
 
     Route::get('/{comment}', 'CommentController@show')->name('comments.show');
