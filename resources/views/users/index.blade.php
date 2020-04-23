@@ -46,7 +46,7 @@
             @foreach ($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td><h5>{{ $user->name }} @if ($user->isAdmin()) (Admin) @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
+                        <td><h5>@if ($user->isAdmin()) Admin @else {{ $user->name }} @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
                         <td class="text-muted">{{ $user->email }}</td>
                         <td>
                             <form class="" action="{{ route('users.destroy', $user) }}" method="POST" id="deleteForm-{{ $user->id }}">
