@@ -418,7 +418,7 @@ class OrderController extends Controller
             ->where('id', $request->get('order_id'))
             ->first();
 
-            if($order->favourite_order_name == null){
+            if($order->favourite_order_name == null || $order->favourite_order_name == ""){
 
                 $order->favourite_order_name = $request->get('favourite_order_name');
                 $order->save();
@@ -426,6 +426,34 @@ class OrderController extends Controller
                 return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
             }else{
                 return response()->json(["response" => ["code" => -1, "data" => "Ya ha sido registrado como favorito"]], 400);
+            }
+        }
+    }
+
+    //Función que quita un pedido como favorito desde la API en la bd
+    public function cancelFavoriteOrder(Request $request){
+        $validator = Validator::make($request->all(), [
+            'order_id' => ['required', Rule::exists('orders', 'id')],
+        ], [
+            'order_id.required' => 'El pedido es obligatorio',
+            'order_id.exists' => 'El pedido debe ser válido',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+            $order = Order::query()
+            ->where('id', $request->get('order_id'))
+            ->first();
+
+            if($order->favourite_order_name != null || $order->favourite_order_name != ""){
+
+                $order->favourite_order_name = null;
+                $order->save();
+
+                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+            }else{
+                return response()->json(["response" => ["code" => -1, "data" => "Este pedido no consta como favorito"]], 400);
             }
         }
     }
@@ -541,7 +569,7 @@ class OrderController extends Controller
                             return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
                         }
                 }else{
-                    return response()->json(["response" => ["code" => -1, "data" => "Necesitas añadir el token de invitado o el id de usuario del pedido"]], 422);
+                    return response()->json(["response" => ["code" => -1, "data" => "Necesitas añadir el token de invitado o el id de usuario del pedido"]], 400);
                 }
             }
         }
