@@ -26,7 +26,6 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
-            'discount' => ['nullable', 'present', 'numeric'],
             'image' => ['nullable'],
         ];
     }
@@ -37,8 +36,6 @@ class UpdateCategoryRequest extends FormRequest
             'name.required' => 'El campo nombre es obligatorio.',
             'name.min' => 'El campo nombre debe tener más de dos caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
-            'discount.present' => 'El campo descuento debe esta presente.',
-            'discount.numeric' => 'El campo descuento no es válido.',
         ];
     }
 
@@ -55,13 +52,11 @@ class UpdateCategoryRequest extends FormRequest
 
             $category->update([
                 'name' => $this['name'],
-                'discount' => $this['discount'],
                 'image' => "media/categories/$name",
             ]);
         }else{
             $category->update([
                 'name' => $this['name'],
-                'discount' => $this['discount'],
             ]);
         }
     }
