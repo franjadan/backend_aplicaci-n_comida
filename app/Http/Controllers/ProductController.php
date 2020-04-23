@@ -89,14 +89,14 @@ class ProductController extends Controller
 
     public function productsByCategory(Category $category)
     {
-        $products = $category->products;
+        $products = $category->products->where('active', '=', true);
 
         return response()->json(['response' => ['code' => 1, 'data' => ProductResource::collection($products)]], 200);
     }
 
     public function products()
     {
-        $products = Product::all();
+        $products = Product::where('active', '=', true)->get();
 
         return response()->json(['response' => ['code' => 1, 'data' => ProductResource::collection($products)]], 200);
     }

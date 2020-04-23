@@ -22,6 +22,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'discount' => $this->discount,
+            'active' => $this->active,
             'ingredients' => IngredientResource::collection($this->ingredients),
         ];
     }
