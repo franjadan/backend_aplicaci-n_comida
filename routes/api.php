@@ -34,7 +34,7 @@ Route::post('pedidos/nuevo', 'OrderController@storeAPI');
 
 Route::get('pedidos/ultimos', 'OrderController@lastOrders');
 
-Route::get('pedidos/cancelar', 'OrderController@cancelOrderAPI');
+Route::post('pedidos/cancelar', 'OrderController@cancelOrderAPI');
 
 Route::get('categorias', 'CategoryController@categories');
 
