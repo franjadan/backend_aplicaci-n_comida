@@ -11,6 +11,7 @@ use DataTables;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class UserController extends Controller
 {
@@ -18,7 +19,13 @@ class UserController extends Controller
     //Función que genera la vista que lista los usuarios
     public function index()
     {
-        $users = User::all();
+        if (Auth::user()->role === "superadmin"){
+            $users = User::all();
+        }else{
+            $users = User::query()
+            ->where('role', '<>', 'admin')
+            ->get();
+        }
 
         return view('users.index', [
             'users' => $users
@@ -29,9 +36,16 @@ class UserController extends Controller
     public function create()
     {
         $user = new User;
+
+        if (Auth::user()->role == "superadmin"){
+            $roles =  ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario'];
+        }else{
+            $roles =  ['user' => 'Usuario', 'operator' => 'Operario'];
+        }
+
         return view('users.create', [
             'user' => $user,
-            'roles' => ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario']
+            'roles' => $roles
         ]);
     }
 
@@ -46,9 +60,20 @@ class UserController extends Controller
     //Función que genera la vista para editar el usuario
     public function edit(User $user)
     {
+
+        if(Auth::user()->role != "superadmin" && $user->role == "admin"){
+            return redirect()->route('users.index')->with('error', 'No puedes acceder a este usuario');
+        }
+
+        if (Auth::user()->role == "superadmin"){
+            $roles =  ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario'];
+        }else{
+            $roles =  ['user' => 'Usuario', 'operator' => 'Operario'];
+        }
+
         return view('users.edit', [
             'user' => $user,
-            'roles' => ['admin' => 'Admin', 'user' => 'Usuario', 'operator' => 'Operario']
+            'roles' => $roles
         ]);
     }
 
