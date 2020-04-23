@@ -48,7 +48,7 @@ class CategoryController extends Controller
     {
         $request->updateCategory($category);
 
-        return redirect()->route('categories.edit', $category)->with('sucsess', 'Se han guardado los cambios.');
+        return redirect()->route('categories.edit', $category)->with('success', 'Se han guardado los cambios.');
     }
 
     public function destroy(Category $category)

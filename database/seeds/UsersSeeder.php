@@ -12,12 +12,12 @@ class UsersSeeder extends Seeder
     public function run()
     {
         factory(\App\User::class)->create([
-            'first_name' => "Admin",
-            'last_name' => "Admin",
+            'first_name' => null,
+            'last_name' => null,
             'email' => "admin@escuelaestech.es",
             'password' => bcrypt('admin'),
-            'phone' => '622622622',
-            'address' => 'Calle 123',
+            'phone' => null,
+            'address' => null,
             'role' => 'admin',
             'created_at' => now(),
             'active' => true

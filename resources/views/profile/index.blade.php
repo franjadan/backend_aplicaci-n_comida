@@ -6,17 +6,19 @@
 
     <h1 class="mb-5">Perfil</h1>
 
-    <h5 class="mt-5 info_field_title">Nombre</h5>
-    <p>{{ $user->first_name }} {{ $user->last_name }}</p>
-
     <h5 class="mt-5 info_field_title">Email</h5>
     <p>{{ $user->email }}</p>
 
-    <h5 class="mt-5 info_field_title">Teléfono</h5>
-    <p>{{ $user->phone }}</p>
-
-    <h5 class="mt-5 info_field_title">Dirección</h5>
-    <p>{{ $user->address }}</p>
+    <h5 class="mt-5 info_field_title">Rol</h5>
+    @if($user->role == "superadmin")
+        <p>Super administrador</p>
+    @elseif($user->role == "admin")
+        <p>Administrador</p>
+    @elseif($user->role == "operator")
+        <p>Operario</p>
+    @else
+        <p>Usuario</p>
+    @endif
 
     <a class="btn btn-warning mt-3" href="{{ route('profile.edit', $user) }}">Cambiar contraseña</a>
     

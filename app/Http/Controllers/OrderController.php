@@ -418,7 +418,7 @@ class OrderController extends Controller
             ->where('id', $request->get('order_id'))
             ->first();
 
-            if($order->favourite_order_name == null){
+            if($order->favourite_order_name == null || $order->favourite_order_name == ""){
 
                 $order->favourite_order_name = $request->get('favourite_order_name');
                 $order->save();
@@ -426,6 +426,34 @@ class OrderController extends Controller
                 return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
             }else{
                 return response()->json(["response" => ["code" => -1, "data" => "Ya ha sido registrado como favorito"]], 400);
+            }
+        }
+    }
+
+    //Función que quita un pedido como favorito desde la API en la bd
+    public function cancelFavoriteOrder(Request $request){
+        $validator = Validator::make($request->all(), [
+            'order_id' => ['required', Rule::exists('orders', 'id')],
+        ], [
+            'order_id.required' => 'El pedido es obligatorio',
+            'order_id.exists' => 'El pedido debe ser válido',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
+        } else {
+            $order = Order::query()
+            ->where('id', $request->get('order_id'))
+            ->first();
+
+            if($order->favourite_order_name != null || $order->favourite_order_name != ""){
+
+                $order->favourite_order_name = null;
+                $order->save();
+
+                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+            }else{
+                return response()->json(["response" => ["code" => -1, "data" => "Este pedido no consta como favorito"]], 400);
             }
         }
     }
@@ -495,22 +523,55 @@ class OrderController extends Controller
 
         $validator = Validator::make($request->all(), [
             'order_id' => ['required', Rule::exists('orders', 'id')],
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'guest_token' => ['nullable', Rule::exists('orders', 'guest_token')] //Reglas
         ], [
             'order_id.required' => 'El pedido es obligatorio',
             'order_id.exists' => 'El pedido debe ser válido',
+            'user_id.exists' => 'El campo usuario debe ser válido',
+            'guest_token.exists' => 'El campo token del invitado debe ser válido', //Mensajes
         ]);
 
         if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
-            $order = Order::query()
-            ->where('id', $request->get('order_id'))
-            ->first();
 
-            $order->state = 'cancelled';
-            $order->save();
+            if($request->get('guest_token') != null){
+                $order = Order::query()
+                    ->where('guest_token', $request->get('guest_token'))
+                    ->where('state', 'pending')
+                    ->where('id', $request->get('order_id'))
+                    ->first();
 
-            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                if($order != null){
+                    $order->state = 'cancelled';
+                    $order->save();
+        
+                    return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                }else{
+                    return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
+                }
+
+            }else{
+                if($request->get('user_id') != null){
+                    $order = Order::query()
+                        ->where('user_id', $request->get('user_id'))
+                        ->where('state', 'pending')
+                        ->where('id', $request->get('order_id'))
+                        ->first();
+
+                        if($order != null){
+                            $order->state = 'cancelled';
+                            $order->save();
+                
+                            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                        }else{
+                            return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
+                        }
+                }else{
+                    return response()->json(["response" => ["code" => -1, "data" => "Necesitas añadir el token de invitado o el id de usuario del pedido"]], 400);
+                }
+            }
         }
     }
 

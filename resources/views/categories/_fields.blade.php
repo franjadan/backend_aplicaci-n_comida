@@ -8,18 +8,6 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="inputDiscount">Descuento:</label>
-    <div class="input-group">
-        <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $category->discount) }}" placeholder="0.00">
-        <div class="input-group-append">
-            <span class="input-group-text">€</span>
-        </div>
-    </div>
-    @if($errors->has('discount'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('discount') }}</div>
-    @endif
-</div>
-<div class="form-group">
     <label for="inputImage">Imagen:</label>
     <div class="input-group">
         <div class="custom-file">
