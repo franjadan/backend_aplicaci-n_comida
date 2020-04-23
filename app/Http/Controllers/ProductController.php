@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         $request->availableProduct($product);
 
-        return redirect()->route('products.edit', $product)->with('success', 'se han guardado los cambios.');
+        return redirect()->route('products')->with('success', 'se han guardado los cambios.');
     }
 
     public function destroy(Product $product)

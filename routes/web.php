@@ -97,9 +97,9 @@ Route::group(['middleware' => ['auth','active']], function() {
 
         Route::post('/nuevo', 'ProductController@store')->name('products.create')->middleware('admin');
 
-        Route::get('/{product}/editar', 'ProductController@edit')->name('products.edit');
+        Route::get('/{product}/editar', 'ProductController@edit')->name('products.edit')->middleware('admin');
 
-        Route::put('/{product}/editar', 'ProductController@update')->name('products.edit');
+        Route::put('/{product}/editar', 'ProductController@update')->name('products.edit')->middleware('admin');
 
         Route::put('/{product}/editar', 'ProductController@available')->name('products.available');
 

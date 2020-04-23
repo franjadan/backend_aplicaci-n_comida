@@ -46,16 +46,27 @@
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <div class="card-options my-3" id="card-options-{{ $product->id }}">
                                 <div class="container">
-                                    <div class="row my-3">
-                                        <div class="col">
-                                            <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
-                                        </div>
-                                    </div>
                                     @if(auth()->user()->isAdmin())
+                                        <div class="row my-3">
+                                            <div class="col">
+                                                <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col">
                                                 <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
                                             </div>
+                                        </div>
+                                    @else
+                                        <div class="row my-3">
+                                            <div class="col">
+                                                <form action="{{ route('products.available', $product) }}" method="post">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('PUT') }}
+                                                    <input type="hidden" name="available" value="{{ $product->available ? 'no': 'yes' }}">
+                                                    <input type="submit" class="btn {{ $product->available ? 'btn-danger': 'btn-success' }} w-100" value="{{ $product->available ? 'Deshabilitar': 'Habilitar'}} producto">
+                                                </form>
+                                            </div>  
                                         </div>
                                     @endif
                                 </div>
