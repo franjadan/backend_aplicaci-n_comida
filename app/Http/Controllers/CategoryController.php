@@ -53,8 +53,9 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $images = Category::where('image', '=', $category->image)->get();
         $image = public_path()."/$category->image";
-        if (@getimagesize($image)){
+        if (@getimagesize($image) && count($images) <= 1){
             unlink($image);
         }
         $category->delete();

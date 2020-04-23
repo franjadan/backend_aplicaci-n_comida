@@ -45,8 +45,9 @@ class UpdateCategoryRequest extends FormRequest
     public function updateCategory(Category $category)
     {
         if ($this->file('image') != null){
+            $images = Category::where('image', '=', $category->image)->get();
             $old = public_path()."/$category->image";
-            if (@getimagesize($old)){
+            if (@getimagesize($old) && count($images) <= 1){
                 unlink($old);
             }
             $new = $this->file('image');

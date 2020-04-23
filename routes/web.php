@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth','active']], function() {
 
         Route::put('/{product}/editar', 'ProductController@update')->name('products.edit')->middleware('admin');
 
-        Route::put('/{product}/editar', 'ProductController@available')->name('products.available');
+        Route::put('/{product}/habilitar', 'ProductController@available')->name('products.available');
 
         Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy')->middleware('admin');
     });

@@ -16,7 +16,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::search()
+        $products = Product::where('active', '=', '1')
+            ->search()
             ->orderBy('name')
             ->paginate(5);
 
@@ -68,16 +69,15 @@ class ProductController extends Controller
     {
         $request->availableProduct($product);
 
-        return redirect()->route('products')->with('success', 'se han guardado los cambios.');
+        return redirect()->route('products')->with('success', 'Se han guardado los cambios.');
     }
 
     public function destroy(Product $product)
     {
-        if($product->image != null && explode('/', $product->image)[1] != "shared"){
-            $image = public_path()."/$product->image";
-            if (@getimagesize($image)){
-                unlink($image);
-            }
+        $images = Product::where('image', '=', $product->image)->get();
+        $image = public_path()."/$product->image";
+        if (@getimagesize($image) && count($images) <= 1){
+            unlink($image);
         }
 
         $product->active = false;

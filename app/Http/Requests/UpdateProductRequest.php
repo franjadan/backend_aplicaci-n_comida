@@ -65,8 +65,9 @@ class UpdateProductRequest extends FormRequest
 
         if ($this->file('image') != null){
             if($product->image != null){
+                $images = Product::where('image', '=', $product->image)->get();
                 $old = public_path()."/$product->image";
-                if (@getimagesize($old)){
+                if (@getimagesize($old) && count($images) <= 1){
                     unlink($old);
                 }
             }

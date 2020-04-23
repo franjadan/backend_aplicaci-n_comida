@@ -64,7 +64,9 @@ class CreateProductRequest extends FormRequest
     {
         $image = $this->file('image');
         $name = $image->getClientOriginalName();
-        $image->move('media/products', $name);
+        if (!@getimagesize(public_path()."/$name")){
+            $image->move('media/products', $name);
+        }
 
         $available = $this['available'] == 'yes'? true: false;
 

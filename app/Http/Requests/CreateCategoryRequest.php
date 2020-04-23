@@ -47,7 +47,9 @@ class CreateCategoryRequest extends FormRequest
     {
         $image = $this->file('image');
         $name = $image->getClientOriginalName();
-        $image->move('media/categories', $name);
+        if (!@getimagesize(public_path()."/$name")){
+            $image->move('media/categories', $name);
+        }
 
         Category::create([
             'name' => $this['name'],

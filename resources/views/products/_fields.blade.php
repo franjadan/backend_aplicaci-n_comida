@@ -35,7 +35,7 @@
     <div class="input-group">
         <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $product->discount) }}" placeholder="0.00">
         <div class="input-group-append">
-            <span class="input-group-text">€</span>
+            <span class="input-group-text">%</span>
         </div>
     </div>
     @if($errors->has('discount'))
