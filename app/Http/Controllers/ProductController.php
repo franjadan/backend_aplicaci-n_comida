@@ -16,8 +16,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::query()
-            ->where('active', '=', '1')
+        $products = Product::search()
             ->orderBy('name')
             ->paginate(5);
 
