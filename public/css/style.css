@@ -47,12 +47,8 @@ body{
     background-color: red;
 }
 
-#categories_image{
-    width: 20%;
-}
-
-#products_image{
-    width: 20%;
+.card-image {
+    height: 100%;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
