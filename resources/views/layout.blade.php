@@ -46,13 +46,15 @@
                 <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-square"></i> Pedidos</a>
                 <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
                 @if(auth()->user()->isAdmin())
-                    <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
-                    <a href="{{ route('categories') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-th-list"></i> Categorías</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
-                    <a href="{{ route('comments') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
+                  <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
+                  <a href="{{ route('categories') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-th-list"></i> Categorías</a>
+                  <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
+                  <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
                 @endif
                 <a href="{{ route('products') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-hamburger"></i> Productos</a>
+                @if(auth()->user()->isAdmin())
+                  <a href="{{ route('comments') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
+                @endif
                 <a href="{{ route('profile.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i> Perfil</a>
               </div>
             </div>
