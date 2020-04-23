@@ -33,7 +33,7 @@ class OrderController extends Controller
     }
 
     //Función que genera la vista para crear el pedido
-    public function create() 
+    public function create()
     {
         $order = new Order;
         $users = User::query()
@@ -93,7 +93,7 @@ class OrderController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
 
             return redirect(route('orders.create'))->withErrors($validator)->withInput();;
 
@@ -102,12 +102,12 @@ class OrderController extends Controller
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
                     $validator->getMessageBag()->add('guest_phone', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
-                    return back()->withErrors($validator)->withInput();                
+                    return back()->withErrors($validator)->withInput();
                 }
             }else{
                 if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone'))){
                     $validator->getMessageBag()->add('guest_phone', 'Debe haber un usuario registrado o datos de invitado');
-                    return back()->withErrors($validator)->withInput();                
+                    return back()->withErrors($validator)->withInput();
                 }
             }
 
@@ -125,7 +125,7 @@ class OrderController extends Controller
                 $validator->getMessageBag()->add('guest_phone', 'Debe haber al menos un producto');
                 return back()->withErrors($validator)->withInput();
             }
-            
+
             $order = new Order();
             $dt = new DateTime();
 
@@ -142,7 +142,7 @@ class OrderController extends Controller
                 'comment' =>$request->get('comment'),
                 'paid' => $request->get('paid'),
             ]);
-        
+
             $order->save();
 
             //Guarda los productos de este pedido
@@ -162,7 +162,7 @@ class OrderController extends Controller
     }
 
     //Función que genera la vista para editar el pedido
-    public function edit(Order $order) 
+    public function edit(Order $order)
     {
         if($order->state != "pending"){ //Sólo se pueden editar pedidos pendientes
             return redirect()->route('orders.index')->with('error', 'No puedes acceder a este pedido');
@@ -178,7 +178,7 @@ class OrderController extends Controller
             'order' => $order,
             'users' => $users,
             'products' => $products
-        ]);  
+        ]);
     }
 
     //Función que actualiza el pedido en la bd
@@ -224,7 +224,7 @@ class OrderController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
 
             return redirect(route('orders.edit', ['order' => $order]))->withErrors($validator)->withInput();
 
@@ -233,12 +233,12 @@ class OrderController extends Controller
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
                     $validator->getMessageBag()->add('guest_phone', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
-                    return back()->withErrors($validator)->withInput();                
+                    return back()->withErrors($validator)->withInput();
                 }
             }else{
                 if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone'))){
                     $validator->getMessageBag()->add('guest_phone', 'Debe haber un usuario registrado o datos de invitado');
-                    return back()->withErrors($validator)->withInput();                
+                    return back()->withErrors($validator)->withInput();
                 }
             }
 
@@ -268,7 +268,7 @@ class OrderController extends Controller
                 'comment' =>$request->get('comment'),
                 'paid' => $request->get('paid'),
             ]);
-        
+
             $order->save();
 
             //Actualiza los productos
@@ -309,7 +309,7 @@ class OrderController extends Controller
     }
 
     //Función que genera la vista de detalle del pedido
-    public function show(Order $order) 
+    public function show(Order $order)
     {
         return view('orders.show', [
             'order' => $order
@@ -317,7 +317,7 @@ class OrderController extends Controller
     }
 
     //Función que genera el listado del historial de pedidos
-    public function orderRecord(Request $request) 
+    public function orderRecord(Request $request)
     {
         //Muestra todos los que no sean pendientes
         $orders = Order::query()
@@ -361,21 +361,21 @@ class OrderController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) { 
-            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);         
+        if ($validator->fails()) {
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
 
         } else {
 
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone')) || !empty($request->get('guest_token'))){
-                    return response()->json(["response" => ["code" => -1, "data" => "El pedido sólo podrá realizarse con un usuario registrado o invitado"]], 422);         
+                    return response()->json(["response" => ["code" => -1, "data" => "El pedido sólo podrá realizarse con un usuario registrado o invitado"]], 422);
                 }
             }else{
                 if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone')) || empty($request->get('guest_token'))){
-                    return response()->json(["response" => ["code" => -1, "data" => "Debe haber un usuario registrado o datos de invitado"]], 422);         
+                    return response()->json(["response" => ["code" => -1, "data" => "Debe haber un usuario registrado o datos de invitado"]], 422);
                 }
             }
-            
+
             $order = new Order();
             $dt = new DateTime();
 
@@ -391,7 +391,7 @@ class OrderController extends Controller
                 'comment' =>$request->get('comment'),
                 'paid' => $request->get('paid'),
             ]);
-        
+
             $order->save();
 
             $order->products()->attach($request->get('products'));
@@ -411,7 +411,7 @@ class OrderController extends Controller
             'favourite_order_name.required' => 'El campo nombre del pedido favorito es obligatorio' //Mensajes
         ]);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
             $order = Order::query()
@@ -438,7 +438,7 @@ class OrderController extends Controller
             'user_id.exists' => 'El campo usuario debe ser válido', //Mensajes
         ]);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
             if($request->get('user_id') != null){
@@ -464,7 +464,7 @@ class OrderController extends Controller
             'guest_token.exists' => 'El campo token del invitado debe ser válido', //Mensajes
         ]);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
 
@@ -500,7 +500,7 @@ class OrderController extends Controller
             'order_id.exists' => 'El pedido debe ser válido',
         ]);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
             $order = Order::query()
@@ -513,5 +513,12 @@ class OrderController extends Controller
             return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
         }
     }
-    
+
+    public function refresh()
+    {
+        $orders = Order::all();
+
+        return response()->json(['response' => ['code' => 1, 'data' => count($orders)]]);
+    }
+
 }

@@ -196,6 +196,10 @@ table thead th::before {
     content: '' !important;
 }
 
+.alert-refresh-orders {
+    border-radius: 0.5em;
+}
+
 @media (min-width: 768px) {
     #sidebar-wrapper {
       margin-left: 0;
@@ -225,6 +229,6 @@ table thead th::before {
     -webkit-box-shadow: 0 4px 6px -6px #000000;
     -moz-box-shadow: 0 4px 6px -6px #000000;
     box-shadow: 0 4px 6px -6px #000000;
-  
+
 }
 

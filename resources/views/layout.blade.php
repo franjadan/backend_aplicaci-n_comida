@@ -17,6 +17,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="{{ asset('js/refresh_orders.js') }}"></script>
     @yield('scripts')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -60,6 +61,17 @@
             </div>
             <div id="page-content-wrapper">
               <div class="container mt-5 mb-5">
+                <div class="d-flex justify-content-center refresh-orders">
+                    <div class="m-5 p-3 container shadow alert-refresh-orders">
+                        <h2 class="refresh-orders-title"></h2>
+                        <div class="row mt-4">
+                            <div class="col-8"></div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <a href="{{ route('orders.index') }}" class="btn btn-primary">Refrescar pedidos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @include('shared._flash-message')
 
                 @yield('content')

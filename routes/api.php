@@ -43,3 +43,5 @@ Route::get('productos/{category}', 'ProductController@productsByCategory');
 Route::get('productos', 'ProductController@products');
 
 Route::get('comentarios', 'CommentController@comments');
+
+Route::get('pedidos', 'OrderController@refresh');
