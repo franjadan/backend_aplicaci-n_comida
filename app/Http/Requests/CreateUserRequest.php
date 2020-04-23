@@ -29,12 +29,12 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => ['nullable', 'present'],
+            'last_name' => ['nullable', 'present'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'present', 'min:6'],
-            'address' => 'required',
-            'phone' => ['required', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'address' => ['nullable', 'present'],
+            'phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'role' => ['required', Rule::in(['admin', 'user', 'operator'])],
         ];
     }
@@ -43,15 +43,15 @@ class CreateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => 'El campo nombre es obligatorio',
-            'last_name.required' => 'El campo apellido es obligatorio',
+            'first_name.present' => 'El campo nombre debe estar presente',
+            'last_name.present' => 'El campo apellido debe estar presente',
             'email.required' => 'El campo email es obligatorio',
             'email.email' => 'El campo email debe ser válido',
             'email.unique' => 'El campo email debe ser único',
             'password.required' => 'El campo contraseña debe ser obligatorio',
             'password.min' => 'El campo contraseña debe tener mínimo 6 caracteres',
-            'address.required' => 'El campo dirección es obligatorio',
-            'phone.required' => 'El campo teléfono es obligatorio',
+            'address.present' => 'El campo dirección debe estar presente',
+            'phone.present' => 'El campo teléfono debe estar presente',
             'phone.regex' => 'El teléfono debe ser válido',
             'role.required' => 'El campo rol es obligatorio',
             'role.in' => 'El rol debe ser válido',
