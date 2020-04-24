@@ -396,6 +396,15 @@ class OrderController extends Controller
 
             $order->products()->attach($request->get('products'));
 
+            $total = 0;
+            foreach($order->products as $product){
+                $total += ($product->price - ($product->price * ($product->discount / 100)));
+            }
+
+            $order->total = $total;
+
+            $order->save();
+
             return response()->json(["response" => ["code" => 1, "data" => $order->id]], 201);
         }
     }
