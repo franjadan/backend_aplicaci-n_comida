@@ -68,7 +68,7 @@ class UserController extends Controller
         }
 
         if(Auth::user()->role == "superadmin" && $user->role == "superadmin"){
-            return redirect()->route('users.index')->with('error', 'No puedes acceder a este usuario');
+            return redirect()->route('users.index');
         }
 
         if (Auth::user()->role == "superadmin"){
