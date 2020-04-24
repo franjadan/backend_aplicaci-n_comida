@@ -16,7 +16,7 @@ class AdminAuthorization
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')) {
             return $next($request);
         }else{
            return redirect('/');

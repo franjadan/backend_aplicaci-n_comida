@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('admin'),
             'phone' => null,
             'address' => null,
-            'role' => 'admin',
+            'role' => 'superadmin',
             'created_at' => now(),
             'active' => true
         ]);

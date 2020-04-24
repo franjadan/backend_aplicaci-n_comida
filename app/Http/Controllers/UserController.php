@@ -20,7 +20,9 @@ class UserController extends Controller
     public function index()
     {
         if (Auth::user()->role === "superadmin"){
-            $users = User::all();
+            $users = User::query()
+            ->where('role', '<>', 'superadmin')
+            ->get();
         }else{
             $users = User::query()
             ->where('role', '<>', 'admin')
@@ -62,6 +64,10 @@ class UserController extends Controller
     {
 
         if(Auth::user()->role != "superadmin" && $user->role == "admin"){
+            return redirect()->route('users.index')->with('error', 'No puedes acceder a este usuario');
+        }
+
+        if(Auth::user()->role == "superadmin" && $user->role == "superadmin"){
             return redirect()->route('users.index')->with('error', 'No puedes acceder a este usuario');
         }
 
