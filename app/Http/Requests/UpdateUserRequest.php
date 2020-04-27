@@ -32,7 +32,6 @@ class UpdateUserRequest extends FormRequest
             'first_name' => ['nullable', 'present'],
             'last_name' => ['nullable', 'present'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user)],
-            'password' => ['nullable', 'present', 'min:6'],
             'address' => ['nullable', 'present'],
             'phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'role' => ['required', Rule::in(['admin', 'user', 'operator'])],
@@ -48,7 +47,6 @@ class UpdateUserRequest extends FormRequest
             'email.required' => 'El campo email es obligatorio',
             'email.email' => 'El campo email debe ser válido',
             'email.unique' => 'El campo email debe ser único',
-            'password.min' => 'El campo contraseña debe tener mínimo 6 caracteres',
             'address.present' => 'El campo dirección debe estar presente',
             'phone.present' => 'El campo teléfono debe estar presente',
             'phone.regex' => 'El teléfono debe ser válido',
@@ -70,10 +68,6 @@ class UpdateUserRequest extends FormRequest
             'phone' => $this->phone,
             'role' => $this->role ?? 'user'
         ]);
-
-        if($this->password != null){
-            $user->password = bcrypt($this->password); //Encripta la contraseña
-        }
 
         $user->save();
 

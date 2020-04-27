@@ -26,13 +26,15 @@
     @endif
 </div>
 
-<div class="form-group">
-    <label for="password">Contraseña*</label>
-    <input type="password" class="form-control" id="password" name="password" placeholder="Mayor a 6 caracteres">
-    @if ($errors->has('password'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('password') }}</div>
-    @endif
-</div>
+@if($route == "create")
+    <div class="form-group">
+        <label for="password">Contraseña*</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Mayor a 6 caracteres">
+        @if ($errors->has('password'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('password') }}</div>
+        @endif
+    </div>
+@endif
 
 <div class="form-group">
     <label for="address">Dirección</label>

@@ -47,6 +47,7 @@ class UserController extends Controller
 
         return view('users.create', [
             'user' => $user,
+            'route' => 'create',
             'roles' => $roles
         ]);
     }
@@ -79,6 +80,7 @@ class UserController extends Controller
 
         return view('users.edit', [
             'user' => $user,
+            'route' => 'edit',
             'roles' => $roles
         ]);
     }
