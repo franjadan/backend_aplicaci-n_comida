@@ -5,7 +5,7 @@
 @section('content')
     <h1>Cambiar contraseña</h1>
     
-    <form action="{{ route('profile.edit', $user) }}" method="post" class="mt-3" enctype="multipart/form-data">
+    <form action="{{ route('users.changePassword', $user) }}" method="post" class="mt-3" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
 
@@ -35,7 +35,11 @@
 
         <div class="form-group mt-5">
             <input type="submit" class="btn btn-success" value="Modificar contraseña">
-            <a href="{{ route('profile.index') }}" class="btn btn-secondary">Volver al perfil</a>
+            @if($user->id == auth()->user()->id)
+                <a href="{{ route('profile.index') }}" class="btn btn-outline-primary">Volver al perfil </a>
+            @else
+                <a href="{{ route('users.edit', $user) }}" class="btn btn-outline-primary">Volver al usuario</a>
+            @endif
         </div>
     </form>
 @endsection

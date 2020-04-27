@@ -20,6 +20,6 @@
         <p>Usuario</p>
     @endif
 
-    <a class="btn btn-warning mt-3" href="{{ route('profile.edit', $user) }}">Cambiar contraseña</a>
+    <a class="btn btn-warning" href="{{ route('users.changePassword', $user) }}">Cambiar contraseña</a>
     
 @endsection

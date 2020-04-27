@@ -47,6 +47,7 @@
         {{ csrf_field() }}
         
         <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" type="button" class="btn btn-warning showModalConfirmBtn" @if ($user->active) value="Deshabilitar usuario" @else value="Habilitar usuario" @endif>
+        <a class="btn btn-outline-warning" href="{{ route('users.changePassword', $user) }}">Cambiar contraseña</a>
         <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
         
     </form>

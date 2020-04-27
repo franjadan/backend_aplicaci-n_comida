@@ -32,6 +32,11 @@ Route::group(['middleware' => ['auth','active']], function() {
 
         Route::delete('/{user}', 'UserController@destroy') //Ruta para realizar la eliminación el usuario
             ->name('users.destroy');
+
+        Route::get('/{user}/cambiar_contraseña', 'ChangePasswordController@edit')
+            ->name('users.changePassword'); //Ruta para cambiar la contraseña
+
+        Route::put('/{user}/cambiar_contraseña', 'ChangePasswordController@update');
     });
 
     Route::middleware('admin')->prefix('/categorias')->group(function () {
@@ -116,10 +121,6 @@ Route::group(['middleware' => ['auth','active']], function() {
 
     Route::prefix('/perfil')->group(function () {
         Route::get('/', 'ProfileController@index')->name('profile.index'); //Ruta para mostrar datos del perfil
-
-        Route::get('/{user}/editar', 'ProfileController@edit')->name('profile.edit'); //Ruta para cambiar la contraseña
-
-        Route::put('/{user}/editar', 'ProfileController@update');
 
     });
 
