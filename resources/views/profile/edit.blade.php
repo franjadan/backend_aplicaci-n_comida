@@ -3,7 +3,9 @@
 @section('title', 'Cambiar contraseña')
 
 @section('content')
-    <form action="{{ route('profile.edit', $user) }}" method="post" enctype="multipart/form-data">
+    <h1>Cambiar contraseña</h1>
+    
+    <form action="{{ route('profile.edit', $user) }}" method="post" class="mt-3" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
 

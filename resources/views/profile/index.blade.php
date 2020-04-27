@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <h1 class="mb-5">Perfil</h1>
+    <h1 class="mb-3">Perfil</h1>
 
-    <h5 class="mt-5 info_field_title">Email</h5>
+    <h5 class="info_field_title">Email</h5>
     <p>{{ $user->email }}</p>
 
     <h5 class="mt-5 info_field_title">Rol</h5>

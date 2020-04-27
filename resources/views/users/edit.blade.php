@@ -31,7 +31,7 @@
         </div>
     </div>
     
-    <form method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}") }}">
+    <form method="POST" class="d-inline mt-3" action="{{ url("usuarios/{$user->id}") }}">
                 
         {{ method_field('PUT') }}
         

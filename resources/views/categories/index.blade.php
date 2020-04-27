@@ -29,7 +29,7 @@
         </div>
     </div>
     <div>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2 mb-3">Nueva Categoría</a>
+        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Nueva Categoría</a>
     </div>
     @include('categories._filters')
     <div>

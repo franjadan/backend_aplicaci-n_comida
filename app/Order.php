@@ -33,7 +33,8 @@ class Order extends Model
      * @var array
      */
     protected $casts = [
-    'paid' => 'bool'
+    'paid' => 'bool',
+    'order_date' => 'datetime'
     ];
 
     public function products()

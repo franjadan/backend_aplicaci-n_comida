@@ -50,7 +50,7 @@
         </div>
     </div>
     
-    <form method="POST" class="d-inline" action="{{ url("pedidos/{$order->id}") }}">
+    <form method="POST" class="d-inline mt-3" action="{{ url("pedidos/{$order->id}") }}">
                 
         {{ method_field('PUT') }}
         

@@ -30,7 +30,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ route('products.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo Producto</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary mt-2">Nuevo Producto</a>
         </div>
     @endif
     @include('products._filters')
@@ -46,7 +46,7 @@
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <div class="card-options my-3" id="card-options-{{ $product->id }}">
                                 <div class="container">
-                                    @if(auth()->user()->isAdmin())
+                                    @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                                         <div class="row my-3">
                                             <div class="col">
                                                 <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>

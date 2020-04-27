@@ -3,7 +3,9 @@
 @section('title', 'Editar producto')
 
 @section('content')
-    <form action="{{ route('products.edit', $product) }}" method="post" enctype="multipart/form-data">
+    <h1>Producto {{ $product->id }}</h1>
+
+    <form action="{{ route('products.edit', $product) }}" method="post" class="mt-3" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         @include('products._fields')
         <div class="row">
@@ -19,7 +21,7 @@
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-success" value="Modificar producto">
-            <a href="{{ route('products') }}" class="btn btn-secondary">Volver al listado de productos</a>
+            <a href="{{ route('products') }}" class="btn btn-outline-primary">Volver al listado de productos</a>
         </div>
     </form>
 @endsection

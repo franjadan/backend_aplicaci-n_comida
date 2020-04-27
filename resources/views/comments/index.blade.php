@@ -33,33 +33,37 @@
     <div>
         @if ($comments->isNotEmpty())
 
-            <table class="table table-bordered data-table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Comentario</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($comments as $comment)
+            <div class="table-responsive">
+                <table class="table table-bordered data-table">
+                    <thead class="thead">
                         <tr>
-                            <td>{{ $comment->id }}</td>
-                            <td>{{ substr($comment->comment, 0, 40)}}...</td>
-                            <td>
-                                <div>
-                                    <form id="deleteForm-{{ $comment->id }}" action="{{ route('comments.destroy', $comment) }}" method="post">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <a href="{{ route('comments.show', $comment) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                        <button data-id="{{ $comment->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
-                                    </form>
-                                </div>
-                            </td>
+                            <th class="text-center" scope="col">#</th>
+                            <th scope="col">Comentario</th>
+                            <th class="text-center" scope="col">Acciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($comments as $comment)
+                            <tr>
+                                <td class="text-center">{{ $comment->id }}</td>
+                                <td>{{ substr($comment->comment, 0, 40)}}...</td>
+                                <td class="text-center">
+                                    <div>
+                                        <form id="deleteForm-{{ $comment->id }}" action="{{ route('comments.destroy', $comment) }}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <div class="btn-group">
+                                                <a href="{{ route('comments.show', $comment) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                                <button data-id="{{ $comment->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
+                                            </div>    
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         @else
             <p>No hay comentarios registrados.</p>

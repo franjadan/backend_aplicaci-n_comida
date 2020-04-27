@@ -6,7 +6,7 @@
 
     <h1>Nuevo usuario</h1>
     
-    <form method="POST" action="{{ url('usuarios/crear') }}">
+    <form method="POST" class="mt-3" action="{{ url('usuarios/crear') }}">
         
         @include('users._fields')
         

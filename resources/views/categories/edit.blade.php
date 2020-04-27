@@ -3,7 +3,9 @@
 @section('title', 'Editar categoría')
 
 @section('content')
-    <form action="{{ route('categories.edit', $category) }}" method="post" enctype="multipart/form-data">
+    <h1>Categoría {{ $category->id }}</h1>
+
+    <form action="{{ route('categories.edit', $category) }}" class="mt-3" method="post" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         @include('categories._fields')
         <div class="row">
@@ -19,7 +21,7 @@
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-success" value="Modificar categoría">
-            <a href="{{ route('categories') }}" class="btn btn-secondary">Volver al listado de categorías</a>
+            <a href="{{ route('categories') }}" class="btn btn-outline-primary">Volver al listado de categorías</a>
         </div>
     </form>
 @endsection

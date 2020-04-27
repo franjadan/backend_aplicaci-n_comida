@@ -28,41 +28,42 @@
         </div>
     </div>
     <div>
-        <a href="{{ route('users.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo usuario</a>
+        <a href="{{ route('users.create') }}" class="btn btn-primary mt-3">Nuevo usuario</a>
     </div>
     @if(!$users->isEmpty())
-
-        <table class="table table-bordered data-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-            <!--Relleno la tabla con los datos de los usuarios-->
-            @foreach ($users as $user)
+        <div class="table-responsive">
+            <table class="table table-bordered data-table">
+                <thead class="thead">
                     <tr>
-                        <td>{{ $user->id }}</td>
-                        <td><h5>@if ($user->isAdmin()) Admin @else {{ $user->name }} @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
-                        <td class="text-muted">{{ $user->email }}</td>
-                        <td>
-                            <form class="" action="{{ route('users.destroy', $user) }}" method="POST" id="deleteForm-{{ $user->id }}">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-
-                                <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
-                                <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
-                            </form>
-                        </td>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center" scope="col">Email</th>
+                        <th class="text-center" scope="col">Acciones</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <!--Relleno la tabla con los datos de los usuarios-->
+                @foreach ($users as $user)
+                        <tr>
+                            <td class="text-center">{{ $user->id }}</td>
+                            <td class="text-center"><h5>@if ($user->isAdmin()) Admin @else {{ $user->name }} @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
+                            <td class="text-muted text-center">{{ $user->email }}</td>
+                            <td class="text-center">
+                                <form class="" action="{{ route('users.destroy', $user) }}" method="POST" id="deleteForm-{{ $user->id }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
 
-
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
+                                        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @else
         <p class="mt-3">No hay usuarios</p>
     @endif

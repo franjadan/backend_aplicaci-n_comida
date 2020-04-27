@@ -18,51 +18,55 @@
 
     @if($route != "record")
         <div>
-            <a href="{{ route('orders.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo pedido</a>
+            <a href="{{ route('orders.create') }}" class="btn btn-primary mt-3">Nuevo pedido</a>
         </div>
     @elseif(auth()->user()->isAdmin())
         <div>
-            <a href="{{ route('orders.excel') }}" class="btn btn-success mt-2 mb-3">Descargar excel</a>
+            <a href="{{ route('orders.excel') }}" class="btn btn-success mt-3">Descargar excel</a>
         </div>
     @endif
     <!--Relleno la tabla con los datos de los pedidios-->
     @if(!$orders->isEmpty())
 
-        <table class="table table-bordered data-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Hora de recogida</th>
-                    <th scope="col">Fecha del pedido</th>
-                    @if($route == "record")
-                        <th scope="col">Estado</th>
-                    @endif
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($orders as $order)
+        <div class="table-responsive">
+            <table class="table table-bordered data-table">
+                <thead class="thead">
                     <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->estimated_time }}</td>
-                        <td>{{ $order->order_date }}</td>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Hora de recogida</th>
+                        <th class="text-center" scope="col">Fecha del pedido</th>
                         @if($route == "record")
-                            @if($order->state == "finished")
-                                <td>Finalizado</td>
-                            @else
-                                <td>Cancelado</td>
-                            @endif
+                            <th class="text-center" scope="col">Estado</th>
                         @endif
-                        <td>
-                            <a class='btn btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
-                            @if($route != 'record')
-                                <a class='btn btn-primary ml-1' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
-                            @endif
-                        </td>
+                        <th class="text-center" scope="col">Acciones</th>
                     </tr>
-                    @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $order)
+                        <tr>
+                            <td class="text-center">{{ $order->id }}</td>
+                            <td class="text-center">{{ $order->estimated_time }}</td>
+                            <td class="text-center">{{ $order->order_date->format('d/m/Y H:i:s') }}</td>
+                            @if($route == "record")
+                                @if($order->state == "finished")
+                                    <td class="text-center">Finalizado</td>
+                                @else
+                                    <td class="text-center">Cancelado</td>
+                                @endif
+                            @endif
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a class='btn btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
+                                    @if($route != 'record')
+                                        <a class='btn btn-primary' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                </tbody>
+            </table>
+        </div>
     @else
         <p class="mt-3">No hay pedidos pendientes</p>
     @endif

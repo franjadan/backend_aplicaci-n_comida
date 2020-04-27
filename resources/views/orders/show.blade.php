@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1 class="mb-5">Pedido {{ $order->id }}</h1>
+    <h1 class="mb-3">Pedido {{ $order->id }}</h1>
 
     @if($order->user != null)
         <h5 class="mt-5 info_field_title">Usuario</h5>
