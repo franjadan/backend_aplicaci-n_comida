@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/plug-ins/1.10.20/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
@@ -24,67 +25,77 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <title>@yield('title')</title>
 </head>
-<body>
-    <div class="section">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse d-flex justify-content-between p-3">
-              <a class="navbar-brand" href="{{ url('/') }}">Menu of the day</a>
-              <div>
-                <a class="nav-link btn btn-outline-secondary" href="{{ route('logout') }}"
-                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                  Cerrar sesión <i class="fas fa-sign-out-alt"></i>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
-                  {{ csrf_field() }}
-                </form>
+  <body>
 
-              </div>
-            </div>
-        </nav>
-        <div class="d-flex" id="wrapper">
-            <div class="bg-light pt-4" id="sidebar-wrapper">
-              <div class="list-group list-group-flush">
-                <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-square"></i> Pedidos</a>
-                <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
-                @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                  <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i> Usuarios</a>
-                  <a href="{{ route('categories') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-th-list"></i> Categorías</a>
-                  <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
-                  <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-egg"></i> Ingredientes</a>
-                @endif
-                <a href="{{ route('products') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-hamburger"></i> Productos</a>
-                @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                  <a href="{{ route('comments') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-comments"></i> Comentarios</a>
-                @endif
-                <a href="{{ route('profile.index') }}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i> Perfil</a>
-              </div>
-            </div>
-            <div id="page-content-wrapper">
-              <div class="container mt-5 mb-5">
-                <div class="d-flex justify-content-center refresh-orders">
-                    <div class="m-5 p-3 container shadow alert-refresh-orders">
-                        <h2 class="refresh-orders-title"></h2>
-                        <div class="row mt-4">
-                            <div class="col-8"></div>
-                            <div class="col-4 d-flex justify-content-end">
-                                <a href="{{ route('orders.index') }}" class="btn btn-primary">Refrescar pedidos</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @include('shared._flash-message')
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading text-center">
+            <a class="navbar-brand" href="{{ url('/') }}">Menu of the day</a>
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-check-square"></i> Pedidos</a>
+          <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
+          @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-users"></i> Usuarios</a>
+            <a href="{{ route('categories') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-th-list"></i> Categorías</a>
+            <a href="#" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
+            <a href="#" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-egg"></i> Ingredientes</a>
+          @endif
+            <a href="{{ route('products') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-hamburger"></i> Productos</a>
+          @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+            <a href="{{ route('comments') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-comments"></i> Comentarios</a>
+          @endif
+          <a href="{{ route('profile.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-id-badge"></i> Perfil</a>
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
 
-                @yield('content')
-            </div>
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+
+          <nav class="navbar navbar-expand-lg navbar-light">
+              <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                  <li class="nav-item">
+                      <a class="btn btn-outline-danger" href="{{ route('logout') }}"
+                          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                          Cerrar sesión <i class="fas fa-sign-out-alt"></i>
+                      </a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
+                          {{ csrf_field() }}
+                      </form>
+                  </li>
+              </ul>
+              </div>
+          </nav>
+
+          <div class="container-fluid my-4 px-4">
+              @include('shared._flash-message')
+              @yield('content')
           </div>
+      </div>
+    <!-- /#page-content-wrapper -->
     </div>
-</body>
-<script type="application/javascript">
-    $('input[type="file"]').change(function(e){
-        var fileName = e.target.files[0].name;
-        $('.custom-file-label').html(fileName);
-    });
-</script>
-@yield('analytics')
-@yield('datatable')
+
+  </body>
+  <script type="application/javascript">
+      $('input[type="file"]').change(function(e){
+          var fileName = e.target.files[0].name;
+          $('.custom-file-label').html(fileName);
+      });
+
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggle();
+      });
+  </script>
+  @yield('analytics')
+  @yield('datatable')
 </html>

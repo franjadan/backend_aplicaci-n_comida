@@ -9,7 +9,7 @@
 
 @section('content')
     <h1>Listado de productos</h1>
-    @if(auth()->user()->isAdmin())
+    @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Nuevo Producto</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary mt-2 mb-3">Nuevo Producto</a>
         </div>
     @endif
     @include('products._filters')

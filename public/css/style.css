@@ -222,9 +222,14 @@ table thead th::before {
 .info_field_title {
     padding-left: 10px;
     margin-bottom: 1em;
-    -webkit-box-shadow: 0 4px 6px -6px #000000;
-    -moz-box-shadow: 0 4px 6px -6px #000000;
-    box-shadow: 0 4px 6px -6px #000000;
+    -webkit-box-shadow: 0 4px 6px -6px #0069D9;
+    -moz-box-shadow: 0 4px 6px -6px #0069D9;
+    box-shadow: 0 4px 6px -6px #0069D9;
+}
 
+nav {
+    -webkit-box-shadow: 0 4px 6px -6px #0069D9;
+    -moz-box-shadow: 0 4px 6px -6px #0069D9;
+    box-shadow: 0 4px 6px -6px #0069D9;
 }
 

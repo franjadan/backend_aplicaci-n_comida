@@ -5,11 +5,17 @@
 @section('content')
     <!--Donde voy a colocar los gráficos-->
     <div class="row justify-content-md-center">
-        <div id="first_chart" style="width:100%; height:400px;"></div>     
+        <div class="col-md-12">
+            <div id="first_chart" class="div_chart" style="height:400px;"></div>
+        </div>     
     </div>
     <div class="row">
-        <div id="second_chart"  style="width:50%; height:400px;"></div>
-        <div id="third_chart" style="width:50%; height:400px;"></div>
+        <div class="col-md-6">
+            <div id="second_chart" class="div_chart" style="height:400px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="third_chart" class="div_chart" style="height:400px;"></div>
+        </div>
     </div>
 @endsection
 
@@ -75,6 +81,19 @@
                 $("text").last().html("No hay ventas en " + month);
             }
         }
+
+        $(window).resize(function(){
+            drawChart();
+        });
+
+        $("#menu-toggle").off('click').click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggle(0, function() {
+                drawChart();
+            });
+            
+        });
+
     </script>
 @endsection
 
