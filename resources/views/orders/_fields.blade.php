@@ -3,7 +3,7 @@
 <!--Aquí se encuentran los campos compartidos entre la creación y edición de pedidios-->
 
 <div class="form-group">
-    <label for="selectUser">Usuario:</label>
+    <label for="selectUser">Usuario</label>
     @if ($users->isNotEmpty())
         <select name="user_id" id="selectUser" class="form-control">
         <option value="">Usuario invitado</option>
@@ -43,7 +43,11 @@
     @endif
 </div>
 
-<label for="">Productos</label>
+<div class="form-group">
+    <small class="form-text text-muted">Debe haber datos de invitado o usuario seleccionado. Dará error si hay ambos</small>
+</div>
+
+<label for="">Productos*</label>
 <div class="bg-light p-3">
     <!--Compruebo el número de productos-->
     @if ($products->isNotEmpty())
@@ -130,7 +134,7 @@
 </div>
 
 <div class="form-group">
-    <label for="estimated_time">Hora de recogida</label>
+    <label for="estimated_time">Hora de recogida*</label>
     <input type="time" class="form-control" id="estimated_time" name="estimated_time" placeholder="00:00" value="{{ old('estimated_time', $order->estimated_time) }}">
     @if ($errors->has('estimated_time'))
         <div class="alert alert-danger mt-2">{{ $errors->first('estimated_time') }}</div>
@@ -155,7 +159,7 @@
 </div>
 
 <div class="form-group">
-    <p>¿Está pagado?</p>
+    <p>¿Está pagado?*</p>
     <div class="form-check">
         <input {{ old('paid', $order->paid) == 1 ? 'checked' : '' }} type="radio" class="form-check-input" name="paid" id="paid_yes" value="1">
         <label for="form-check-label" for="available_yes">Sí</label>

@@ -19,7 +19,7 @@
 </div>
 
 <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">Email*</label>
     <input type="text" class="form-control" id="email" name="email" placeholder="pedro@example.com" value="{{ old('email', $user->email) }}">
     @if ($errors->has('email'))
         <div class="alert alert-danger mt-2">{{ $errors->first('email') }}</div>
@@ -27,7 +27,7 @@
 </div>
 
 <div class="form-group">
-    <label for="password">Contraseña</label>
+    <label for="password">Contraseña*</label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Mayor a 6 caracteres">
     @if ($errors->has('password'))
         <div class="alert alert-danger mt-2">{{ $errors->first('password') }}</div>

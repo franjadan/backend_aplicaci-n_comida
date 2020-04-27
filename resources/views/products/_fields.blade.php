@@ -5,21 +5,21 @@
 {{ csrf_field() }}
 
 <div class="form-group">
-    <label for="inputName">Nombre:</label>
+    <label for="inputName">Nombre*</label>
     <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $product->name) }}" placeholder="Hamburguesa con queso">
     @if($errors->has('name'))
         <div class="alert alert-danger mt-2">{{ $errors->first('name') }}</div>
     @endif
 </div>
 <div class="form-group">
-    <label for="inputDescription">Descripción:</label>
+    <label for="inputDescription">Descripción*</label>
     <textarea name="description" id="inputDescription" cols="5" rows="5" class="form-control" placeholder="Magnígica hamburguesa con extra de queso...">{{ old('description', $product->description) }}</textarea>
     @if($errors->has('description'))
         <div class="alert alert-danger mt-2">{{ $errors->first('description') }}</div>
     @endif
 </div>
 <div class="form-group">
-    <label for="inputPrice">Precio:</label>
+    <label for="inputPrice">Precio*</label>
     <div class="input-group">
         <input type="text" class="form-control" id="inputPrice" name="price" value="{{ old('price', $product->price) }}" placeholder="10.0">
         <div class="input-group-append">
@@ -31,7 +31,7 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="inputDiscount">Descuento:</label>
+    <label for="inputDiscount">Descuento</label>
     <div class="input-group">
         <input type="text" class="form-control" id="inputDiscount" name="discount" value="{{ old('discount', $product->discount) }}" placeholder="0.00">
         <div class="input-group-append">
@@ -43,7 +43,7 @@
     @endif
 </div>
 <div class="form-group">
-    <p>¿Está disponible?</p>
+    <p>¿Está disponible?*</p>
     <div class="form-check">
         <input type="radio" class="form-check-input" name="available" id="available_yes" value="yes" {{ $product->available || old('available') == 'yes' ? 'checked': '' }}>
         <label for="form-check-label" for="available_yes">Sí</label>
@@ -57,7 +57,7 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="selectCategories">Categorías:</label>
+    <label for="selectCategories">Categorías*</label>
     @if ($categories->isNotEmpty())
         <select name="categories[]" id="selectCategories" class="form-control multi-select" multiple>
             @foreach ($categories as $category)
@@ -72,7 +72,7 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="selectIngredients">Ingredientes:</label>
+    <label for="selectIngredients">Ingredientes*</label>
     @if ($ingredients->isNotEmpty())
         <select name="ingredients[]" id="selectIngredients" class="form-control select-categories multi-select" multiple>
             @foreach ($ingredients as $ingredient)
@@ -87,7 +87,7 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="inputImage">Imagen:</label>
+    <label for="inputImage">Imagen*</label>
     <div class="input-group">
         <div class="custom-file">
             <input type="file" accept="image/*" name="image" class="form-control-file" id="inputImage">
