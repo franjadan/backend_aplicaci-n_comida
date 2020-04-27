@@ -38,12 +38,8 @@ class ChangePasswordController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-
-            if($user->id == Auth::user()->id){
-                return redirect(route('users.changePassword', ['user' => $user]))->withErrors($validator)->withInput();
-            }else{
-                return redirect(route('users.changePassword', ['user' => $user]))->withErrors($validator)->withInput();
-            }
+            
+            return redirect(route('users.changePassword', ['user' => $user]))->withErrors($validator)->withInput();
 
         } else {
 
@@ -58,7 +54,12 @@ class ChangePasswordController extends Controller
 
             $user->save();
 
-            return redirect()->route('profile.index')->with('success', 'Se han guardado los cambios');
+            if($user->id == Auth::user()->id){
+                return redirect()->route('profile.index')->with('success', 'Se han guardado los cambios');
+            }else{
+                return redirect()->route('users.index')->with('success', 'Se han guardado los cambios');
+            }
+
         }
     }
 }
