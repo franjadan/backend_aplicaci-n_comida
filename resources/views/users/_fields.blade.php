@@ -51,7 +51,7 @@
 </div>
 
 <div class="form-group">
-    <label>Rol</label>
+    <label>Rol*</label>
     @foreach($roles as $role => $name)
         <div class="form-check">
             <label class="form-check-label">
