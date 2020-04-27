@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Acceso</div>
+            <div class="card login">
+                <div class="card-header login_header">Acceso</div>
 
                 <div class="card-body">
                 @include('shared._flash-message')

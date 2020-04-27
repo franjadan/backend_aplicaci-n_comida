@@ -242,3 +242,19 @@ thead{
     color: #FFFFFF;
 }
 
+.login{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: none !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.login_header{
+    -webkit-box-shadow: 0 4px 6px -6px #0069D9;
+    -moz-box-shadow: 0 4px 6px -6px #0069D9;
+    box-shadow: 0 4px 6px -6px #0069D9;
+    background-color: #FFFFFF !important;
+    border: none !important;
+}
+
+
