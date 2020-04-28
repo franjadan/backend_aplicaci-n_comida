@@ -19,9 +19,9 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Modificar producto">
-            <a href="{{ route('products') }}" class="btn btn-outline-primary">Volver al listado de productos</a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modificar producto</button>
+            <a href="{{ route('products') }}" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i> Volver al listado de productos</a>
         </div>
     </form>
 @endsection

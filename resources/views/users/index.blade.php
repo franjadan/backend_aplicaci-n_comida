@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Listado de usuarios</h1>
+    <h1>Listado de usuarios.</h1>
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -27,8 +27,8 @@
             </div>
         </div>
     </div>
-    <div>
-        <a href="{{ route('users.create') }}" class="btn btn-primary mt-3">Nuevo usuario</a>
+    <div class="my-custom-panel my-4 shadow-sm p-4">
+        <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo usuario</a>
     </div>
     @if(!$users->isEmpty())
         <div class="table-responsive">
@@ -54,7 +54,7 @@
                                     {{ method_field('DELETE') }}
 
                                     <div class="btn-group">
-                                        <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-dark" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
                                         <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
                                     </div>
                                 </form>

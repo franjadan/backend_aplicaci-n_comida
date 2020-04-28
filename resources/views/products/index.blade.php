@@ -29,8 +29,8 @@
                 </div>
             </div>
         </div>
-        <div>
-            <a href="{{ route('products.create') }}" class="btn btn-primary mt-2">Nuevo Producto</a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Producto</a>
         </div>
     @endif
     @include('products._filters')
@@ -49,7 +49,7 @@
                                     @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                                         <div class="row my-3">
                                             <div class="col">
-                                                <a href="{{ route('products.edit', $product) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('products.edit', $product) }}" class="btn btn-dark d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -64,9 +64,9 @@
                                                     {{ csrf_field() }}
                                                     {{ method_field('PUT') }}
                                                     <input type="hidden" name="available" value="{{ $product->available ? 'no': 'yes' }}">
-                                                    <input type="submit" class="btn {{ $product->available ? 'btn-danger': 'btn-success' }} w-100" value="{{ $product->available ? 'Deshabilitar': 'Habilitar'}} producto">
+                                                    <button type="submit" class="btn {{ $product->available ? 'btn-danger': 'btn-success' }} w-100">@if($product->available) <i class="fas fa-times"></i> Deshabilitar @else <i class="fas fa-check"></i> Habilitar @endif producto</button>
                                                 </form>
-                                            </div>  
+                                            </div>
                                         </div>
                                     @endif
                                 </div>

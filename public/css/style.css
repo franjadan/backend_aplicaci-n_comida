@@ -169,11 +169,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 div.dataTables_wrapper div.dataTables_filter {
-    margin: 2em 0em 2em 2em;
+    margin: 0.5em 0em 0.5em 2em;
 }
 
 .my-custom-search {
-    margin: 2em 0em 2em 2em;
+    margin: 0.5em 0em 0.5em 2em;
 }
 
 .my-custom-search input{
@@ -190,6 +190,10 @@ table.dataTable.no-footer {
 
 table thead th::before {
     content: '' !important;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #dee2e6 !important;
 }
 
 .alert-refresh-orders {
@@ -263,6 +267,10 @@ thead{
 
 .logo-app-layout {
     width: 40%;
+}
+
+.my-custom-panel {
+    border-radius: 0.5em;
 }
 
 

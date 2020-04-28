@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1 class="mb-3">Pedido {{ $order->id }}</h1>
+    <h1 class="mb-3">Pedido {{ $order->id }}.</h1>
 
     @if($order->user != null)
         <h5 class="mt-5 info_field_title">Usuario</h5>
@@ -60,10 +60,12 @@
     <h5 class="mt-5 info_field_title">Total</h5>
     <p>{{ $order->total }}€</p>
 
-    @if($order->state == "pending")
-        <a class="btn btn-outline-primary mt-3" href="{{ route('orders.index') }}">Regresar al listado de pedidos</a>
-    @else
-        <a class="btn btn-outline-primary mt-3" href="{{ route('orders.record') }}">Regresar al listado de pedidos</a>
-    @endif
-  
+    <div class="my-custom-panel my-5 shadow-sm p-4">
+        @if($order->state == "pending")
+            <a class="btn btn-outline-primary" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+        @else
+            <a class="btn btn-outline-primary" href="{{ route('orders.record') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+        @endif
+    </div>
+
 @endsection

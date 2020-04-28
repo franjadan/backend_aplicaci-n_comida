@@ -28,8 +28,8 @@
             </div>
         </div>
     </div>
-    <div>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Nueva Categoría</a>
+    <div class="my-custom-panel my-4 shadow-sm p-4">
+        <a href="{{ route('categories.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Categoría</a>
     </div>
     @include('categories._filters')
     <div>
@@ -45,7 +45,7 @@
                                <div class="container">
                                    <div class="row my-3">
                                         <div class="col">
-                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-primary d-block" id="card-option-edit-{{ $category->id }}"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-dark d-block" id="card-option-edit-{{ $category->id }}"><i class="fas fa-edit"></i></a>
                                         </div>
                                    </div>
                                    <div class="row">

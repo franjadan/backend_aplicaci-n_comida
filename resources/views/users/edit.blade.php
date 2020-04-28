@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <h1>Usuario {{ $user->id }}</h1>
+    <h1>Usuario {{ $user->id }}.</h1>
 
     <!--Modal deshabilitar usuario-->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -30,26 +30,28 @@
             </div>
         </div>
     </div>
-    
+
     <form method="POST" class="d-inline mt-3" action="{{ url("usuarios/{$user->id}") }}">
-                
+
         {{ method_field('PUT') }}
-        
+
         @include('users._fields')
 
-        <input type="submit" class="btn btn-success" value="Guardar cambios">
-    
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modificar usuario</button>
+
     </form>
 
     <form id="deleteForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}/estado") }}">
-                
+
         {{ method_field('POST') }}
         {{ csrf_field() }}
-        
-        <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" type="button" class="btn btn-warning showModalConfirmBtn" @if ($user->active) value="Deshabilitar usuario" @else value="Habilitar usuario" @endif>
-        <a class="btn btn-outline-warning" href="{{ route('users.changePassword', $user) }}">Cambiar contraseña</a>
-        <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
-        
+
+        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn btn-warning showModalConfirmBtn">@if ($user->active) <i class="fas fa-user-times"></i> Deshabilitar usuario @else <i class="fas fa-user-check"></i> Habilitar usuario @endif</button>
+        <a class="btn btn-outline-warning" href="{{ route('users.changePassword', $user) }}"><i class="fas fa-lock"></i> Cambiar contraseña</a>
+        <a class="btn btn-outline-primary" href="{{ route('users.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de usuarios</a>
+
     </form>
-  
+    </div>
+
 @endsection
