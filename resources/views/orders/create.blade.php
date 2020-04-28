@@ -2,6 +2,10 @@
 
 @section('title', "Nuevo pedido")
 
+@section('scripts')
+    <script src="{{ asset('js/show_guest_data.js') }}"></script>
+@endsection
+
 @section('content')
 
     <h1>Nuevo pedido</h1>

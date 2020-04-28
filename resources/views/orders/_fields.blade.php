@@ -3,10 +3,11 @@
 <!--Aquí se encuentran los campos compartidos entre la creación y edición de pedidios-->
 
 <div class="form-group">
-    <label for="selectUser">Usuario</label>
+    <label for="selectUser">Usuario*</label>
     @if ($users->isNotEmpty())
         <select name="user_id" id="selectUser" class="form-control">
-        <option value="">Usuario invitado</option>
+        <option value="" selected>-- Seleccione un usuario --</option>
+        <option value="guest">Usuario invitado</option>
             @foreach ($users as $user)
                 <option {{ $user->id == old('user_id', $order->user_id) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
             @endforeach
@@ -19,32 +20,30 @@
     @endif
 </div>
 
-<div class="form-group">
-    <label for="guest_name">Nombre invitado</label>
-    <input type="text" class="form-control" id="guest_name" name="guest_name" placeholder="Pedro" value="{{ old('guest_name', $order->guest_name) }}">
-    @if ($errors->has('guest_name'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('guest_name') }}</div>
-    @endif
-</div>
+<div class="guest-data">
+    <div class="form-group">
+        <label for="guest_name">Nombre invitado</label>
+        <input type="text" class="form-control" id="guest_name" name="guest_name" placeholder="Pedro" value="{{ old('guest_name', $order->guest_name) }}">
+        @if ($errors->has('guest_name'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('guest_name') }}</div>
+        @endif
+    </div>
 
-<div class="form-group">
-    <label for="guest_address">Dirección invitado</label>
-    <input type="text" class="form-control" id="guest_address" name="guest_address" placeholder="Calle 123" value="{{ old('guest_address', $order->guest_address) }}">
-    @if ($errors->has('guest_address'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('guest_address') }}</div>
-    @endif
-</div>
+    <div class="form-group">
+        <label for="guest_address">Dirección invitado</label>
+        <input type="text" class="form-control" id="guest_address" name="guest_address" placeholder="Calle 123" value="{{ old('guest_address', $order->guest_address) }}">
+        @if ($errors->has('guest_address'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('guest_address') }}</div>
+        @endif
+    </div>
 
-<div class="form-group">
-    <label for="guest_phone">Teléfono invitado</label>
-    <input type="text" class="form-control" id="guest_phone" name="guest_phone" placeholder="662662662" value="{{ old('guest_phone', $order->guest_phone) }}">
-    @if ($errors->has('guest_phone'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('guest_phone') }}</div>
-    @endif
-</div>
-
-<div class="form-group">
-    <small class="form-text text-muted">Debe haber datos de invitado o usuario seleccionado. Dará error si hay ambos</small>
+    <div class="form-group">
+        <label for="guest_phone">Teléfono invitado</label>
+        <input type="text" class="form-control" id="guest_phone" name="guest_phone" placeholder="662662662" value="{{ old('guest_phone', $order->guest_phone) }}">
+        @if ($errors->has('guest_phone'))
+            <div class="alert alert-danger mt-2">{{ $errors->first('guest_phone') }}</div>
+        @endif
+    </div>
 </div>
 
 <label for="">Productos*</label>
@@ -52,17 +51,17 @@
     <!--Compruebo el número de productos-->
     @if ($products->isNotEmpty())
         <div class="selects">
-        <?php 
+        <?php
             $number = 1;
 
-            if(old('num') != null){        
+            if(old('num') != null){
                 $number = old('num');
             }else{
                 if(count($order->products) > 0){
                     $number = count(array_unique($order->products->pluck('id')->toArray()));
                 }
             }
-            
+
         ?>
         <input type="hidden" name="num" id="num" value="<?php echo $number ?>">
         <!--En caso de encontrar productos los añade en el bucle-->
@@ -72,7 +71,7 @@
                     <div class="form-group col-md-7">
                         <label for="<?php echo "product_$i" ?>">Producto</label>
                         <select onchange="calculateTotal()" name="<?php echo "product_$i" ?>" id="<?php echo "product_$i" ?>" class="form-control">
-                        
+
                         <!--select de productos-->
                         @foreach ($products as $product)
                             @if(old('num') != null)
@@ -98,7 +97,7 @@
                             <input onchange="calculateTotal()" type="number" min="1" name="<?php echo "cant_$i" ?>" id="<?php echo "cant_$i" ?>" class="form-control" value="1">
                         @endif
                     </div>
-                
+
 
                     <div class="form-group col-md-2">
                         <label>Total</label>
@@ -116,7 +115,7 @@
                 @if($errors->has('cant_' . $i))
                     <div class="alert alert-danger mt-2">{{ $errors->first('cant_' . $i) }}</div>
                 @endif
-            @endif   
+            @endif
         <?php endfor; ?>
         </div>
     @else
@@ -129,7 +128,7 @@
     <div class="row">
         <div class=" col-md-12 text-center">
             <button id="btnAdd" class="btn btn-success col-md-4">+</button>
-        </div>    
+        </div>
     </div>
 </div>
 
@@ -205,7 +204,7 @@
     }
 
     function calculateTotal(){
-            
+
         var num = parseInt($("#num").val());
         var products = <?php echo $products; ?>;
         var total = 0;
@@ -213,7 +212,7 @@
         $('#inputTotalAmount').val(total + '€');
 
         for(i = 1; i <= num; i++){
-            if(!$('#row-' + i).is(":hidden") && $('#cant_' + i).val() > 0){  
+            if(!$('#row-' + i).is(":hidden") && $('#cant_' + i).val() > 0){
                 var selectedId = $('#product_' + i).children("option:selected").val();
                 var product = products.getById(products, selectedId);
                 var totalPriceProduct = (product.price - (product.price * (product.discount / 100))) * $('#cant_' + i).val();
@@ -229,7 +228,7 @@ $('#btnAdd').click(function(event) {
     event.preventDefault();
 
     var products = <?php echo $products; ?>
-    
+
     var num = $("#num").val();
     num++;
 
@@ -245,16 +244,16 @@ $('#btnAdd').click(function(event) {
 
     $('.selects').append(html);
 
-    $("#num").val(num); 
+    $("#num").val(num);
 
     calculateTotal();
-    
+
 });
 
 //Función para ordenar los productos
 function sortByName(a, b){
   var aName = a.name.toLowerCase();
-  var bName = b.name.toLowerCase(); 
+  var bName = b.name.toLowerCase();
   return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
 }
 
