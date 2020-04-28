@@ -31,7 +31,9 @@
       <!-- Sidebar -->
       <div class="sidebar border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
-            <a class="navbar-brand" href="{{ url('/') }}">Menu of the day</a>
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ asset('media/app/logo.png') }}" alt="" class="logo-app-layout">
+            </a>
         </div>
         <div class="list-group list-group-flush">
           <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-check-square"></i> Pedidos</a>
@@ -76,7 +78,7 @@
               </div>
           </nav>
 
-          <div class="container-fluid my-4 px-4">
+          <div class="container-fluid my-4 px-5">
               @include('shared._flash-message')
               @yield('content')
           </div>
