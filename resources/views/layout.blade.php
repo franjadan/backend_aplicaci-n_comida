@@ -23,6 +23,13 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('media/app/favicon//favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('media/app/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('media/app/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('media/app/favicon/manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ asset('media/app/favicon/ms-icon-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
     <title>@yield('title')</title>
 </head>
   <body>
