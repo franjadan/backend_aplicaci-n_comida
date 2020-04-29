@@ -12,6 +12,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Mail;
 
 class UserController extends Controller
 {
@@ -185,5 +186,32 @@ class UserController extends Controller
 
         $data = compact('user','token');
         return response()->json(["response" => ["code" => 1, "data" => $data]], 200);
+    }
+
+    //Función para generar una nueva contraseña
+    public function generatePassword(User $user)
+    {
+        $new_password = str_random(6);
+
+        $user->password = bcrypt($new_password);
+        $user->save();
+        
+        $subject = "Cambio de contraseña";
+        $for = $user->email;
+
+        $data['msg'] = "Se ha generado una nueva contraseña: $new_password";
+
+        //Enviar por correo
+        Mail::send('email.email', $data, function($message) use($subject,$for){
+            $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
+            $message->subject($subject);
+            $message->to($for);
+        });
+
+        if (Mail::failures()) {
+            return redirect()->route('users.edit', $user)->with('error', 'No se ha podido enviar el correo');
+        }else{
+            return redirect()->route('users.edit', $user)->with('success', "Se ha enviado el correo");
+        }
     }
 }

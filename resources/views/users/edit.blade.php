@@ -30,6 +30,27 @@
             </div>
         </div>
     </div>
+
+    <!--Modal generar contraseña-->
+    <div class="modal fade" id="generatePassModal" tabindex="-1" role="dialog" aria-labelledby="generatePassModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="generatePassModal">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estas seguro de generar la contraseña?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="generatePassButton" class="btn btn-success">Aceptar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     
     <form method="POST" class="d-inline mt-3" action="{{ url("usuarios/{$user->id}") }}">
                 
@@ -47,8 +68,16 @@
         {{ csrf_field() }}
         
         <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" type="button" class="btn btn-warning showModalConfirmBtn" @if ($user->active) value="Deshabilitar usuario" @else value="Habilitar usuario" @endif>
-        <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
         
+    </form>
+
+    <form id="generatePassForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ route('users.generatePassword', $user) }}">
+                    
+        {{ method_field('POST') }}
+        {{ csrf_field() }}
+            
+        <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#generatePassModal" type="button" class="btn btn-outline-warning showModalConfirmBtn" value="Generar contraseña">
+        <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
     </form>
   
 @endsection

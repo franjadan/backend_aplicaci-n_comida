@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth','active']], function() {
 
         Route::delete('/{user}', 'UserController@destroy') //Ruta para realizar la eliminación el usuario
             ->name('users.destroy');
+
+        Route::post('/{user}/generar_contraseña', 'UserController@generatePassword')->name('users.generatePassword'); //Ruta para generar la contraseña
+
     });
 
     Route::middleware('admin')->prefix('/categorias')->group(function () {

@@ -22,5 +22,10 @@ $(function() {
         event.preventDefault();
         $('#concludeForm-' + id).submit();
     });
+
+    $('#generatePassButton').click(function(event) {
+        event.preventDefault();
+        $('#generatePassForm-' + id).submit();
+    });
 });
 
