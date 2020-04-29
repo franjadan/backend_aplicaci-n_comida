@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="my-custom-panel my-4 shadow-sm p-4">
-            <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Producto</a>
+            <a href="{{ route('products.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo Producto</a>
         </div>
     @endif
     @include('products._filters')
@@ -49,12 +49,12 @@
                                     @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                                         <div class="row my-3">
                                             <div class="col">
-                                                <a href="{{ route('products.edit', $product) }}" class="btn btn-dark d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('products.edit', $product) }}" class="btn my-btn-other d-block" id="card-option-edit-{{ $product->id }}"><i class="fas fa-edit"></i></a>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
+                                                <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn my-btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
                                             </div>
                                         </div>
                                     @else
@@ -64,7 +64,7 @@
                                                     {{ csrf_field() }}
                                                     {{ method_field('PUT') }}
                                                     <input type="hidden" name="available" value="{{ $product->available ? 'no': 'yes' }}">
-                                                    <button type="submit" class="btn {{ $product->available ? 'btn-danger': 'btn-success' }} w-100">@if($product->available) <i class="fas fa-times"></i> Deshabilitar @else <i class="fas fa-check"></i> Habilitar @endif producto</button>
+                                                    <button type="submit" class="btn {{ $product->available ? 'my-btn-danger': 'btn-success' }} w-100">@if($product->available) <i class="fas fa-times"></i> Deshabilitar @else <i class="fas fa-check"></i> Habilitar @endif producto</button>
                                                 </form>
                                             </div>
                                         </div>

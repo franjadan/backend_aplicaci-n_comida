@@ -62,9 +62,9 @@
 
     <div class="my-custom-panel my-5 shadow-sm p-4">
         @if($order->state == "pending")
-            <a class="btn btn-outline-primary" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+            <a class="btn my-btn-other" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
         @else
-            <a class="btn btn-outline-primary" href="{{ route('orders.record') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+            <a class="btn my-btn-other" href="{{ route('orders.record') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
         @endif
     </div>
 

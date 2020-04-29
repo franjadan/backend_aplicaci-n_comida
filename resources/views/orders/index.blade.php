@@ -18,11 +18,11 @@
 
     @if($route != "record")
         <div class="my-custom-panel my-4 shadow-sm p-4">
-            <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo pedido</a>
+            <a href="{{ route('orders.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo pedido</a>
         </div>
     @elseif(auth()->user()->isAdmin())
         <div class="my-custom-panel my-4 shadow-sm p-4">
-            <a href="{{ route('orders.excel') }}" class="btn btn-success"><i class="fas fa-file-download"></i> Descargar excel</a>
+            <a href="{{ route('orders.excel') }}" class="btn my-btn-primary"><i class="fas fa-file-download"></i> Descargar excel</a>
         </div>
     @endif
     <!--Relleno la tabla con los datos de los pedidios-->
@@ -56,9 +56,9 @@
                             @endif
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a class='btn btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
+                                    <a class='btn my-btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
                                     @if($route != 'record')
-                                        <a class='btn btn-dark' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
+                                        <a class='btn my-btn-other' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
                                     @endif
                                 </div>
                             </td>

@@ -47,9 +47,9 @@
         {{ method_field('POST') }}
         {{ csrf_field() }}
 
-        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn btn-warning showModalConfirmBtn">@if ($user->active) <i class="fas fa-user-times"></i> Deshabilitar usuario @else <i class="fas fa-user-check"></i> Habilitar usuario @endif</button>
-        <a class="btn btn-outline-warning" href="{{ route('users.changePassword', $user) }}"><i class="fas fa-lock"></i> Cambiar contraseña</a>
-        <a class="btn btn-outline-primary" href="{{ route('users.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de usuarios</a>
+        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn my-btn-danger showModalConfirmBtn">@if ($user->active) <i class="fas fa-user-times"></i> Deshabilitar usuario @else <i class="fas fa-user-check"></i> Habilitar usuario @endif</button>
+        <a class="btn my-btn-primary" href="{{ route('users.changePassword', $user) }}"><i class="fas fa-lock"></i> Cambiar contraseña</a>
+        <a class="btn my-btn-other" href="{{ route('users.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de usuarios</a>
 
     </form>
     </div>

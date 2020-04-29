@@ -67,7 +67,7 @@
         {{ method_field('POST') }}
         {{ csrf_field() }}
 
-        <button data-id="{{ $order->id }}" data-toggle="modal" data-target="#concludeOrderModal" class="btn btn-warning showModalConfirmBtn"><i class="fas fa-check"></i> Finalizar pedido</button>
+        <button data-id="{{ $order->id }}" data-toggle="modal" data-target="#concludeOrderModal" class="btn my-btn-primary showModalConfirmBtn"><i class="fas fa-check"></i> Finalizar pedido</button>
 
     </form>
 
@@ -76,8 +76,8 @@
         {{ method_field('POST') }}
         {{ csrf_field() }}
 
-        <button data-id="{{ $order->id }}" data-toggle="modal" data-target="#cancelOrderModal" class="btn btn-danger showModalConfirmBtn"><i class="fas fa-times"></i> Cancelar pedido</button>
-        <a class="btn btn-outline-primary" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+        <button data-id="{{ $order->id }}" data-toggle="modal" data-target="#cancelOrderModal" class="btn my-btn-danger showModalConfirmBtn"><i class="fas fa-times"></i> Cancelar pedido</button>
+        <a class="btn my-btn-other" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
 
     </form>
     </div>

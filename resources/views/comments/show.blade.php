@@ -9,7 +9,7 @@
     <h5 class="mt-5 info_field_title">Comentario</h5>
     <p>{{ $comment->comment }}</p>
     <div class="my-custom-panel my-4 shadow-sm p-4">
-        <a href="{{ route('comments') }}" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i> Volver al listado de comentarios</a>
+        <a href="{{ route('comments') }}" class="btn my-btn-other"><i class="fas fa-arrow-left"></i> Volver al listado de comentarios</a>
     </div>
 @endsection
 

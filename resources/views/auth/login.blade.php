@@ -4,8 +4,10 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-8">
-            <div class="card login">
-                <div class="card-header login_header">Menu of the day</div>
+            <div class="card login shadow-lg">
+                <div class="card-header login_header my-2">
+                    <h4>Menu of the day</h4>
+                </div>
                 <div class="card-body">
                 @include('shared._flash-message')
 
@@ -38,7 +40,7 @@
                             <div class="row px-3 mt-4">
                                 <div class="col-8"></div>
                                 <div class="col-4 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                                    <button type="submit" class="btn w-100 my-btn-primary">Iniciar sesión <i class="fas fa-sign-in-alt"></i></button>
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             ¿Ha olvidado la contraseña?

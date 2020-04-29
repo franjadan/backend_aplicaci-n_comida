@@ -16,7 +16,7 @@
 
         <div class="my-custom-panel my-5 shadow-sm p-4">
             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Crear pedido</button>
-            <a class="btn btn-outline-primary" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
+            <a class="btn my-btn-other" href="{{ route('orders.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de pedidos</a>
         </div>
 
     </form>

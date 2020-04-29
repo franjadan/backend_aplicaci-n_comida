@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -36,26 +37,26 @@
 
     <div class="d-flex" id="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar border-right" id="sidebar-wrapper">
+      <div class="sidebar" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('media/app/logo.png') }}" alt="" class="logo-app-layout">
             </a>
         </div>
-        <div class="list-group list-group-flush">
-          <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-check-square"></i> Pedidos</a>
-          <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-clipboard-list"></i> Historial de pedidos</a>
+        <div class="list-group list-group-flush py-5">
+          <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-check-square"></i> Pedidos.</a>
+          <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-clipboard-list"></i> Historial de pedidos.</a>
           @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-users"></i> Usuarios</a>
-            <a href="{{ route('categories') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-th-list"></i> Categorías</a>
-            <a href="#" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-exclamation-triangle"></i> Alérgenos</a>
-            <a href="#" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-egg"></i> Ingredientes</a>
+            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-users"></i> Usuarios.</a>
+            <a href="{{ route('categories') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-th-list"></i> Categorías.</a>
+            <a href="#" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-exclamation-triangle"></i> Alérgenos.</a>
+            <a href="#" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-egg"></i> Ingredientes.</a>
           @endif
-            <a href="{{ route('products') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-hamburger"></i> Productos</a>
+            <a href="{{ route('products') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-hamburger"></i> Productos.</a>
           @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-            <a href="{{ route('comments') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-comments"></i> Comentarios</a>
+            <a href="{{ route('comments') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-comments"></i> Comentarios.</a>
           @endif
-          <a href="{{ route('profile.index') }}" class="list-group-item list-group-item-action text-white lead"><i class="fas fa-id-badge"></i> Perfil</a>
+          <a href="{{ route('profile.index') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-id-badge"></i> Perfil.</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
@@ -63,8 +64,8 @@
       <!-- Page Content -->
       <div id="page-content-wrapper">
 
-          <nav class="navbar navbar-expand-lg navbar-light py-4">
-              <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+          <nav class="navbar navbar-expand-lg navbar-light py-4 shadow-sm">
+              <button class="btn my-btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
 
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -73,9 +74,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                   <li class="nav-item">
-                      <a class="btn btn-outline-danger" href="{{ route('logout') }}"
-                          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                          Cerrar sesión <i class="fas fa-sign-out-alt"></i>
+                      <a class="btn my-btn-other py-2 px-3" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión <i class="fas fa-sign-out-alt"></i>
                       </a>
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: one;">
                           {{ csrf_field() }}
@@ -85,7 +84,7 @@
               </div>
           </nav>
 
-          <div class="container-fluid my-4 px-5">
+          <div class="container-fluid p-5">
               @include('shared._flash-message')
               @yield('content')
           </div>
