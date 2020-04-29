@@ -318,10 +318,18 @@ nav {
     font-weight: 700;
 }
 
+.my-btn-primary:hover {
+    background-color: rgba(229,179,0, 1);
+}
+
 .my-btn-other {
     background-color: rgba(163, 189, 49, 0.7);
     color: rgba(0, 0, 0, 0.9);
     font-weight: 700;
+}
+
+.my-btn-other:hover {
+    background-color: rgba(163, 189, 49, 1);
 }
 
 .my-btn-danger {
@@ -331,6 +339,7 @@ nav {
 }
 
 .my-btn-danger:hover {
+    background-color:  rgba(197, 66, 71, 1);
     color: rgba(255, 255, 255, 0.9);
 }
 
