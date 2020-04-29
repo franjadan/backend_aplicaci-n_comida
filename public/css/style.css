@@ -352,4 +352,18 @@ nav {
     border-color: rgba(229,179,0, 1);
 }
 
+table.dataTable thead th.sorting:after {
+    color: rgba(0, 0, 0, 0.9) !important;
+}
+
+table.dataTable thead th.sorting_desc:after {
+    color: rgba(229,179,0, 1) !important;
+}
+
+table.dataTable thead th.sorting_asc:after {
+    color: rgba(229,179,0, 1) !important;
+    opacity: 1 !important;
+}
+
+
 
