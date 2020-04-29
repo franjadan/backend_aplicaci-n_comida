@@ -5,16 +5,16 @@
 @section('content')
     <!--Donde voy a colocar los gráficos-->
     <div class="row justify-content-md-center">
-        <div class="col-md-12">
-            <div id="first_chart" class="div_chart" style="height:400px;"></div>
-        </div>     
+        <div class="col-md-12 p-5">
+            <div id="first_chart" class="div_chart shadow" style="height:400px;"></div>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <div id="second_chart" class="div_chart" style="height:400px;"></div>
+        <div class="col-md-6 p-5">
+            <div id="second_chart" class="div_chart shadow" style="height:400px;"></div>
         </div>
-        <div class="col-md-6">
-            <div id="third_chart" class="div_chart" style="height:400px;"></div>
+        <div class="col-md-6 p-5">
+            <div id="third_chart" class="div_chart shadow" style="height:400px;"></div>
         </div>
     </div>
 @endsection
@@ -91,7 +91,7 @@
             $("#sidebar-wrapper").toggle(0, function() {
                 drawChart();
             });
-            
+
         });
 
     </script>

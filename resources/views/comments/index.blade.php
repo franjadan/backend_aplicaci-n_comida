@@ -53,9 +53,9 @@
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <div class="btn-group">
-                                                <a href="{{ route('comments.show', $comment) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                                <button data-id="{{ $comment->id }}" data-toggle="modal" data-target="#confirmModal" class='btn btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
-                                            </div>    
+                                                <a href="{{ route('comments.show', $comment) }}" class="btn my-btn-primary"><i class="fas fa-eye"></i></a>
+                                                <button data-id="{{ $comment->id }}" data-toggle="modal" data-target="#confirmModal" class='btn my-btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
+                                            </div>
                                         </form>
                                     </div>
                                 </td>

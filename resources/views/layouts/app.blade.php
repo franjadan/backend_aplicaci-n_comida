@@ -10,8 +10,9 @@
     <title>Menu of the day</title>
 
     <!-- Scripts -->
-    
+
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/4e337af5d8.js" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -23,11 +24,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white">
+        <nav class="navbar navbar-expand-md navbar-light shadow">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Menu of the day
-                </a>
+                <img src="{{ asset('media/app/logo.png') }}" alt="" class="logo-app">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

@@ -3,7 +3,7 @@
 @section('title', 'Editar categoría')
 
 @section('content')
-    <h1>Categoría {{ $category->id }}</h1>
+    <h1>Categoría {{ $category->id }}.</h1>
 
     <form action="{{ route('categories.edit', $category) }}" class="mt-3" method="post" enctype="multipart/form-data">
         {{ method_field('PUT') }}
@@ -19,9 +19,9 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Modificar categoría">
-            <a href="{{ route('categories') }}" class="btn btn-outline-primary">Volver al listado de categorías</a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modificar categoría</button>
+            <a href="{{ route('categories') }}" class="btn my-btn-other"><i class="fas fa-arrow-left"></i> Volver al listado de categorías</a>
         </div>
     </form>
 @endsection

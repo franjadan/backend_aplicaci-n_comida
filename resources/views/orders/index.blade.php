@@ -11,18 +11,18 @@
 @section('content')
 
     @if($route == "record")
-        <h1>Historial de pedidos</h1>
+        <h1>Historial de pedidos.</h1>
     @else
-        <h1>Pedidos pendientes</h1>
+        <h1>Pedidos pendientes.</h1>
     @endif
 
     @if($route != "record")
-        <div>
-            <a href="{{ route('orders.create') }}" class="btn btn-primary mt-3">Nuevo pedido</a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <a href="{{ route('orders.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo pedido</a>
         </div>
     @elseif(auth()->user()->isAdmin())
-        <div>
-            <a href="{{ route('orders.excel') }}" class="btn btn-success mt-3">Descargar excel</a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <a href="{{ route('orders.excel') }}" class="btn my-btn-primary"><i class="fas fa-file-download"></i> Descargar excel</a>
         </div>
     @endif
     <!--Relleno la tabla con los datos de los pedidios-->
@@ -56,9 +56,9 @@
                             @endif
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a class='btn btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
+                                    <a class='btn my-btn-primary' href="{{ route('orders.show', ['order' => $order]) }}"><i class='fas fa-eye'></i></a>
                                     @if($route != 'record')
-                                        <a class='btn btn-primary' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
+                                        <a class='btn my-btn-other' href="{{ route('orders.edit', ['order' => $order]) }}"><i class='fas fa-edit'></i></a>
                                     @endif
                                 </div>
                             </td>
