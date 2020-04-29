@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
             'guest_address' => $this->guest_address,
             'guest_phone' => $this->guest_phone,
             'guest_token' => $this->guest_token,
-            'order_date' => $this->order_date,
+            'order_date' => $this->order_date->format('d/m/Y H:i:s'),
             'estimated_time' => $this->estimated_time,
             'real_time' => $this->real_time,
             'state' => $this->state,

@@ -13,6 +13,7 @@ use DataTables;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use DateTime;
+use Carbon\Carbon;
 
 
 class OrderController extends Controller
@@ -59,7 +60,6 @@ class OrderController extends Controller
             'guest_address' => ['nullable', 'present'],
             'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
-            'real_time' => ['nullable', 'present', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
             'paid' => ['required', 'boolean'] //Reglas
         ];
@@ -72,8 +72,6 @@ class OrderController extends Controller
             'guest_phone.present' => 'El campo teléfono del invitado debe estar presente',
             'estimated_time.required' => 'El campo hora de recogida es obligatorio',
             'estimated_time.regex' => 'El campo hora de recogida debe ser válido',
-            'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
-            'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
             'comments.present' => 'El campo observaciones debe estar presente',
             'paid.required' => 'El campo pagado es obligatorio',
             'paid.boolean' => 'El campo pagado no es válido' //Mensajes
@@ -138,7 +136,6 @@ class OrderController extends Controller
                 'order_date' => $dt->format('Y-m-d H:i:s'),
                 'estimated_time' => $request->get('estimated_time'),
                 'state' => 'pending',
-                'real_time' => $request->get('real_time'),
                 'comment' =>$request->get('comment'),
                 'paid' => $request->get('paid'),
             ]);
@@ -190,7 +187,6 @@ class OrderController extends Controller
             'guest_address' => ['nullable', 'present'],
             'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
-            'real_time' => ['nullable', 'present', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
             'paid' => ['required', 'boolean'] //Reglas
         ];
@@ -203,8 +199,6 @@ class OrderController extends Controller
             'guest_phone.present' => 'El campo teléfono del invitado debe estar presente',
             'estimated_time.required' => 'El campo hora de recogida es obligatorio',
             'estimated_time.regex' => 'El campo hora de recogida debe ser válido',
-            'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
-            'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
             'comments.present' => 'El campo observaciones debe estar presente',
             'paid.required' => 'El campo pagado es obligatorio',
             'paid.boolean' => 'El campo pagado no es válido' //Mensajes
@@ -264,7 +258,6 @@ class OrderController extends Controller
                 'guest_address' => $request->get('guest_address'),
                 'guest_phone' => $request->get('guest_phone'),
                 'estimated_time' => $request->get('estimated_time'),
-                'real_time' => $request->get('real_time'),
                 'comment' =>$request->get('comment'),
                 'paid' => $request->get('paid'),
             ]);
@@ -293,6 +286,7 @@ class OrderController extends Controller
 
         $order->state = 'finished';
         $order->paid = true; //El finalizar un pedidio quiere decir que este se ha pagado
+        $order->real_time = Carbon::now()->format('H:i');
 
         $order->save();
 

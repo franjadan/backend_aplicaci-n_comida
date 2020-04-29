@@ -19,7 +19,7 @@
     @endif
 
     <h5 class="mt-5 info_field_title">Fecha pedido</h5>
-    <p>{{ $order->order_date }}</p>
+    <p>{{ $order->order_date->format('d/m/Y H:i:s') }}</p>
 
     <h5 class="mt-5 info_field_title">Productos</h5>
     <ul>
@@ -36,9 +36,11 @@
     <h5 class="mt-5 info_field_title">Hora de recogida estimada</h5>
     <p>{{ $order->estimated_time }}</p>
 
+    <h5 class="mt-5 info_field_title">Hora de recogida real</h5>
     @if($order->real_time != null)
-        <h5 class="mt-5 info_field_title">Hora de recogida real</h5>
         <p>{{ $order->real_time }}</p>
+    @else
+        <p>No recogido</p>
     @endif
 
     <h5 class="mt-5 info_field_title">Estado del pedido</h5>

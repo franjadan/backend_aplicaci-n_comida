@@ -141,15 +141,6 @@
 </div>
 
 <div class="form-group">
-    <label for="real_time">Hora real de recogida</label>
-    <input type="time" class="form-control" id="real_time" name="real_time" placeholder="00:00" value="{{ old('real_time', $order->real_time) }}">
-    @if ($errors->has('real_time'))
-        <div class="alert alert-danger mt-2">{{ $errors->first('real_time') }}</div>
-    @endif
-</div>
-
-
-<div class="form-group">
     <label for="comment">Observaciones</label>
     <input type="text" class="form-control" id="comment" name="comment" placeholder="El pan muy tostado" value="{{ old('comment', $order->comment) }}">
     @if ($errors->has('comment'))
