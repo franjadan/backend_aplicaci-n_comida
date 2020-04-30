@@ -20,7 +20,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de cancelar el pedido?
+                ¿Está seguro de que desea cancelar el pedido?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -40,7 +40,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de finalizar el pedido?
+                ¿Está segurdo de que desea finalizar el pedido?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

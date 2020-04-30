@@ -365,5 +365,34 @@ table.dataTable thead th.sorting_asc:after {
     opacity: 1 !important;
 }
 
+.modal-content {
+    border: 0em;
+}
+
+.modal-header {
+    background-color: rgba(163, 189, 49, 0.015);
+    border: 0em;
+    -webkit-box-shadow: 0 4px 6px -6px #A3BD31;
+    -moz-box-shadow: 0 4px 6px -6px #A3BD31;
+    box-shadow: 0 4px 6px -6px #A3BD31;
+}
+
+.modal-title {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-body {
+    background-color: rgba(163, 189, 49, 0.015);
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 500;
+    padding-top: 2em;
+}
+
+.modal-footer {
+    background-color: rgba(163, 189, 49, 0.015);
+    border: 0em;
+    padding-top: 2em;
+}
+
 
 

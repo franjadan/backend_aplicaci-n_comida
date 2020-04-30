@@ -20,7 +20,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Estas seguro de eliminar el producto?
+                    ¿Está seguro de que desea eliminar el producto?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

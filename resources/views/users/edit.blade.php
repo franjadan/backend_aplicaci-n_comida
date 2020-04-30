@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de cambiar el estado del usuario?
+                ¿Está seguro de que desea cambiar el estado del usuario?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -42,7 +42,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de generar la contraseña?
+                ¿Está seguro de que desea generar una nueva contraseña?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
