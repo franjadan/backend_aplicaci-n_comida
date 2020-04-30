@@ -7,7 +7,7 @@ body{
 }
 
 .sidebar{
-    width: 20%;
+    width: 25%;
     background-color: rgba(163,189,49, 0.015);
 }
 
@@ -33,7 +33,7 @@ body{
 }
 
 .principal{
-    width: 80%;
+    width: 75%;
 }
 
 #wrapper{
@@ -286,8 +286,12 @@ thead{
     -webkit-box-shadow: 0 4px 6px -6px #A3BD31;
     -moz-box-shadow: 0 4px 6px -6px #A3BD31;
     box-shadow: 0 4px 6px -6px #A3BD31;
-    background-color: #FFFFFF !important;
+    background-color: rgba(163, 189, 49, 0.015);
     border: none !important;
+}
+
+.login-body {
+    background-color: rgba(163, 189, 49, 0.015);
 }
 
 .logo-app {
