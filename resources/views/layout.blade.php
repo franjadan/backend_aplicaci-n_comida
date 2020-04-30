@@ -35,9 +35,9 @@
 </head>
   <body>
 
-    <div class="d-flex pl-4" id="wrapper">
+    <div class="d-flex" id="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar" id="sidebar-wrapper">
+      <div class="sidebar p-4" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('media/app/logo.png') }}" alt="" class="logo-app-layout">
