@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'description' => ['required', 'min:5', 'regex:/^[\pL\s\-\.]+$/u'],
             'available' => ['required'],
-            'image' => [''],
+            'image' => ['nullable', 'image'],
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
             'price' => ['required', 'numeric'],
             'discount' => ['nullable', 'numeric', 'present'],
@@ -40,22 +40,23 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'description.required' => 'El campo descripción es obligatorio.',
-            'description.min' => 'El campo descripción debe tener más de cinco caracteres.',
+            'description.min' => 'El campo descripción debe tener mínimo 5 caracteres.',
             'description.regex' => 'El campo descripción no es válido.',
             'available.required' => 'El campo disponible es obligatorio.',
+            'image.image' => 'El campo imagen no es válido.',
             'name.required' => 'El campo nombre es obligatorio.',
-            'name.min' => 'El campo descripción debe tener mas de dos caracteres.',
-            'name.regex' => 'El campos nombre no es válido.',
+            'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
+            'name.regex' => 'El campo nombre no es válido.',
             'price.required' => 'El campo precio es obligatorio.',
             'price.numeric' => 'El campo precio no es válido.',
             'discount.numeric' => 'El campo descuendo no es válido.',
-            'discount.present' => 'El campor descuento debe estar presente.',
+            'discount.present' => 'El campo descuento debe estar presente.',
             'categories.required' => 'El campo categorías es obligatorio.',
             'categories.array' => 'El campo categorías no es válido.',
-            'categories.exists' => 'Debe seleccionar una categoría válida.',
+            'categories.exists' => 'El campo categorías no es válido.',
             'ingredients.required' => 'El campo ingredientes es obligatorio',
             'ingredients.array' => 'El campo ingredientes no es válido.',
-            'categories.exists' => 'Debes seleccionar un ingrediente válido.',
+            'categories.exists' => 'El campo ingredientes no es válido.',
         ];
     }
 

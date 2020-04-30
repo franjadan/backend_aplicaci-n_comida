@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
-            'image' => ['nullable'],
+            'image' => ['nullable', 'image'],
         ];
     }
 
@@ -34,8 +34,9 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'El campo nombre es obligatorio.',
-            'name.min' => 'El campo nombre debe tener más de dos caracteres.',
+            'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
+            'image.image' => 'El campo imagen no es válido',
         ];
     }
 

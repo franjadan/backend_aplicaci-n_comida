@@ -42,16 +42,16 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.present' => 'El campo nombre debe estar presente',
-            'last_name.present' => 'El campo apellido debe estar presente',
-            'email.required' => 'El campo email es obligatorio',
-            'email.email' => 'El campo email debe ser válido',
-            'email.unique' => 'El campo email debe ser único',
-            'address.present' => 'El campo dirección debe estar presente',
-            'phone.present' => 'El campo teléfono debe estar presente',
-            'phone.regex' => 'El teléfono debe ser válido',
-            'role.required' => 'El campo rol es obligatorio',
-            'role.in' => 'El rol debe ser válido',
+            'first_name.present' => 'El campo nombre debe estar presente.',
+            'last_name.present' => 'El campo apellido debe estar presente.',
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El campo email no es válido.',
+            'email.unique' => 'El campo email no puede coincidir con el de otro usuario.',
+            'address.present' => 'El campo dirección debe estar presente.',
+            'phone.present' => 'El campo teléfono debe estar presente.',
+            'phone.regex' => 'El campo teléfono no es válido.',
+            'role.required' => 'El campo rol es obligatorio.',
+            'role.in' => 'El campo rol no es válido.',
         ];
     }
 

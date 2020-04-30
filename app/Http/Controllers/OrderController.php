@@ -65,18 +65,18 @@ class OrderController extends Controller
         ];
 
         $messages = [
-            'user_id.present' => 'El campo usuario debe esta presente',
-            'user_id.exists' => 'El campo usuario debe ser válido',
-            'guest_name.present' => 'El campo nombre del invitado debe estar presente',
-            'guest_address.present' => 'El campo dirección del invitado debe estar presente',
-            'guest_phone.present' => 'El campo teléfono del invitado debe estar presente',
-            'estimated_time.required' => 'El campo hora de recogida es obligatorio',
-            'estimated_time.regex' => 'El campo hora de recogida debe ser válido',
-            'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
-            'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
-            'comments.present' => 'El campo observaciones debe estar presente',
-            'paid.required' => 'El campo pagado es obligatorio',
-            'paid.boolean' => 'El campo pagado no es válido' //Mensajes
+            'user_id.present' => 'El campo usuario debe esta presente.',
+            'user_id.exists' => 'El campo usuario no es válido.',
+            'guest_name.present' => 'El campo nombre invitado debe estar presente.',
+            'guest_address.present' => 'El campo dirección invitado debe estar presente.',
+            'guest_phone.present' => 'El campo teléfono invitado debe estar presente.',
+            'estimated_time.required' => 'El campo hora de recogida es obligatorio.',
+            'estimated_time.regex' => 'El campo hora de recogida no es válido.',
+            'estimated_time.present' => 'El campo hora de recogida real debe estar presente.',
+            'estimated_time.regex' => 'El campo hora de recogida real debe no es válido.',
+            'comments.present' => 'El campo observaciones debe estar presente.',
+            'paid.required' => 'El campo pagado es obligatorio.',
+            'paid.boolean' => 'El campo pagado no es válido.' //Mensajes
         ];
 
         $lenght = $request->get('num');
@@ -196,18 +196,19 @@ class OrderController extends Controller
         ];
 
         $messages = [
-            'user_id.present' => 'El campo usuario debe esta presente',
-            'user_id.exists' => 'El campo usuario debe ser válido',
-            'guest_name.present' => 'El campo nombre del invitado debe estar presente',
-            'guest_address.present' => 'El campo dirección del invitado debe estar presente',
-            'guest_phone.present' => 'El campo teléfono del invitado debe estar presente',
-            'estimated_time.required' => 'El campo hora de recogida es obligatorio',
-            'estimated_time.regex' => 'El campo hora de recogida debe ser válido',
-            'estimated_time.present' => 'El campo hora de recogida real debe estar presente',
-            'estimated_time.regex' => 'El campo hora de recogida real debe ser válido',
-            'comments.present' => 'El campo observaciones debe estar presente',
-            'paid.required' => 'El campo pagado es obligatorio',
-            'paid.boolean' => 'El campo pagado no es válido' //Mensajes
+            'user_id.present' => 'El campo usuario debe estar presente.',
+            'user_id.exists' => 'El campo usuario no es válido.',
+            'guest_name.present' => 'El campo nombre invitado debe estar presente.',
+            'guest_address.present' => 'El campo dirección invitado debe estar presente.',
+            'guest_phone.present' => 'El campo teléfono invitado debe estar presente.',
+            'guest_phone.regex' => 'El campo teléfono invitado no es válido.',
+            'estimated_time.required' => 'El campo hora de recogida es obligatorio.',
+            'estimated_time.regex' => 'El campo hora de recogida no es válido.',
+            'estimated_time.present' => 'El campo hora de recogida real debe estar presente.',
+            'estimated_time.regex' => 'El campo hora de recogida real no es válido.',
+            'comments.present' => 'El campo observaciones debe estar presente.',
+            'paid.required' => 'El campo pagado es obligatorio.',
+            'paid.boolean' => 'El campo pagado no es válido.' //Mensajes
         ];
 
         $lenght = $request->get('num');
@@ -448,7 +449,7 @@ class OrderController extends Controller
             'order_id.exists' => 'El pedido debe ser válido',
         ]);
 
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
             $order = Order::query()
@@ -555,7 +556,7 @@ class OrderController extends Controller
                 if($order != null){
                     $order->state = 'cancelled';
                     $order->save();
-        
+
                     return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
                 }else{
                     return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
@@ -572,7 +573,7 @@ class OrderController extends Controller
                         if($order != null){
                             $order->state = 'cancelled';
                             $order->save();
-                
+
                             return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
                         }else{
                             return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
