@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Category;
 
 class CreateCategoryRequest extends FormRequest
@@ -45,13 +46,21 @@ class CreateCategoryRequest extends FormRequest
     {
         $image = $this->file('image');
         $name = $image->getClientOriginalName();
-        if (!@getimagesize(public_path()."/$name")){
-            $image->move('media/categories', $name);
-        }
+        $root = public_path('media/categories/'.$name);
+
+        Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
+
+        $root = public_path('media/categories/min/'.$name);
+        Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
 
         Category::create([
             'name' => $this['name'],
             'image' => "media/categories/$name",
+            'min' => "media/categories/min/$name",
         ]);
     }
 }
