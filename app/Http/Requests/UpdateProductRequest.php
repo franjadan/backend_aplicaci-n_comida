@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Product;
 
 class UpdateProductRequest extends FormRequest
@@ -65,21 +66,31 @@ class UpdateProductRequest extends FormRequest
         $available = $this['available'] == 'yes'? true: false;
 
         if ($this->file('image') != null){
-            if($product->image != null){
-                $images = Product::where('image', '=', $product->image)->get();
-                $old = public_path()."/$product->image";
-                if (@getimagesize($old) && count($images) <= 1){
-                    unlink($old);
-                }
+            $images = Product::where('image', '=', $product->image)->get();
+            $old = public_path($product->image);
+            if (@getimagesize($old) && count($images) <= 1){
+                unlink($old);
+                $old = public_path($product->min);
+                unlink($old);
             }
             $new = $this->file('image');
             $name = $new->getClientOriginalName();
-            $new->move('media/products', $name);
+            $root = public_path('media/products/'.$name);
+
+            Image::make($new->getRealPath())->resize(600, 400, function($constaint) {
+                $constaint->aspectRatio();
+            })->save($root, 72);
+
+            $root = public_path('media/products/min/'.$name);
+            Image::make($new->getRealPath())->resize(300, 300, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
 
             $product->update([
                 'description' => $this['description'],
                 'available' => $available,
                 'image' => "media/products/$name",
+                'min' => "media/products/min/$name",
                 'name' => $this['name'],
                 'price' => $this['price'],
                 'discount' => $this['discount'],

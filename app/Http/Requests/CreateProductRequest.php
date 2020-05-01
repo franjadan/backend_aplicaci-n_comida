@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Product;
 
 class CreateProductRequest extends FormRequest
@@ -65,9 +66,16 @@ class CreateProductRequest extends FormRequest
     {
         $image = $this->file('image');
         $name = $image->getClientOriginalName();
-        if (!@getimagesize(public_path()."/$name")){
-            $image->move('media/products', $name);
-        }
+        $root = public_path('media/products/'.$name);
+
+        Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
+
+        $root = public_path('media/products/min/'.$name);
+        Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
 
         $available = $this['available'] == 'yes'? true: false;
 
@@ -75,6 +83,7 @@ class CreateProductRequest extends FormRequest
             'description' => $this['description'],
             'available' => $available,
             'image' => "media/products/$name",
+            'min' => "media/products/min/$name",
             'name' => $this['name'],
             'price' => $this['price'],
             'discount' => $this['discount'],
