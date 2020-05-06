@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'discount' => $this->discount,
             'active' => $this->active,
             'ingredients' => IngredientResource::collection($this->ingredients),
+            'min' => asset($this->min),
         ];
     }
 }

@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->boolean('available')->default(true);
             $table->string('image');
+            $table->string('min');
             $table->string('name')->unique();
             $table->double('price');
             $table->double('discount')->nullable();

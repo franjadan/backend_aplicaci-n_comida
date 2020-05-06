@@ -8,7 +8,7 @@
                 <div class="card-header login_header my-2">
                     <h4>Menu of the day</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body login-body">
                 @include('shared._flash-message')
 
                     <form method="POST" action="{{ route('login') }}">

@@ -20,6 +20,6 @@
         <p>Usuario</p>
     @endif
     <div class="my-custom-panel my-4 shadow-sm p-4">
-        <a class="btn btn-warning" href="{{ route('profile.changePassword') }}">Cambiar contraseña</a>
+        <a class="btn my-btn-primary" href="{{ route('profile.changePassword') }}"><i class="fas fa-lock"></i> Cambiar contraseña</a>
     </div>
 @endsection

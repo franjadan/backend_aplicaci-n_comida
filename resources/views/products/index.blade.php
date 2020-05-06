@@ -20,7 +20,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Estas seguro de eliminar el producto?
+                    ¿Está seguro de que desea eliminar el producto?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -57,6 +57,10 @@
                                                 <button data-id="{{ $product->id }}" data-toggle="modal" data-target="#confirmModal" class='btn my-btn-danger showModalConfirmBtn w-100' type='button'><i class='fas fa-trash-alt'></i></button>
                                             </div>
                                         </div>
+                                        <form action="{{ route('products.destroy', $product) }}" method="post" id="deleteForm-{{ $product->id }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
                                     @else
                                         <div class="row my-3">
                                             <div class="col">
@@ -70,12 +74,6 @@
                                         </div>
                                     @endif
                                 </div>
-                                @if(auth()->user()->isAdmin())
-                                    <form action="{{ route('products.destroy', $product) }}" method="post" id="deleteForm-{{ $product->id }}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                    </form>
-                                @endif
                             </div>
                         </div>
                     </div>

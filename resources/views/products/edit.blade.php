@@ -12,7 +12,7 @@
             <div class="col-8"></div>
             <div class="col-4 mt-4 p-3 card-image">
                 <div class="card w-75 shadow">
-                    <img src="{{ asset($product->image) }}" alt="" class="card-image-top">
+                    <img src="{{ asset($product->min) }}" alt="" class="card-image-top">
                     <div class="card-body">
                         <h5 class="card-title text-center">Imagen actual</h5>
                     </div>
