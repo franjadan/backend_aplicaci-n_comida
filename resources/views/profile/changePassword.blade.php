@@ -35,7 +35,7 @@
 
         <div class="my-custom-panel my-4 shadow-sm p-4">
             <button type="submit" class="btn btn-success"><i class="fas fa-lock"></i> Modificar contraseña</button>
-            <a href="{{ route('profile.index') }}" class="btn my-btn-other"><i class="fas fa-lock"></i> Volver al perfil </a>
+            <a href="{{ route('profile.index') }}" class="btn my-btn-other"><i class="fas fa-arrow-left"></i> Volver al perfil </a>
         </div>
     </form>
 @endsection
