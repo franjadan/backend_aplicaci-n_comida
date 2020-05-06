@@ -192,9 +192,6 @@ class UserController extends Controller
     public function generatePassword(User $user)
     {
         $new_password = str_random(6);
-
-        $user->password = bcrypt($new_password);
-        $user->save();
         
         $subject = "Cambio de contraseña";
         $for = $user->email;
@@ -202,16 +199,71 @@ class UserController extends Controller
         $data['msg'] = "Se ha generado una nueva contraseña: $new_password";
 
         //Enviar por correo
-        Mail::send('email.email', $data, function($message) use($subject,$for){
-            $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
-            $message->subject($subject);
-            $message->to($for);
-        });
+        try{
+            Mail::send('email.email', $data, function($message) use($subject,$for){
+                $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
+                $message->subject($subject);
+                $message->to($for);
+            });
 
-        if (Mail::failures()) {
-            return redirect()->route('users.edit', $user)->with('error', 'No se ha podido enviar el correo');
-        }else{
-            return redirect()->route('users.edit', $user)->with('success', "Se ha enviado el correo");
+            if (Mail::failures()) {
+                return redirect()->route('users.edit', $user)->with('error', 'No se ha podido enviar el correo');
+            }else{
+                $user->password = bcrypt($new_password);
+                $user->save();
+
+                return redirect()->route('users.edit', $user)->with('success', "Se ha enviado el correo");
+            }
+        }catch(Exception $ex){
+            return redirect()->route('users.edit', $user)->with('error', $ex->getMessage());
+        }
+    }
+
+    //Función api para generar una nueva contraseña
+    public function api_generatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email'] //Reglas
+        ], [
+            'email.required' => 'El email es obligatorio',
+            'email.email' => 'El email debe ser válido' //Mensajes
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 422);
+        } else {
+            $user = User::query()->where('email', $request->get('email'))->first();
+
+            if($user == null){
+                return response()->json(["response" => ["code" => -1, "data" => "No existe el usuario con este email"]], 422);
+            }else{
+                $new_password = str_random(6);
+                $subject = "Cambio de contraseña";
+                $for = $user->email;
+
+                $data['msg'] = "Se ha generado una nueva contraseña: $new_password";
+
+                //Enviar por correo
+                try{
+                    Mail::send('email.email', $data, function($message) use($subject,$for){
+                        $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
+                        $message->subject($subject);
+                        $message->to($for);
+                    });
+
+                    if (Mail::failures()) {
+                        return response()->json(["response" => ["code" => -1, "data" => "No se ha podido enviar el correo"]], 502);
+                    }else{
+                        $user->password = bcrypt($new_password);
+                        $user->save();
+
+                        return response()->json(["response" => ["code" => 1, "data" => "Se ha enviado un correo con la nueva contraseña"]], 200);
+                    }
+                }catch(Exception $ex){
+                    return response()->json(["response" => ["code" => -1, "data" => "No se ha podido enviar el correo"]], 502);
+
+                }
+            }
         }
     }
 }
