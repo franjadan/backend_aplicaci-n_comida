@@ -37,13 +37,13 @@
 
     <div class="d-flex" id="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar" id="sidebar-wrapper">
+      <div class="sidebar p-4" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('media/app/logo.png') }}" alt="" class="logo-app-layout">
             </a>
         </div>
-        <div class="list-group list-group-flush py-5">
+        <div class="list-group list-group-flush mt-5 p-1">
           <a href="{{ route('orders.index') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-check-square"></i> Pedidos.</a>
           <a href="{{ route('orders.record') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-clipboard-list"></i> Historial de pedidos.</a>
           @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())

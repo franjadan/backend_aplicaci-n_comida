@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Category;
 
 class CreateCategoryRequest extends FormRequest
@@ -26,7 +27,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
-            'image' => ['required'],
+            'image' => ['required', 'image'],
         ];
     }
 
@@ -34,9 +35,10 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'El campo nombre es obligatorio.',
-            'name.min' => 'El campo nombre debe tener más de dos caracteres.',
+            'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
             'image.required' => 'El campo imagen es obligatorio.',
+            'image.image' => 'El campo imagen no es válido',
         ];
     }
 
@@ -44,13 +46,21 @@ class CreateCategoryRequest extends FormRequest
     {
         $image = $this->file('image');
         $name = $image->getClientOriginalName();
-        if (!@getimagesize(public_path()."/$name")){
-            $image->move('media/categories', $name);
-        }
+        $root = public_path('media/categories/'.$name);
+
+        Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
+
+        $root = public_path('media/categories/min/'.$name);
+        Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
+            $constraint->aspectRatio();
+        })->save($root, 72);
 
         Category::create([
             'name' => $this['name'],
             'image' => "media/categories/$name",
+            'min' => "media/categories/min/$name",
         ]);
     }
 }

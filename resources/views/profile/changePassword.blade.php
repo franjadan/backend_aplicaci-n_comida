@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Cambiar contraseña</h1>
-    
+
     <form action="{{ route('profile.changePassword') }}" method="post" class="mt-3" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
@@ -33,9 +33,9 @@
             @endif
         </div>
 
-        <div class="form-group mt-5">
-            <input type="submit" class="btn btn-success" value="Modificar contraseña">
-            <a href="{{ route('profile.index') }}" class="btn btn-outline-primary">Volver al perfil </a>
+        <div class="my-custom-panel my-4 shadow-sm p-4">
+            <button type="submit" class="btn btn-success"><i class="fas fa-lock"></i> Modificar contraseña</button>
+            <a href="{{ route('profile.index') }}" class="btn my-btn-other"><i class="fas fa-arrow-left"></i> Volver al perfil </a>
         </div>
     </form>
 @endsection

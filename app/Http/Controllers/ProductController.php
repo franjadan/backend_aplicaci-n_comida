@@ -80,8 +80,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $images = Product::where('image', '=', $product->image)->get();
-        $image = public_path()."/$product->image";
+        $image = public_path($product->image);
         if (@getimagesize($image) && count($images) <= 1){
+            unlink($image);
+            $image = public_path($product->min);
             unlink($image);
         }
 

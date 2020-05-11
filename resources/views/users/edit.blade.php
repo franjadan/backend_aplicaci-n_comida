@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de cambiar el estado del usuario?
+                ¿Está seguro de que desea cambiar el estado del usuario?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -42,7 +42,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estas seguro de generar la contraseña?
+                ¿Está seguro de que desea generar una nueva contraseña?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    
+
     <form method="POST" class="d-inline mt-3" action="{{ url("usuarios/{$user->id}") }}">
 
         {{ method_field('PUT') }}
@@ -67,18 +67,18 @@
 
         {{ method_field('POST') }}
         {{ csrf_field() }}
-        
-        <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" type="button" class="btn btn-warning showModalConfirmBtn" @if ($user->active) value="Deshabilitar usuario" @else value="Habilitar usuario" @endif>
-        
+
+        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn my-btn-danger showModalConfirmBtn">@if ($user->active) <i class="fas fa-user-times"></i> Deshabilitar usuario @else <i class="fas fa-user-check"></i> Habilitar usuario @endif</button>
+
     </form>
 
     <form id="generatePassForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ route('users.generatePassword', $user) }}">
-                    
+
         {{ method_field('POST') }}
         {{ csrf_field() }}
-            
-        <input data-id="{{ $user->id }}" data-toggle="modal" data-target="#generatePassModal" type="button" class="btn btn-outline-warning showModalConfirmBtn" value="Generar contraseña">
-        <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
+
+        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#generatePassModal" class="btn my-btn-primary showModalConfirmBtn"><i class="fas fa-lock"></i> Generar contraseña</button>
+        <a class="btn my-btn-other" href="{{ route('users.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de usuarios</a>
     </form>
-  
+
 @endsection

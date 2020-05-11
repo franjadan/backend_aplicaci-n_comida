@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Category;
 
 class UpdateCategoryRequest extends FormRequest
@@ -26,7 +27,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
-            'image' => ['nullable'],
+            'image' => ['nullable', 'image'],
         ];
     }
 
@@ -34,8 +35,9 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'El campo nombre es obligatorio.',
-            'name.min' => 'El campo nombre debe tener más de dos caracteres.',
+            'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
+            'image.image' => 'El campo imagen no es válido',
         ];
     }
 
@@ -43,17 +45,29 @@ class UpdateCategoryRequest extends FormRequest
     {
         if ($this->file('image') != null){
             $images = Category::where('image', '=', $category->image)->get();
-            $old = public_path()."/$category->image";
+            $old = public_path($category->image);
             if (@getimagesize($old) && count($images) <= 1){
+                unlink($old);
+                $old = public_path($category->min);
                 unlink($old);
             }
             $new = $this->file('image');
             $name = $new->getClientOriginalName();
-            $new->move('media/categories', $name);
+            $root = public_path('media/categories/'.$name);
+
+            Image::make($new->getRealPath())->resize(600, 400, function($contraint) {
+                $contraint->aspectRatio();
+            })->save($root, 72);
+
+            $root = public_path('media/categories/min/'.$name);
+            Image::make($new->getRealPath())->resize(300, 300, function($contraint) {
+                $contraint->aspectRatio();
+            })->save($root, 72);
 
             $category->update([
                 'name' => $this['name'],
                 'image' => "media/categories/$name",
+                'min' => "media/categories/min/$name",
             ]);
         }else{
             $category->update([
