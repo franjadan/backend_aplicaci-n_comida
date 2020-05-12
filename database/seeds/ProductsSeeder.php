@@ -20,6 +20,7 @@ class ProductsSeeder extends Seeder
             $randomCategories = $categories->random(rand(0, 2));
             $randomIngredients = $ingredients->random(rand(1, 3));
             $product->categories()->attach($randomCategories);
+            $product->ingredients()->attach($randomIngredients);
         }
     }
 }
