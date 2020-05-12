@@ -1,5 +1,5 @@
 $(function() {
-    let url = window.location.href + 'api/pedidos';
+    let url = window.location.origin + '/api/pedidos';
     $('.alert-refresh-orders').hide();
     $.getJSON('/api/pedidos').done(function(data) {
         let olds = data['response']['data'];
