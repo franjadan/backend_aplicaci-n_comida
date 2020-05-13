@@ -8,7 +8,7 @@
 @section('title', 'Listado de productos')
 
 @section('content')
-    <h1>Listado de productos</h1>
+    <h1>Listado de productos.</h1>
     @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

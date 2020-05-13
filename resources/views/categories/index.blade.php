@@ -8,7 +8,7 @@
 @section('title', 'Listado de categorías')
 
 @section('content')
-    <h1>Listado de categorías</h1>
+    <h1>Listado de categorías.</h1>
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

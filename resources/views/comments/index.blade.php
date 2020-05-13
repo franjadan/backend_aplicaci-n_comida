@@ -7,7 +7,7 @@
 @section('title', 'Listado de comentarios')
 
 @section('content')
-    <h1>Listado de comentarios</h1>
+    <h1>Listado de comentarios.</h1>
 
         <!-- Modal -->
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -38,7 +38,7 @@
                     <thead class="thead">
                         <tr>
                             <th class="text-center" scope="col">#</th>
-                            <th scope="col">Comentario</th>
+                            <th class="text-center">Comentario</th>
                             <th class="text-center" scope="col">Acciones</th>
                         </tr>
                     </thead>

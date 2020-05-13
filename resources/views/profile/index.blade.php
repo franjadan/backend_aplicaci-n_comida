@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1 class="mb-3">Perfil</h1>
+    <h1 class="mb-3">Perfil.</h1>
 
     <h5 class="info_field_title">Email</h5>
     <p>{{ $user->email }}</p>
