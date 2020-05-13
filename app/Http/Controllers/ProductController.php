@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use App\Ingredient;
+use App\Allergen;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\AvailableProductRequest;
+use App\Http\Resources\AllergenResource;
 use App\Http\Resources\ProductResource;
-use DataTables;
 
 class ProductController extends Controller
 {
@@ -106,5 +107,12 @@ class ProductController extends Controller
         $products = Product::where('active', '=', true)->get();
 
         return response()->json(['response' => ['code' => 1, 'data' => ProductResource::collection($products)]], 200);
+    }
+
+    public function allergens()
+    {
+        $allergens = Allergen::all();
+
+        return response()->json(['response' => ['code' => 1, 'data' => AllergenResource::collection($allergens)]], 200);
     }
 }

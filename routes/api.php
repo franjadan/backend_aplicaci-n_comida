@@ -49,3 +49,5 @@ Route::get('comentarios', 'CommentController@comments');
 Route::get('pedidos', 'OrderController@refresh');
 
 Route::post('generar_contrasenia', 'UserController@api_generatePassword');
+
+Route::get('alergenos', 'ProductController@allergens');
