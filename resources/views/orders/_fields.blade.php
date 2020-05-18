@@ -142,7 +142,7 @@
 
 <div class="form-group">
     <label for="comment">Observaciones</label>
-    <input type="text" class="form-control" id="comment" name="comment" placeholder="El pan muy tostado" value="{{ old('comment', $order->comment) }}">
+    <textarea name="comment" class="form-control" rows="2" id="comment" placeholder="El pan muy tostado">{{ old('comment', $order->comment) }}</textarea>
     @if ($errors->has('comment'))
         <div class="alert alert-danger mt-2">{{ $errors->first('comment') }}</div>
     @endif
@@ -200,7 +200,7 @@
         var products = <?php echo $products; ?>;
         var total = 0;
 
-        $('#inputTotalAmount').val(total + '€');
+        $('#inputTotalAmount').val(total.toFixed(2) + '€');
 
         for(i = 1; i <= num; i++){
             if(!$('#row-' + i).is(":hidden") && $('#cant_' + i).val() > 0){
@@ -208,9 +208,9 @@
                 var product = products.getById(products, selectedId);
                 var totalPriceProduct = (product.price - (product.price * (product.discount / 100))) * $('#cant_' + i).val();
                 total += totalPriceProduct
-                $('#totalProduct_' + i).val(totalPriceProduct + '€');
+                $('#totalProduct_' + i).val(totalPriceProduct.toFixed(2) + '€');
             }
-            $('#inputTotalAmount').val(total + '€');
+            $('#inputTotalAmount').val(total.toFixed(2) + '€');
         }
     }
 

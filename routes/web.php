@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['auth','active']], function() {
+Route::group(['middleware' => ['auth','active', 'access']], function() {
 
     Route::get('/', 'IndexController@index')->name('index');
 

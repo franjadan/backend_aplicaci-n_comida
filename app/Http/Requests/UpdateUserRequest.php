@@ -33,7 +33,7 @@ class UpdateUserRequest extends FormRequest
             'last_name' => ['nullable', 'present'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user)],
             'address' => ['nullable', 'present'],
-            'phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7|8|9)[ -]*([0-9][ -]*){8}/'],
             'role' => ['required', Rule::in(['admin', 'user', 'operator'])],
         ];
     }

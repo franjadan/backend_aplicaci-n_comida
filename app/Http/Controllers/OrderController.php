@@ -58,7 +58,7 @@ class OrderController extends Controller
             'user_id' => ['nullable', 'present', Rule::exists('users', 'id')],
             'guest_name' => ['nullable', 'present'],
             'guest_address' => ['nullable', 'present'],
-            'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7|8|9)[ -]*([0-9][ -]*){8}/'],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
             'paid' => ['required', 'boolean'] //Reglas
@@ -187,7 +187,7 @@ class OrderController extends Controller
             'user_id' => ['nullable', 'present', Rule::exists('users', 'id')],
             'guest_name' => ['nullable', 'present'],
             'guest_address' => ['nullable', 'present'],
-            'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'guest_phone' => ['nullable', 'present', 'regex:/(\+34|0034|34)?[ -]*(6|7|8|9)[ -]*([0-9][ -]*){8}/'],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],
             'comment' => ['nullable', 'present'],
             'paid' => ['required', 'boolean'] //Reglas
@@ -338,7 +338,7 @@ class OrderController extends Controller
             'user_id' => ['nullable', Rule::exists('users', 'id')],
             'guest_name' => ['nullable'],
             'guest_address' => ['nullable'],
-            'guest_phone' => ['nullable', 'regex:/(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/'],
+            'guest_phone' => ['nullable', 'regex:/(\+34|0034|34)?[ -]*(6|7|8|9)[ -]*([0-9][ -]*){8}/'],
             'guest_token' => ['nullable'],
             'products' => ['required', 'array', Rule::exists('products', 'id')],
             'estimated_time' => ['required', 'regex:/[0-9][0-9]:[0-9][0-9]/'],

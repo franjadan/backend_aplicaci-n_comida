@@ -20,7 +20,7 @@
         <div class="my-custom-panel my-4 shadow-sm p-4">
             <a href="{{ route('orders.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo pedido</a>
         </div>
-    @elseif(auth()->user()->isAdmin())
+    @elseif(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
         <div class="my-custom-panel my-4 shadow-sm p-4">
             <a href="{{ route('orders.excel') }}" class="btn my-btn-primary"><i class="fas fa-file-download"></i> Descargar excel</a>
         </div>
