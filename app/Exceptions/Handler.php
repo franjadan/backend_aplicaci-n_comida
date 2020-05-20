@@ -54,24 +54,26 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException)
         {
             $modelName = strtolower(class_basename($exception->getModel()));
-            return $this->errorResponse("It does not exist any instance of {$modelName} with the specified id", 404);
+            return response()->json("It does not exist any instance of {$modelName} with the specified id", 404);
+
         }
 
         if ($exception instanceof MethodNotAllowedHttpException)
         {
-            return $this->errorResponse('HTTP method does match with any endpoint', $exception->getStatusCode());
+            return response()->json("HTTP method does match with any endpoint", $exception->getStatusCode());
         }
         
         if ($exception instanceof HttpException)
         {
-            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+            return response()->json($exception->getMessage(), $exception->getStatusCode());
+
         }
         
         if (config('app.debug'))
         {
             return parent::render($request, $exception);
         }
-
-        return $this->errorResponse('Unexpected error', 500);
+        
+        return response()->json('Unexpected error', 500);
     }
 }
