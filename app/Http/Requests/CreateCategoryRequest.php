@@ -26,7 +26,7 @@ class CreateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
+            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u', 'unique:categories,name'],
             'image' => ['required', 'image'],
         ];
     }
@@ -37,6 +37,7 @@ class CreateCategoryRequest extends FormRequest
             'name.required' => 'El campo nombre es obligatorio.',
             'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
+            'name.unique' => 'El campo nombre no pude coincidir con el de otra categoría.',
             'image.required' => 'El campo imagen es obligatorio.',
             'image.image' => 'El campo imagen no es válido',
         ];
