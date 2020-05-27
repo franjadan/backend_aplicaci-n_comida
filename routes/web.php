@@ -127,6 +127,14 @@ Route::group(['middleware' => ['auth','active', 'access']], function() {
 
     });
 
+    Route::middleware('admin')->prefix('/alergenos')->group(function () {
+        Route::get('/', 'AllergenController@index')->name('allergens');
+
+        Route::get('/nuevo', 'AllergenController@create')->name('allergens.create');
+
+        Route::post('/nuevo', 'AllergenController@store')->name('allergens.create');
+    });
+
 });
 
 Auth::routes([
