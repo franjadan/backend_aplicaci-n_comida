@@ -137,6 +137,8 @@ Route::group(['middleware' => ['auth','active', 'access']], function() {
         Route::get('/{allergen}/editar', 'AllergenController@edit')->name('allergens.edit');
 
         Route::put('/{allergen}/editar', 'AllergenController@update')->name('allergens.edit');
+
+        Route::delete('/{allergen}', 'AllergenController@destroy')->name('allergens.destroy');
     });
 
 });

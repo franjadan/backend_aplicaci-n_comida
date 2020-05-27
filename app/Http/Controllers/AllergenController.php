@@ -49,4 +49,16 @@ class AllergenController extends Controller
 
         return redirect()->route('allergens.edit', $allergen)->with('success', 'Se han guardado los cambios.');
     }
+
+    public function destroy(Allergen $allergen)
+    {
+        $images = Allergen::where('image', '=', $allergen->image)->get();
+        $image = public_path($allergen->image);
+        if (@getimagesize($image) && count($images) <= 1) {
+            unlink($image);
+        }
+        $allergen->delete();
+
+        return redirect()->route('allergens')->with('success', 'Se ha eliminado conéxito');
+    }
 }

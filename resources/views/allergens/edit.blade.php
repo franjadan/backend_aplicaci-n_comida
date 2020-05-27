@@ -3,14 +3,14 @@
 @section('title', 'Editar alérgeno')
 
 @section('content')
-    <h1>Alérgeno {{ $allergen->id }}</h1>
+    <h1>Alérgeno {{ $allergen->id }}.</h1>
 
     <form action="{{ route('allergens.edit', $allergen) }}" class="mt-3" method="post" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         @include('allergens._fields')
         <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4 mt-4 p-3 card-image">
+            <div class="col-9"></div>
+            <div class="col-3 mt-4 p-3 card-image">
                 <div class="card w-75 shadow p-3">
                     <div class="card-image-content">
                         <img src="{{ asset($allergen->image) }}" alt="" class="card-image-top">

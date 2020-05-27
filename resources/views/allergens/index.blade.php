@@ -1,9 +1,32 @@
 @extends('layout')
 
+@section('scripts')
+    <script src="{{ asset('js/confirm_modal.js') }}"></script>
+@endsection
+
 @section('title', 'Listado de alérgenos')
 
 @section('content')
     <h1>Listado de alérgenos.</h1>
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">¡ATENCIÓN!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar el alérgeno?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="acceptButton" class="btn btn-success">Aceptar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <div class="my-custom-panel my-4 shadow-sm p-4">
         <a href="{{ route('allergens.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo Alérgeno</a>
     </div>
@@ -25,7 +48,7 @@
                                 <td class="text-center">{{ $allergen->id }}</td>
                                 <td class="text-center">{{ $allergen->name }}</td>
                                 <td class="text-center">
-                                    <form class="" action="" method="POST" id="deleteForm-{{ $allergen->id }}">
+                                <form action="{{ route('allergens.destroy', $allergen) }}" method="POST" id="deleteForm-{{ $allergen->id }}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
