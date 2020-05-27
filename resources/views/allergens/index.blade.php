@@ -25,9 +25,15 @@
                                 <td class="text-center">{{ $allergen->id }}</td>
                                 <td class="text-center">{{ $allergen->name }}</td>
                                 <td class="text-center">
-                                    <div>
+                                    <form class="" action="" method="POST" id="deleteForm-{{ $allergen->id }}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
 
-                                    </div>
+                                        <div class="btn-group">
+                                            <a class="btn my-btn-primary" href="{{ route('allergens.edit', $allergen) }}"><i class="fas fa-edit"></i></a>
+                                            <button data-id="{{ $allergen->id }}" data-toggle="modal" data-target="#confirmModal" class='btn my-btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

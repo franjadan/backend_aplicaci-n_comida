@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Allergen;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateAllergenRequest;
+use App\Http\Requests\UpdateAllergenRequest;
 
 class AllergenController extends Controller
 {
@@ -33,5 +34,19 @@ class AllergenController extends Controller
         $request->createAllergen();
 
         return redirect()->route('allergens')->with('success', 'Se ha creado el alérgeno con éxito.');
+    }
+
+    public function edit(Allergen $allergen)
+    {
+        return view('allergens.edit', [
+            'allergen' => $allergen,
+        ]);
+    }
+
+    public function update(UPdateAllergenRequest $request, Allergen $allergen)
+    {
+        $request->updateAllergen($allergen);
+
+        return redirect()->route('allergens.edit', $allergen)->with('success', 'Se han guardado los cambios.');
     }
 }

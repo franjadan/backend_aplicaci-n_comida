@@ -26,7 +26,8 @@ class CreateAllergenRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u', 'unique:allergens,name']
+            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u', 'unique:allergens,name'],
+            'image' => ['required', 'image'],
         ];
     }
 

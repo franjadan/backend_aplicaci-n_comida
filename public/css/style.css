@@ -402,11 +402,14 @@ table.dataTable thead th.sorting_asc:after {
     padding-top: 2em;
 }
 
-.card-img-top {
-    height: 300px;
-    width: 600px;
-    object-fit: cover;
+.card-image-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.card-img-top {
+    object-fit: cover;
+}
 
 
