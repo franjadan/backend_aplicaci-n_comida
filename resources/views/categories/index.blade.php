@@ -40,7 +40,7 @@
                     <div class="card mb-5 mt-3" id="card-category-{{ $category->id }}">
                         <img class="card-img-top" src="{{ asset($category->image) }}" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $category->name }}</h5>
+                            <h5 class="card-title pb-4">{{ $category->name }}</h5>
                             <div class="card-options my-3" id="card-options-{{ $category->id }}">
                                <div class="container">
                                    <div class="row my-3">

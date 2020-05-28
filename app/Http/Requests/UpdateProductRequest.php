@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Validation\Rule;
 use App\Product;
 
 class UpdateProductRequest extends FormRequest
@@ -29,7 +30,7 @@ class UpdateProductRequest extends FormRequest
             'description' => ['required', 'min:5', 'regex:/^[\pL\s\-\.]+$/u'],
             'available' => ['required'],
             'image' => ['nullable', 'image'],
-            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
+            'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u', Rule::unique('products', 'name')->ignore($this->product)],
             'price' => ['required', 'numeric'],
             'discount' => ['nullable', 'numeric', 'present'],
             'categories' => ['required', 'array', 'exists:categories,id'],
@@ -48,6 +49,7 @@ class UpdateProductRequest extends FormRequest
             'name.required' => 'El campo nombre es obligatorio.',
             'name.min' => 'El campo nombre debe tener mínimo 2 caracteres.',
             'name.regex' => 'El campo nombre no es válido.',
+            'name.unique' => 'El campo nombre no puede coincidir con el de otro producto.',
             'price.required' => 'El campo precio es obligatorio.',
             'price.numeric' => 'El campo precio no es válido.',
             'discount.numeric' => 'El campo descuendo no es válido.',
