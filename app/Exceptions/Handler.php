@@ -46,34 +46,71 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException)
-        {
-            return $this->convertValidationExceptionToResponse($exception, $request);
-        }
-
-        if ($exception instanceof ModelNotFoundException)
-        {
-            $modelName = strtolower(class_basename($exception->getModel()));
-            return response()->json("It does not exist any instance of {$modelName} with the specified id", 404);
-
-        }
-
-        if ($exception instanceof MethodNotAllowedHttpException)
-        {
-            return response()->json("HTTP method does match with any endpoint", $exception->getStatusCode());
-        }
-        
-        if ($exception instanceof HttpException)
-        {
-            return response()->json($exception->getMessage(), $exception->getStatusCode());
-
-        }
-        
-        if (config('app.debug'))
-        {
+        if ($request->is('api/*')) {
+            return $this->handleApiException($request, $exception);
+        } else {
             return parent::render($request, $exception);
         }
-        
-        return response()->json('Unexpected error', 500);
+
+    }
+
+    private function handleApiException($request, Exception $exception)
+    {
+        $exception = $this->prepareException($exception);
+
+        if ($exception instanceof \Illuminate\Http\Exception\HttpResponseException) {
+            $exception = $exception->getResponse();
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            $exception = $this->unauthenticated($request, $exception);
+        }
+
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return $this->customApiResponse($exception);
+    }
+
+    private function customApiResponse($exception)
+    {
+        if (method_exists($exception, 'getStatusCode')) {
+            $statusCode = $exception->getStatusCode();
+        } else {
+            $statusCode = 500;
+        }
+
+        $message = "";
+        $errors = "";
+
+        switch ($statusCode) {
+            case 401:
+                $message= 'Unauthorized';
+                break;
+            case 403:
+                $message = 'Forbidden';
+                break;
+            case 404:
+                $message = 'Not Found';
+                break;
+            case 405:
+                $message = 'Method Not Allowed';
+                break;
+            case 422:
+                $message = $exception->original['message'];
+                //$errors = $exception->original['errors'];
+                break;
+            default:
+                $response['data'] = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();
+                break;
+        }
+
+        if (config('app.debug')) {
+            $response['trace'] = $exception->getTrace();
+            $response['code'] = $exception->getCode();
+        }
+
+        return response()->json(["response" => ["code" => -1, "data" => $message]], $statusCode);
     }
 }
