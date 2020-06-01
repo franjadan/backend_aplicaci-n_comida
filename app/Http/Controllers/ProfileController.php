@@ -40,23 +40,23 @@ class ProfileController extends Controller
         ];
 
         $messages = [
-            'old_password.required' => 'El campo antigua contraseña es obligatorio',
-            'new_password.required' => 'El campo nueva contraseña es obligatorio',
-            'new_password.min' => 'La contraseña debe tener mínimo 6 caracteres',
-            'verify_password.required' => 'El campo repetir contraseña es obligatorio',
-            'verify_password.same' => 'Las contraseñas no coinciden'
+            'old_password.required' => 'El campo antigua contraseña es obligatorio.',
+            'new_password.required' => 'El campo nueva contraseña es obligatorio.',
+            'new_password.min' => 'La contraseña debe tener mínimo 6 caracteres.',
+            'verify_password.required' => 'El campo repetir contraseña es obligatorio.',
+            'verify_password.same' => 'Las contraseñas no coinciden.'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            
+
             return redirect(route('profile.changePassword'))->withErrors($validator)->withInput();
 
         } else {
 
             if(!Hash::check($request->get('old_password'), $user->password)){
-                $validator->getMessageBag()->add('old_password', 'La contraseña antigua no coincide con tu contraseña actual');
+                $validator->getMessageBag()->add('old_password', 'La contraseña antigua no coincide con tu contraseña actual.');
                 return back()->withErrors($validator)->withInput();
             }
 
@@ -66,8 +66,8 @@ class ProfileController extends Controller
 
             $user->save();
 
-            
-            return redirect()->route('profile.index')->with('success', 'Se han guardado los cambios');
+
+            return redirect()->route('profile.index')->with('success', 'Se han guardado los cambios.');
 
         }
     }
@@ -84,8 +84,8 @@ class ProfileController extends Controller
         ];
 
         $messages = [
-            'user_id.required' => 'El campo usuario es obligatorio',
-            'user_id.exists' => 'El campo usuario debe ser válido',
+            'user_id.required' => 'El campo usuario es obligatorio.',
+            'user_id.exists' => 'El campo usuario debe ser válido.',
             'first_name.required' => 'El campo nombre es obligatorio.',
             'last_name.required' => 'El campo apellido es obligatorio.',
             'email.required' => 'El campo email es obligatorio.',
@@ -114,7 +114,7 @@ class ProfileController extends Controller
                 $user->save();
                 return response()->json(['response' => ['code' => 1, 'data' => $user]], 200);
             }else{
-                return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar otro perfil"]], 400);
+                return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar otro perfil."]], 400);
             }
         }
     }
@@ -129,19 +129,19 @@ class ProfileController extends Controller
         ];
 
         $messages = [
-            'user_id.required' => 'El campo usuario es obligatorio',
-            'user_id.exists' => 'El campo usuario debe ser válido',
-            'old_password.required' => 'El campo antigua contraseña es obligatorio',
-            'new_password.required' => 'El campo nueva contraseña es obligatorio',
-            'new_password.min' => 'La contraseña debe tener mínimo 6 caracteres',
-            'verify_password.required' => 'El campo repetir contraseña es obligatorio',
-            'verify_password.same' => 'Las contraseñas no coinciden'
+            'user_id.required' => 'El campo usuario es obligatorio.',
+            'user_id.exists' => 'El campo usuario debe ser válido.',
+            'old_password.required' => 'El campo antigua contraseña es obligatorio.',
+            'new_password.required' => 'El campo nueva contraseña es obligatorio.',
+            'new_password.min' => 'La contraseña debe tener mínimo 6 caracteres.',
+            'verify_password.required' => 'El campo repetir contraseña es obligatorio.',
+            'verify_password.same' => 'Las contraseñas no coinciden.'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            
+
             return response()->json(['response' => ['code' => -1, 'data' => $validator->errors()]], 400);
 
         } else {
@@ -150,18 +150,18 @@ class ProfileController extends Controller
             if($request->get('user_id') == auth()->user()->id) //Para que el id coincida con el usuario del token
             {
                 if(!Hash::check($request->get('old_password'), $user->password)){
-                    return response()->json(['response' => ['code' => -1, 'data' => 'La contraseña antigua no coincide con tu contraseña actual']], 400);
+                    return response()->json(['response' => ['code' => -1, 'data' => 'La contraseña antigua no coincide con tu contraseña actual.']], 400);
                 }
-                
+
                 $user->forceFill([
                     'password' => bcrypt($request->get('new_password'))
                 ]);
-    
+
                 $user->save();
-    
-                return response()->json(['response' => ['code' => 1, 'data' => "Se ha cambiado la contraseña con éxito"]], 200);
+
+                return response()->json(['response' => ['code' => 1, 'data' => "Se ha cambiado la contraseña con éxito."]], 200);
             }else{
-                return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar la contraseña de otro usuario"]], 400);
+                return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar la contraseña de otro usuario."]], 400);
             }
         }
     }
