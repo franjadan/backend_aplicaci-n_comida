@@ -49,7 +49,7 @@
           @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
             <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-users"></i> Usuarios.</a>
             <a href="{{ route('categories') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-th-list"></i> Categorías.</a>
-            <a href="#" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-exclamation-triangle"></i> Alérgenos.</a>
+            <a href="{{ route('allergens') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-exclamation-triangle"></i> Alérgenos.</a>
             <a href="#" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-egg"></i> Ingredientes.</a>
           @endif
             <a href="{{ route('products') }}" class="list-group-item list-group-item-action lead shadow-sm"><i class="fas fa-hamburger"></i> Productos.</a>
