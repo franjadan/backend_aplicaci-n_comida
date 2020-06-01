@@ -6,6 +6,7 @@ use App\Allergen;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateAllergenRequest;
 use App\Http\Requests\UpdateAllergenRequest;
+use App\Http\Resources\AllergenResource;
 
 class AllergenController extends Controller
 {
@@ -60,5 +61,12 @@ class AllergenController extends Controller
         $allergen->delete();
 
         return redirect()->route('allergens')->with('success', 'Se ha eliminado conéxito');
+    }
+
+    public function allergens()
+    {
+        $allergens = Allergen::all();
+
+        return response()->json(['response' => ['code' => 1, 'data' => AllergenResource::collection($allergens)]], 200);
     }
 }
