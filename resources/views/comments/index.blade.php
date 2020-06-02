@@ -38,6 +38,7 @@
                     <thead class="thead">
                         <tr>
                             <th class="text-center" scope="col">#</th>
+                            <th class="text-center" scope="col">Usuario</th>
                             <th class="text-center" scope="col">Comentario</th>
                             <th class="text-center" scope="col">Fecha</th>
                             <th class="text-center" scope="col">Acciones</th>
@@ -47,6 +48,7 @@
                         @foreach ($comments as $comment)
                             <tr>
                                 <td class="text-center">{{ $comment->id }}</td>
+                                <td class="text-center">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</td>
                                 <td class="text-center">{{ substr($comment->comment, 0, 40)}}...</td>
                                 <td class="text-center">{{ $comment->created_at->format('d/m/Y') }}</td>
                                 <td class="text-center">
