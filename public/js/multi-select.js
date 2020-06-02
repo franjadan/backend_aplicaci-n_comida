@@ -1,5 +1,3 @@
 $(function() {
-    $('.multi-select').select2({
-        placeholder: 'Seleciona una categoría...'
-    });
+    $('.multi-select').select2();
 });
