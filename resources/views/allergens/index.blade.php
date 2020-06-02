@@ -38,7 +38,7 @@
                     <thead class="thead">
                         <tr>
                             <th class="text-center" scope="col">#</th>
-                            <th class="text-center">Nombre</th>
+                            <th class="text-center" scope="col">Nombre</th>
                             <th class="text-center" scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -75,8 +75,9 @@
 $(document).ready(function(){
 
 	$('.data-table').DataTable( {
-        "bSort": false,
-		"stateSave": true,
+        "columnDefs": [
+            { "bSortable": false, "aTargets": [ 2 ] },
+        ],		"stateSave": true,
 		"pageLength": 10,
         "lengthChange": false,
 		"language": {

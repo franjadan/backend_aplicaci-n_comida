@@ -15,7 +15,7 @@ class CommentController extends Controller
     public function index(Request $request)
     {
         $comments = Comment::query()
-        ->orderBy('created_at')
+        ->orderByDesc('created_at')
         ->get();
 
         return view('comments.index', [
