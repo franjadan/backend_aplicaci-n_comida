@@ -78,16 +78,16 @@ Route::group(['middleware' => ['auth','active', 'access']], function() {
 
     });
 
-    Route::prefix('/ingredientes')->group(function () {
+    Route::middleware('admin')->prefix('/ingredientes')->group(function () {
         Route::get('/', 'IngredientController@index')->name('ingredients.index');
 
         Route::get('/nuevo', 'IngredientController@create')->name('ingredients.create');
 
-        //Route::post('/crear', 'IngredientController@store')->name('ingredients.store');
+        Route::post('/nuevo', 'IngredientController@store')->name('ingredients.create');
 
         Route::get('/{ingredient}/editar', 'IngredientController@edit')->name('ingredients.edit');
 
-        //Route::put('/{ingredient}', 'IngredientController@update')->name('ingredients.update');
+        Route::put('/{ingredient}/editar', 'IngredientController@update')->name('ingredients.edit');
 
         Route::delete('/{ingredient}', 'IngredientController@destroy')->name('ingredients.destroy');
 
