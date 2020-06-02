@@ -16,9 +16,9 @@ class CreateIngredientAllergensTable extends Migration
         Schema::create('ingredient_allergens', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('ingredient_id');
-            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('CASCADE');
             $table->unsignedInteger('allergen_id');
-            $table->foreign('allergen_id')->references('id')->on('allergens')->onDelete('cascade');
+            $table->foreign('allergen_id')->references('id')->on('allergens')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
