@@ -3,6 +3,8 @@
 @section('title', 'Editar ingrediente')
 
 @section('content')
+    <h1>Ingrediente {{ $ingredient->id }}.</h1>
+
     <form action="{{ route('ingredients.edit', $ingredient) }}" method="post" enctype="multipart/form-data">
         {{ method_field('PUT') }}
         @include('ingredients._fields')
