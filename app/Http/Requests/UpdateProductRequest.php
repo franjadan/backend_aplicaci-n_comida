@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => ['required', 'min:5', 'regex:/^[\pL\s\-\.]+$/u'],
+            'description' => ['required', 'min:5'],
             'available' => ['required'],
             'image' => ['nullable', 'image'],
             'name' => ['required', 'min:2', 'regex:/^[\pL\s\-]+$/u', Rule::unique('products', 'name')->ignore($this->product)],
@@ -43,7 +43,6 @@ class UpdateProductRequest extends FormRequest
         return [
             'description.required' => 'El campo descripción es obligatorio.',
             'description.min' => 'El campo descripción debe tener mínimo 5 caracteres.',
-            'description.regex' => 'El campo descripción no es válido.',
             'available.required' => 'El campo disponible es obligatorio.',
             'image.image' => 'El campo imagen no es válido.',
             'name.required' => 'El campo nombre es obligatorio.',
