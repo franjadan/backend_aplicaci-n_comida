@@ -23,12 +23,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UsersSeeder::class,
-            CommentsSeeder::class,
-            AllergensSeeder::class,
-            IngredientsSeeder::class,
-            CategoriesSeeder::class,
-            ProductsSeeder::class,
-            OrdersSeeder::class,
+            //CommentsSeeder::class,
+            //AllergensSeeder::class,
+            //IngredientsSeeder::class,
+            //CategoriesSeeder::class,
+            //ProductsSeeder::class,
+            //OrdersSeeder::class,
         ]);
     }
 

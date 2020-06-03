@@ -23,6 +23,6 @@ class UsersSeeder extends Seeder
             'active' => true
         ]);
 
-        factory(\App\User::class)->times(50)->create();
+        //factory(\App\User::class)->times(50)->create();
     }
 }
