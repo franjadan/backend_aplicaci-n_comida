@@ -413,4 +413,8 @@ table.dataTable thead th.sorting_asc:after {
     object-fit: cover;
 }
 
+.hide {
+    display: none;
+}
+
 

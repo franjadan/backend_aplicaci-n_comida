@@ -1,13 +1,15 @@
 {{ csrf_field() }}
 
 <!--Aquí se encuentran los campos compartidos entre la creación y edición de pedidios-->
+<input type="hidden" value="{{ $order->user_id }}" class="user">
+<input type="hidden" value="{{ $order->id }}" class="order">
 
 <div class="form-group">
     <label for="selectUser">Usuario*</label>
     @if ($users->isNotEmpty())
         <select name="user_id" id="selectUser" class="form-control">
         <option value="" selected>-- Seleccione un usuario --</option>
-        <option id="guest" value="">Usuario invitado</option>
+        <option id="guest" value="" {{ $order->user_id == null && $order->id != null ? 'selected' : '' }}>Usuario invitado</option>
             @foreach ($users as $user)
                 <option {{ $user->id == old('user_id', $order->user_id) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
             @endforeach

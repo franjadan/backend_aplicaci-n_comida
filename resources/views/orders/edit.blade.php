@@ -4,10 +4,10 @@
 
 @section('scripts')
     <script src="{{ asset('js/confirm_modal.js') }}"></script>
+    <script src="{{ asset('js/show_guest_data.js') }}"></script>
 @endsection
 
 @section('content')
-
     <h1>Pedido {{ $order->id }}.</h1>
 
     <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
