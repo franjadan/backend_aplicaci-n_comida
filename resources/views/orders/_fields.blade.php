@@ -8,7 +8,6 @@
     <label for="selectUser">Usuario*</label>
     @if ($users->isNotEmpty())
         <select name="user_id" id="selectUser" class="form-control">
-        <option value="" selected>-- Seleccione un usuario --</option>
         <option id="guest" value="" {{ $order->user_id == null && $order->id != null ? 'selected' : '' }}>Usuario invitado</option>
             @foreach ($users as $user)
                 <option {{ $user->id == old('user_id', $order->user_id) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>

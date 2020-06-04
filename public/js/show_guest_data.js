@@ -1,7 +1,15 @@
 $(function() {
-    if ($('.user').val() != '' || $('.order').val() == '') {
-        $('.guest-data').hide();
-    }
+    console.log($('#selectUser').children(":selected").val() == "");
+
+    if($('.order').val() != ''){
+        if($('.user').val() != ''){
+            $('.guest-data').hide();
+        }
+    }else{
+        if($('#selectUser').children(":selected").val() != ''){
+            $('.guest-data').hide();
+        }
+    } 
 
     $('#selectUser').change(function() {
         if ($(this).children(":selected").attr("id") == 'guest'){

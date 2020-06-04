@@ -71,6 +71,7 @@ class OrderController extends Controller
             'guest_name.present' => 'El campo nombre invitado debe estar presente.',
             'guest_address.present' => 'El campo dirección invitado debe estar presente.',
             'guest_phone.present' => 'El campo teléfono invitado debe estar presente.',
+            'guest_phone.regex' => 'El campo teléfono invitado no es válido.',
             'estimated_time.required' => 'El campo hora de recogida es obligatorio.',
             'estimated_time.regex' => 'El campo hora de recogida no es válido.',
             'estimated_time.present' => 'El campo hora de recogida real debe estar presente.',
@@ -106,8 +107,8 @@ class OrderController extends Controller
                     return back()->withErrors($validator)->withInput();
                 }
             }else{
-                if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone.'))){
-                    $validator->getMessageBag()->add('user_id', 'Debe haber un usuario registrado o datos de invitado');
+                if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone'))){
+                    $validator->getMessageBag()->add('user_id', 'Debe haber un usuario registrado o datos de invitado con todos sus datos completos');
                     return back()->withErrors($validator)->withInput();
                 }
             }
