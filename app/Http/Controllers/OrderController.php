@@ -38,6 +38,7 @@ class OrderController extends Controller
     {
         $order = new Order;
         $users = User::query()
+        ->where('role', "user")
         ->orderBy('first_name')
         ->get();
         $products = Product::query()
@@ -168,6 +169,7 @@ class OrderController extends Controller
         }
 
         $users = User::query()
+        ->where('role', "user")
         ->orderBy('first_name')
         ->get();
         $products = Product::query()
