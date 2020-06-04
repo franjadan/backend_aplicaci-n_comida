@@ -58,7 +58,7 @@
         @include('orders._fields')
 
         <div class="my-custom-panel my-4 shadow-sm p-4">
-        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modificar pedido</button>
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar cambios</button>
 
     </form>
 

@@ -10,7 +10,7 @@
         @include('ingredients._fields')
         <div class="form-group mt-5">
             <div class="my-custom-panel my-4 shadow-sm p-4">
-                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modificar ingrediente</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar cambios</button>
                 <a class="btn my-btn-other" href="{{ route('ingredients.index') }}"><i class="fas fa-arrow-left"></i> Regresar al listado de ingredientes</a>
             </div>
         </div>

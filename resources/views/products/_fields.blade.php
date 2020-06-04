@@ -72,7 +72,7 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="selectIngredients">Ingredientes*</label>
+    <label for="selectIngredients">Ingredientes</label>
     @if ($ingredients->isNotEmpty())
         <select name="ingredients[]" id="selectIngredients" class="form-control select-categories multi-select" multiple>
             @foreach ($ingredients as $ingredient)
