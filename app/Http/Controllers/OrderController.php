@@ -102,12 +102,12 @@ class OrderController extends Controller
 
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
-                    $validator->getMessageBag()->add('guest_phone', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
+                    $validator->getMessageBag()->add('user_id', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
                     return back()->withErrors($validator)->withInput();
                 }
             }else{
                 if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone'))){
-                    $validator->getMessageBag()->add('guest_phone', 'Debe haber un usuario registrado o datos de invitado');
+                    $validator->getMessageBag()->add('user_id', 'Debe haber un usuario registrado o datos de invitado');
                     return back()->withErrors($validator)->withInput();
                 }
             }
@@ -123,7 +123,7 @@ class OrderController extends Controller
             }
 
             if(count($products) <= 0){
-                $validator->getMessageBag()->add('guest_phone', 'Debe haber al menos un producto');
+                $validator->getMessageBag()->add('products', 'Debe haber al menos un producto');
                 return back()->withErrors($validator)->withInput();
             }
 
@@ -233,12 +233,12 @@ class OrderController extends Controller
 
             if($request->get('user_id') != null){
                 if(!empty($request->get('guest_name')) || !empty($request->get('guest_address')) || !empty($request->get('guest_phone'))){
-                    $validator->getMessageBag()->add('guest_phone', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
+                    $validator->getMessageBag()->add('user_id', 'El pedido sólo podrá realizarse con un usuario registrado o invitado');
                     return back()->withErrors($validator)->withInput();
                 }
             }else{
                 if(empty($request->get('guest_name')) || empty($request->get('guest_address')) || empty($request->get('guest_phone'))){
-                    $validator->getMessageBag()->add('guest_phone', 'Debe haber un usuario registrado o datos de invitado');
+                    $validator->getMessageBag()->add('user_id', 'Debe haber un usuario registrado o datos de invitado');
                     return back()->withErrors($validator)->withInput();
                 }
             }
@@ -254,7 +254,7 @@ class OrderController extends Controller
             }
 
             if(count($products) <= 0){
-                $validator->getMessageBag()->add('guest_phone', 'Debe haber al menos un producto');
+                $validator->getMessageBag()->add('products', 'Debe haber al menos un producto');
                 return back()->withErrors($validator)->withInput();
             }
 
