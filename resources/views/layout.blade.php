@@ -84,6 +84,17 @@
           </nav>
 
           <div class="container-fluid p-5">
+              <div class="d-flex justify-content-center refresh-orders">
+                  <div class="m-5 p-3 container shadow alert-refresh-orders">
+                      <h2 class="refresh-orders-title"></h2>
+                      <div class="row mt-4">
+                          <div class="col-8"></div>
+                          <div class="col-4 d-flex justify-content-end">
+                              <a href="{{ route('orders.index') }}" class="btn my-btn-primary">Refrescar pedidos</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
               @include('shared._flash-message')
               @yield('content')
           </div>
