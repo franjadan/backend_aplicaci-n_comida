@@ -27,9 +27,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::post('comentarios/nuevo', 'CommentController@new');
 
+    Route::post('usuarios/editar_contrasenia', 'ProfileController@api_passwordUpdate');
+
     Route::post('usuarios/editar', 'ProfileController@api_updateProfile');
 
-    Route::post('usuarios/editar_contrasenia', 'ProfileController@api_passwordUpdate');
 });
 
 Route::post('login', 'UserController@login');

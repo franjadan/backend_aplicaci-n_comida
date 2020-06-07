@@ -472,10 +472,14 @@ class OrderController extends Controller
                 if($order->favourite_order_name == null || $order->favourite_order_name == ""){
 
                     if($order->user->active){
-                        $order->favourite_order_name = $request->get('favourite_order_name');
-                        $order->save();
+                        if($order->user->id == auth()->user()->id){
+                            $order->favourite_order_name = $request->get('favourite_order_name');
+                            $order->save();
 
-                        return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                        }else{
+                            return response()->json(['response' => ['code' => -1, 'data' => 'No puedes modificar pedidos de otro usuario']], 401);
+                        }
                     }else{
                         return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
                     }
@@ -508,10 +512,15 @@ class OrderController extends Controller
             if($order->favourite_order_name != null || $order->favourite_order_name != ""){
 
                 if($order->user->active){
-                    $order->favourite_order_name = null;
-                    $order->save();
+                    if($order->user->id == auth()->user()->id){
+                        $order->favourite_order_name = null;
+                        $order->save();
 
-                    return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                        return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                    }else{
+                        return response()->json(['response' => ['code' => -1, 'data' => 'No puedes modificar pedidos de otro usuario']], 401);
+
+                    }
                 }else{
                     return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
                 }

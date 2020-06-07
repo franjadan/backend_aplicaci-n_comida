@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\User;
 use App\Http\Resources\CommentResource;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
