@@ -377,37 +377,76 @@ class OrderController extends Controller
                     return response()->json(["response" => ["code" => -1, "data" => "Debe haber un usuario registrado o datos de invitado"]], 422);
                 }
             }
+            
+            if($request->get('user_id') != null){
+                $user = User::query()->where('id', $request->get('user_id'))->first();
 
-            $order = new Order();
-            $dt = new DateTime();
+                if($user->active){
+                    $order = new Order();
+                    $dt = new DateTime();
+        
+                    $order->forceFill([
+                        'user_id' => $request->get('user_id'),
+                        'guest_name' => $request->get('guest_name'),
+                        'guest_address' => $request->get('guest_address'),
+                        'guest_phone' => $request->get('order_date'),
+                        'guest_token' => $request->get('guest_token'),
+                        'order_date' => $dt->format('Y-m-d H:i:s'),
+                        'estimated_time' => $request->get('estimated_time'),
+                        'state' => 'pending',
+                        'comment' =>$request->get('comment'),
+                        'paid' => $request->get('paid'),
+                    ]);
+        
+                    $order->save();
+        
+                    $order->products()->attach($request->get('products'));
+        
+                    $total = 0;
+                    foreach($order->products as $product){
+                        $total += ($product->price - ($product->price * ($product->discount / 100)));
+                    }
+        
+                    $order->total = $total;
+        
+                    $order->save();
+        
+                    return response()->json(["response" => ["code" => 1, "data" => $order->id]], 201);
+                }else{
+                    return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                }
+            }else{
+                $order = new Order();
+                $dt = new DateTime();
 
-            $order->forceFill([
-                'user_id' => $request->get('user_id'),
-                'guest_name' => $request->get('guest_name'),
-                'guest_address' => $request->get('guest_address'),
-                'guest_phone' => $request->get('order_date'),
-                'guest_token' => $request->get('guest_token'),
-                'order_date' => $dt->format('Y-m-d H:i:s'),
-                'estimated_time' => $request->get('estimated_time'),
-                'state' => 'pending',
-                'comment' =>$request->get('comment'),
-                'paid' => $request->get('paid'),
-            ]);
+                $order->forceFill([
+                    'user_id' => $request->get('user_id'),
+                    'guest_name' => $request->get('guest_name'),
+                    'guest_address' => $request->get('guest_address'),
+                    'guest_phone' => $request->get('order_date'),
+                    'guest_token' => $request->get('guest_token'),
+                    'order_date' => $dt->format('Y-m-d H:i:s'),
+                    'estimated_time' => $request->get('estimated_time'),
+                    'state' => 'pending',
+                    'comment' =>$request->get('comment'),
+                    'paid' => $request->get('paid'),
+                ]);
 
-            $order->save();
+                $order->save();
 
-            $order->products()->attach($request->get('products'));
+                $order->products()->attach($request->get('products'));
 
-            $total = 0;
-            foreach($order->products as $product){
-                $total += ($product->price - ($product->price * ($product->discount / 100)));
+                $total = 0;
+                foreach($order->products as $product){
+                    $total += ($product->price - ($product->price * ($product->discount / 100)));
+                }
+
+                $order->total = $total;
+
+                $order->save();
+
+                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 201);
             }
-
-            $order->total = $total;
-
-            $order->save();
-
-            return response()->json(["response" => ["code" => 1, "data" => $order->id]], 201);
         }
     }
 
@@ -429,14 +468,23 @@ class OrderController extends Controller
             ->where('id', $request->get('order_id'))
             ->first();
 
-            if($order->favourite_order_name == null || $order->favourite_order_name == ""){
+            if($order->user != null){
+                if($order->favourite_order_name == null || $order->favourite_order_name == ""){
 
-                $order->favourite_order_name = $request->get('favourite_order_name');
-                $order->save();
+                    if($order->user->active){
+                        $order->favourite_order_name = $request->get('favourite_order_name');
+                        $order->save();
 
-                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                        return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                    }else{
+                        return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                    }
+
+                }else{
+                    return response()->json(["response" => ["code" => -1, "data" => "Ya ha sido registrado como favorito"]], 400);
+                }
             }else{
-                return response()->json(["response" => ["code" => -1, "data" => "Ya ha sido registrado como favorito"]], 400);
+                return response()->json(["response" => ["code" => -1, "data" => "Sólo los pedidos realizados por un usuario podrán ser favoritos"]], 400);
             }
         }
     }
@@ -459,10 +507,15 @@ class OrderController extends Controller
 
             if($order->favourite_order_name != null || $order->favourite_order_name != ""){
 
-                $order->favourite_order_name = null;
-                $order->save();
+                if($order->user->active){
+                    $order->favourite_order_name = null;
+                    $order->save();
 
-                return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                    return response()->json(["response" => ["code" => 1, "data" => $order->id]], 200);
+                }else{
+                    return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                }
+ 
             }else{
                 return response()->json(["response" => ["code" => -1, "data" => "Este pedido no consta como favorito"]], 400);
             }
@@ -481,12 +534,18 @@ class OrderController extends Controller
             return response()->json(["response" => ["code" => -1, "data" => $validator->errors()]], 400);
         } else {
             if($request->get('user_id') != null){
-                $orders = Order::query()
-                    ->where('user_id', $request->get('user_id'))
-                    ->whereNotNull('favourite_order_name')
-                    ->get();
+                $user = User::query()->where('id', $request->get('user_id'))->first();
 
-                return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
+                if($user->active){
+                    $orders = Order::query()
+                        ->where('user_id', $request->get('user_id'))
+                        ->whereNotNull('favourite_order_name')
+                        ->get();
+
+                    return response()->json(["response" => ["code" => 1, "data" => OrderResource::collection($orders)]], 200);
+                }else{
+                    return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                }
             }else{
                 return response()->json(["response" => ["code" => 1, "data" => []]], 200);
             }
@@ -565,11 +624,14 @@ class OrderController extends Controller
 
             }else{
                 if($request->get('user_id') != null){
-                    $order = Order::query()
-                        ->where('user_id', $request->get('user_id'))
-                        ->where('state', 'pending')
-                        ->where('id', $request->get('order_id'))
-                        ->first();
+                    $user = User::query()->where('id', $request->get('user_id'))->first();
+
+                    if($user->active){
+                        $order = Order::query()
+                            ->where('user_id', $request->get('user_id'))
+                            ->where('state', 'pending')
+                            ->where('id', $request->get('order_id'))
+                            ->first();
 
                         if($order != null){
                             $order->state = 'cancelled';
@@ -579,6 +641,9 @@ class OrderController extends Controller
                         }else{
                             return response()->json(["response" => ["code" => -1, "data" => "No se ha podido acceder al pedido"]], 422);
                         }
+                    }else{
+                        return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                    }
                 }else{
                     return response()->json(["response" => ["code" => -1, "data" => "Necesitas añadir el token de invitado o el id de usuario del pedido"]], 400);
                 }

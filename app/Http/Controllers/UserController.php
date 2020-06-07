@@ -202,8 +202,12 @@ class UserController extends Controller
 
         $user = DB::table('users')->where('email', $request->get('email'))->first();
 
-        $data = compact('user','token');
-        return response()->json(["response" => ["code" => 1, "data" => $data]], 200);
+       if($user->active){
+            $data = compact('user','token');
+            return response()->json(["response" => ["code" => 1, "data" => $data]], 200);
+       }else{
+            return response()->json(["response" => ["code" => -1, "data" => "Este usuario ha sido deshabilitado por el sistema"]], 401);
+       }
     }
 
     //Función para generar una nueva contraseña
@@ -255,31 +259,35 @@ class UserController extends Controller
             if($user == null){
                 return response()->json(["response" => ["code" => -1, "data" => "No existe el usuario con este email"]], 422);
             }else{
-                $new_password = str_random(6);
-                $subject = "Cambio de contraseña";
-                $for = $user->email;
+                if($user->active){
+                    $new_password = str_random(6);
+                    $subject = "Cambio de contraseña";
+                    $for = $user->email;
 
-                $data['msg'] = "Se ha generado una nueva contraseña: $new_password";
+                    $data['msg'] = "Se ha generado una nueva contraseña: $new_password";
 
-                //Enviar por correo
-                try{
-                    Mail::send('email.email', $data, function($message) use($subject,$for){
-                        $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
-                        $message->subject($subject);
-                        $message->to($for);
-                    });
+                    //Enviar por correo
+                    try{
+                        Mail::send('email.email', $data, function($message) use($subject,$for){
+                            $message->from("proyectofinalestechdam@gmail.com","Menu of the day");
+                            $message->subject($subject);
+                            $message->to($for);
+                        });
 
-                    if (Mail::failures()) {
+                        if (Mail::failures()) {
+                            return response()->json(["response" => ["code" => -1, "data" => "No se ha podido enviar el correo"]], 502);
+                        }else{
+                            $user->password = bcrypt($new_password);
+                            $user->save();
+
+                            return response()->json(["response" => ["code" => 1, "data" => "Se ha enviado un correo con la nueva contraseña"]], 200);
+                        }
+                    }catch(Exception $ex){
                         return response()->json(["response" => ["code" => -1, "data" => "No se ha podido enviar el correo"]], 502);
-                    }else{
-                        $user->password = bcrypt($new_password);
-                        $user->save();
 
-                        return response()->json(["response" => ["code" => 1, "data" => "Se ha enviado un correo con la nueva contraseña"]], 200);
                     }
-                }catch(Exception $ex){
-                    return response()->json(["response" => ["code" => -1, "data" => "No se ha podido enviar el correo"]], 502);
-
+                }else{
+                    return response()->json(["response" => ["code" => -1, "data" => "Este usuario ha sido deshabilitado por el sistema"]], 401);
                 }
             }
         }

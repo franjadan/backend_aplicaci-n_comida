@@ -104,15 +104,19 @@ class ProfileController extends Controller
             if($request->get('user_id') == auth()->user()->id) //Para que el id coincida con el usuario del token
             {
                 $user = User::query()->where('id', $request->get('user_id'))->first();
-                $user->forceFill([
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'address' => $request->get('address'),
-                    'phone' => $request->get('phone'),
-                ]);
-                $user->save();
-                return response()->json(['response' => ['code' => 1, 'data' => $user]], 200);
+                if($user->active){
+                    $user->forceFill([
+                        'first_name' => $request->get('first_name'),
+                        'last_name' => $request->get('last_name'),
+                        'email' => $request->get('email'),
+                        'address' => $request->get('address'),
+                        'phone' => $request->get('phone'),
+                    ]);
+                    $user->save();
+                    return response()->json(['response' => ['code' => 1, 'data' => $user]], 200);
+                }else{
+                    return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                }
             }else{
                 return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar otro perfil."]], 400);
             }
@@ -153,13 +157,19 @@ class ProfileController extends Controller
                     return response()->json(['response' => ['code' => -1, 'data' => 'La contraseña antigua no coincide con tu contraseña actual.']], 400);
                 }
 
-                $user->forceFill([
-                    'password' => bcrypt($request->get('new_password'))
-                ]);
+                if($user->active){
 
-                $user->save();
+                    $user->forceFill([
+                        'password' => bcrypt($request->get('new_password'))
+                    ]);
 
-                return response()->json(['response' => ['code' => 1, 'data' => "Se ha cambiado la contraseña con éxito."]], 200);
+                    $user->save();
+
+                    return response()->json(['response' => ['code' => 1, 'data' => "Se ha cambiado la contraseña con éxito."]], 200);
+
+                }else{
+                    return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+                }
             }else{
                 return response()->json(['response' => ['code' => -1, 'data' => "No puedes modificar la contraseña de otro usuario."]], 400);
             }

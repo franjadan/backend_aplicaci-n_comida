@@ -62,12 +62,19 @@ class CommentController extends Controller
         if ($validator->fails()) {
             return response()->json(['response' => ['code' => -1, 'data' => $validator->errors()]], 400);
         }else {
-            Comment::create([
-                'user_id' => $request->get('user_id'),
-                'comment' => $request->get('comment'),
-            ]);
+            $user = User::query()->where('id', $request->get('user_id'))->first();
 
-            return response()->json(['response' => ['code' => 1, 'data' => 'El comentario se ha guardado con éxito']], 201);
+            if($user->active){
+
+                Comment::create([
+                    'user_id' => $request->get('user_id'),
+                    'comment' => $request->get('comment'),
+                ]);
+
+                return response()->json(['response' => ['code' => 1, 'data' => 'El comentario se ha guardado con éxito']], 201);
+            }else{
+                return response()->json(['response' => ['code' => -1, 'data' => 'El usuario ha sido deshabilitado por el sistema']], 401);
+            }
         }
     }
 }
