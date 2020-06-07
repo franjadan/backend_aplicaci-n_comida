@@ -8,6 +8,8 @@
 
 @section('content')
     <h1>Listado de usuarios.</h1>
+
+    <!--Modal deshabilitar usuario-->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -18,7 +20,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Está seguro de que desea eliminar el usuario?
+                ¿Está seguro de que desea cambiar el estado del usuario?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -27,9 +29,15 @@
             </div>
         </div>
     </div>
+
     <div class="my-custom-panel my-4 shadow-sm p-4">
         <a href="{{ route('users.create') }}" class="btn my-btn-primary"><i class="fas fa-plus"></i> Nuevo usuario</a>
-    </div>
+        @if($route == 'index')
+            <a href="{{ route('users.trash') }}" class="btn my-btn-danger"><i class="fas fa-trash"></i> Ver usuarios deshabilitados</a>
+        @else
+            <a href="{{ route('users.index') }}" class="btn my-btn-success"><i class="fas fa-arrow-left"></i> Ver usuarios deshabilitados</a>
+        @endif
+        </div>
     @if(!$users->isEmpty())
         <div class="table-responsive">
             <table class="table table-bordered data-table">
@@ -49,14 +57,19 @@
                             <td class="text-center"><h5>@if ($user->isAdmin()) Admin @else @if ($user->isOperator()) Operario @else {{ $user->name }} @endif @endif @if ($user->active) <span class="status st-active"></span> @else <span class="status st-inactive"></span> @endif</h5></td>
                             <td class="text-muted text-center">{{ $user->email }}</td>
                             <td class="text-center">
-                                <form class="" action="{{ route('users.destroy', $user) }}" method="POST" id="deleteForm-{{ $user->id }}">
+                                <form id="deleteForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}/estado") }}">
                                     {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
+                                    {{ method_field('POST') }}
 
                                     <div class="btn-group">
                                         <a class="btn my-btn-primary" href="{{ route('users.edit', ['user' => $user]) }}"><i class="fas fa-edit"></i></a>
-                                        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class='btn my-btn-danger showModalConfirmBtn' type='button'><i class='fas fa-trash-alt'></i></button>
+                                        @if($user->active)
+                                            <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn my-btn-danger showModalConfirmBtn"><i class="fas fa-user-times"></i></button>
+                                        @else
+                                            <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn my-btn-success showModalConfirmBtn"><i class="fas fa-user-plus"></i></button>
+                                        @endif
                                     </div>
+
                                 </form>
                             </td>
                         </tr>

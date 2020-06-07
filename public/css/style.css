@@ -351,6 +351,17 @@ nav {
     color: rgba(255, 255, 255, 0.9);
 }
 
+.my-btn-success {
+    background-color: rgba(40, 167, 69, 1);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+}
+
+.my-btn-success:hover {
+    background-color: rgba(14, 135, 38, 1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .btn:focus {
     box-shadow: none;
 }

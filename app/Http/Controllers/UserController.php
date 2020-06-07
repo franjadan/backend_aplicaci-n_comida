@@ -23,15 +23,37 @@ class UserController extends Controller
         if (Auth::user()->role === "superadmin"){
             $users = User::query()
             ->where('role', '<>', 'superadmin')
+            ->where('active', '=', 1)
             ->get();
         }else{
             $users = User::query()
             ->where('role', '<>', 'admin')
+            ->where('active', '=', 1)
             ->get();
         }
 
         return view('users.index', [
-            'users' => $users
+            'users' => $users,
+            'route' => 'index'
+        ]);
+    }
+
+    public function trash(){
+        if (Auth::user()->role === "superadmin"){
+            $users = User::query()
+            ->where('role', '<>', 'superadmin')
+            ->where('active', '=', 0)
+            ->get();
+        }else{
+            $users = User::query()
+            ->where('role', '<>', 'admin')
+            ->where('active', '=', 0)
+            ->get();
+        }
+
+        return view('users.index', [
+            'users' => $users,
+            'route' => 'trash'
         ]);
     }
 
@@ -106,16 +128,12 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.edit', ['user' => $user])->with('success', 'Se han guardado los cambios.');
+        if($user->active){
+            return redirect()->route('users.trash')->with('success', 'Se han guardado los cambios.');
+        }else{
+            return redirect()->route('users.index')->with('success', 'Se han guardado los cambios.');
+        }
 
-    }
-
-    //Función para eliminar al usuario
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return redirect()->route('users.index')->with('success', 'Se ha eliminado con éxito.');
     }
 
     //Función para registrar un usuario a través de la API

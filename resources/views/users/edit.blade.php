@@ -63,15 +63,6 @@
 
     </form>
 
-    <form id="deleteForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ url("usuarios/{$user->id}/estado") }}">
-
-        {{ method_field('POST') }}
-        {{ csrf_field() }}
-
-        <button data-id="{{ $user->id }}" data-toggle="modal" data-target="#confirmModal" class="btn my-btn-danger showModalConfirmBtn">@if ($user->active) <i class="fas fa-user-times"></i> Deshabilitar usuario @else <i class="fas fa-user-check"></i> Habilitar usuario @endif</button>
-
-    </form>
-
     <form id="generatePassForm-{{ $user->id }}" method="POST" class="d-inline" action="{{ route('users.generatePassword', $user) }}">
 
         {{ method_field('POST') }}

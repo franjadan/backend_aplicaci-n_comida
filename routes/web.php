@@ -18,6 +18,8 @@ Route::group(['middleware' => ['auth','active', 'access']], function() {
     Route::middleware('admin')->prefix('/usuarios')->group(function () {
         Route::get('/', 'UserController@index')->name('users.index'); //Ruta listado
 
+        Route::get('/trash', 'UserController@trash')->name('users.trash'); //Ruta usuarios deshabilitados
+
         Route::get('/nuevo', 'UserController@create') //Ruta de la página para crear el usuario
             ->name('users.create');
 
