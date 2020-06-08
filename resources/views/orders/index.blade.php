@@ -68,7 +68,9 @@
             </table>
         </div>
     @else
-        <p class="mt-3">No hay pedidos pendientes</p>
+        <div class="alert alert-secondary">
+            <p class="mt-3">No hay pedidos registrados.</p>
+       </div>
     @endif
 
 @endsection

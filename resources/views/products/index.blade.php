@@ -83,7 +83,9 @@
             {{ $products->links() }}
 
         @else
-            <p class="mt-3">No hay productos registrados</p>
+            <div class="alert alert-secondary">
+                <p class="mt-3">No hay productos registrados.</p>
+            </div>
         @endif
     </div>
 @endsection

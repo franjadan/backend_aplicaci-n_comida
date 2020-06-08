@@ -64,7 +64,9 @@
                 </table>
             </div>
         @else
-            <p>No hay alérgenos registrados.</p>
+            <div class="alert alert-secondary">
+                <p class="mt-3">No hay alérgenos registrados.</p>
+            </div>
         @endif
     </div>
 @endsection

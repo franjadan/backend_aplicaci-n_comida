@@ -21,7 +21,9 @@
             @endforeach
         </select>
     @else
-        <p>No hay alérgenos registrados.</p>
+        <div class="alert alert-secondary">
+            <p class="mt-3">No hay alérgenos registrados.</p>
+        </div>
     @endif
     @if($errors->has('allergens'))
         <div class="alert alert-danger mt-2">{{ $errors->first('allergens') }}</div>

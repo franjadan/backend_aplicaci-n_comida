@@ -67,7 +67,9 @@
             {{ $categories->links() }}
 
         @else
-            <p>No hay categorías registradas.</p>
+            <div class="alert alert-secondary">
+                <p class="mt-3">No hay categorías registrados.</p>
+            </div>
         @endif
     </div>
 @endsection

@@ -35,7 +35,7 @@
         @if($route == 'index')
             <a href="{{ route('users.trash') }}" class="btn my-btn-danger"><i class="fas fa-trash"></i> Ver usuarios deshabilitados</a>
         @else
-            <a href="{{ route('users.index') }}" class="btn my-btn-success"><i class="fas fa-arrow-left"></i> Ver usuarios deshabilitados</a>
+            <a href="{{ route('users.index') }}" class="btn my-btn-success"><i class="fas fa-user-check"></i> Ver usuarios habilitados</a>
         @endif
         </div>
     @if(!$users->isEmpty())
@@ -78,7 +78,9 @@
             </table>
         </div>
     @else
-        <p class="mt-3">No hay usuarios</p>
+       <div class="alert alert-secondary">
+            <p class="mt-3">No hay usuarios registrados.</p>
+       </div>
     @endif
 
 @endsection

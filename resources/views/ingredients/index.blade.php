@@ -71,7 +71,9 @@
             </div>
 
         @else
-            <p>No hay ingredientes registrados.</p>
+            <div class="alert alert-secondary">
+                <p class="mt-3">No hay ingredientes registrados.</p>
+            </div>
         @endif
     </div>
 @endsection

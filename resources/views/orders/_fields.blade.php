@@ -14,7 +14,9 @@
             @endforeach
         </select>
     @else
-        <p>No hay usuarios registrados.</p>
+        <div class="alert alert-secondary">
+            <p class="mt-3">No hay usuarios registrados.</p>
+        </div>
     @endif
     @if($errors->has('user_id'))
         <div class="alert alert-danger mt-2">{{ $errors->first('user_id') }}</div>
@@ -120,7 +122,9 @@
         <?php endfor; ?>
         </div>
     @else
-        <p>No hay productos registrados.</p>
+        <div class="alert alert-secondary">
+            <p class="mt-3">No hay productos registrados.</p>
+        </div>
     @endif
     @if($errors->has('products'))
         <div class="alert alert-danger mt-2">{{ $errors->first('products') }}</div>

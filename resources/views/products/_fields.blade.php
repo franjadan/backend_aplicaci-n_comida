@@ -80,7 +80,9 @@
             @endforeach
         </select>
     @else
-        <p>No hay ingredientes registrados.</p>
+        <div class="alert alert-secondary">
+            <p class="mt-3">No hay ingredientes registrados.</p>
+        </div>
     @endif
     @if($errors->has('ingredients'))
         <div class="alert alert-danger mt-2">{{ $errors->first('ingredients') }}</div>
