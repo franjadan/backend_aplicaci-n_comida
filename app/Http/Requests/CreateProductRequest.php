@@ -67,14 +67,16 @@ class CreateProductRequest extends FormRequest
         $name = $image->getClientOriginalName();
         $root = public_path('media/products/'.$name);
 
-        Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
-            $constraint->aspectRatio();
-        })->save($root, 72);
-
-        $root = public_path('media/products/min/'.$name);
-        Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
-            $constraint->aspectRatio();
-        })->save($root, 72);
+        if (!@getimagesize($root)) {
+            Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
+    
+            $root = public_path('media/products/min/'.$name);
+            Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
+        }
 
         $available = $this['available'] == 'yes'? true: false;
 

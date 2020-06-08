@@ -49,9 +49,11 @@ class CreateAllergenRequest extends FormRequest
         $name = $image->getClientOriginalName();
         $root = public_path('media/allergens/'.$name);
 
-        Image::make($image->getRealPath())->resize(150, 150, function($constraint) {
-            $constraint->aspectRatio();
-        })->save($root, 72);
+        if (!@getimagesize($root)) {
+            Image::make($image->getRealPath())->resize(150, 150, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
+        }
 
         Allergen::create([
             'name' => $this['name'],

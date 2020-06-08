@@ -49,14 +49,16 @@ class CreateCategoryRequest extends FormRequest
         $name = $image->getClientOriginalName();
         $root = public_path('media/categories/'.$name);
 
-        Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
-            $constraint->aspectRatio();
-        })->save($root, 72);
-
-        $root = public_path('media/categories/min/'.$name);
-        Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
-            $constraint->aspectRatio();
-        })->save($root, 72);
+        if (!@getimagesize($root)) {
+            Image::make($image->getRealPath())->resize(600, 400, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
+    
+            $root = public_path('media/categories/min/'.$name);
+            Image::make($image->getRealPath())->resize(300, 300, function($constraint) {
+                $constraint->aspectRatio();
+            })->save($root, 72);
+        }
 
         Category::create([
             'name' => $this['name'],
