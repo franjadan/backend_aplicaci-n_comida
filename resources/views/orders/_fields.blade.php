@@ -122,6 +122,7 @@
         <?php endfor; ?>
         </div>
     @else
+        <?php $i = 0 ?>
         <div class="alert alert-secondary">
             <p class="mt-3">No hay productos registrados.</p>
         </div>

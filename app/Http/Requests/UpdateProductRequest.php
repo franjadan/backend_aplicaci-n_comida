@@ -34,7 +34,7 @@ class UpdateProductRequest extends FormRequest
             'price' => ['required', 'numeric'],
             'discount' => ['nullable', 'numeric', 'present'],
             'categories' => ['required', 'array', 'exists:categories,id'],
-            'ingredients' => ['required', 'array', 'exists:ingredients,id'],
+            'ingredients' => ['nullable', 'array', 'exists:ingredients,id'],
         ];
     }
 
@@ -56,7 +56,6 @@ class UpdateProductRequest extends FormRequest
             'categories.required' => 'El campo categorías es obligatorio.',
             'categories.array' => 'El campo categorías no es válido.',
             'categories.exists' => 'El campo categorías no es válido.',
-            'ingredients.required' => 'El campo ingredientes es obligatorio',
             'ingredients.array' => 'El campo ingredientes no es válido.',
             'categories.exists' => 'El campo ingredientes no es válido.',
         ];

@@ -43,6 +43,8 @@ class OrderController extends Controller
         ->get();
         $products = Product::query()
         ->orderBy('name')
+        ->where('active', true)
+        ->where('available', true)
         ->get();
         return view('orders.create', [
             'order' => $order,
