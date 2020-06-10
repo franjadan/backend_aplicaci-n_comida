@@ -74,7 +74,12 @@ class ProductController extends Controller
     {
         $request->availableProduct($product);
 
-        return redirect()->route('products')->with('success', 'Se han guardado los cambios.');
+        if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin()){
+            return redirect()->route('products.edit', $product)->with('success', 'Se han guardado los cambios.');
+        }else{
+            return redirect()->route('products')->with('success', 'Se han guardado los cambios.');
+        }
+
     }
 
     public function destroy(Product $product)
