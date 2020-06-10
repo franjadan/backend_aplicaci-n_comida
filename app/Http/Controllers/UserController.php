@@ -27,6 +27,7 @@ class UserController extends Controller
             ->get();
         }else{
             $users = User::query()
+            ->where('role', '<>', 'superadmin')
             ->where('role', '<>', 'admin')
             ->where('active', '=', 1)
             ->get();
